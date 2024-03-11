@@ -1,0 +1,68 @@
+/* internal */
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@300..700');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..700;1,300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+:root {
+  --darkness: true;
+  --font-title: 'Geologica', 'Segoe UI Semibold', sans-serif;
+  --font-head: 'Montserrat', 'Segoe UI Semibold', sans-serif;
+  --font-body: 'Geologica', 'Segoe UI', sans-serif;
+  --font-code: 'SF Mono', 'Roboto Mono', 'Consolas', monospace;
+  --font-flavour: 'Abel', 'Segoe UI', sans-serif;
+}
+
+/* root */
+html {
+  background-color: var(--night-blue);
+}
+
+/* core */
+p {
+  font-size: 2em;
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: #fff;
+}
+
+h1 {
+  font-size: 4em;
+  font-family: var(--font-title);
+  font-weight: 700;
+}
+h2 {
+  font-size: 3em;
+  font-family: var(--font-head);
+  font-weight: 600;
+}
+h3 {
+  font-size: 2.5em;
+  font-family: var(--font-head);
+  font-weight: 500;
+}
+
+code {
+  font-family: var(--font-code);
+}
+
+/* property */
+a {
+  color: var(--lilac-cresc);
+}
+a:hover {}
+a:visited {}
+a:visited:hover {}
+
+/* section */
+.footer {
+  font-family: var(--font-flavour);
+}
+
+/* dark */
+html (--darkness = false) {
+  background-color: #fff;
+}
+
+p {
+  color: #000;
+}
