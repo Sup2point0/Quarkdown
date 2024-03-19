@@ -1,0 +1,41 @@
+name: run assort.py
+
+on:
+  push
+    # paths:
+    #   - 'origins.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git.checkout
+        uses: actions/checkout@v4
+
+      - name: Python.setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Python.install-packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Python.execute
+        env:
+          SOME_SECRET: ${{ secrets.AQ }}
+        run: python assort.py
+
+      # - name: Git.commit
+      #   run: |
+      #     git config --local user.email "sup2point0@gmail.com"
+      #     git config --local user.name "GitHub Actions"
+      #     git add -A
+      #     git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
+
+      # - name: Git.push
+      #   uses: ad-m/github-push-action@v0.6.0
+      #   with:
+      #     github_token: ${{ secrets.STIG }}
+      #     branch: origin
