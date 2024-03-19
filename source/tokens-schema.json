@@ -65,23 +65,32 @@
         },
         "html-replaces": {
           "title": "HTML Text Replacement",
-          "description": "The text pattern to replace with the opening HTML tag."
+          "description": "The text pattern to replace with the opening HTML tag.",
+          "oneOf": [
+            {"type": "null"},
+            {"type": "string"},
+            {"enum": ["#AUTO"]}
+          ]
         },
         "regex-close": {
           "title": "RegEx Closing Pattern",
           "description": "The regular expression that deactivates the token when matched.",
-          "type": "string"
+          "oneOf": [
+            {"type": "null"},
+            {"type": "string"}
+          ]
         },
         "html-close": {
           "title": "HTML Closing Tag",
           "description": "The HTML tag to append to the text.",
-          "type": "string",
-          "enum": [
-            "#AUTO"
+          "oneOf": [
+            {"type": "null"},
+            {"type": "string"},
+            {"enum": ["#AUTO"]}
           ]
         }
       },
-      "required": ["shard"]
+      "required": ["shard", "kind", "opens-ctx", "regex-open", "html-open", "regex-close", "html-close"]
     },
 
     "part": {}
