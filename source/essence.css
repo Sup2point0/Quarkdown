@@ -3,29 +3,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..700;1,300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 
-:root {
-  --darkness: true;
-  --font-title: 'Geologica', 'Segoe UI Semibold', sans-serif;
-  --font-head: 'Montserrat', 'Segoe UI Semibold', sans-serif;
-  --font-body: 'Geologica', 'Segoe UI', sans-serif;
-  --font-code: 'SF Mono', 'Roboto Mono', 'Consolas', monospace;
-  --font-flavour: 'Abel', 'Segoe UI', sans-serif;
-}
-
 /* root */
 html {
-  background-color: var(--night-blue);
+  --darkness: true;
+
+  --font-title: 'Geologica', 'Segoe UI Semibold', system-ui, sans-serif;
+  --font-head: 'Montserrat', 'Segoe UI Semibold', system-ui, sans-serif;
+  --font-body: 'Geologica', 'Segoe UI', system-ui, sans-serif;
+  --font-code: 'SF Mono', 'Roboto Mono', 'Consolas', system-ui, monospace;
+  --font-flavour: 'Abel', 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+  margin: 0% 20%;
+  background-color: var(--blue-night);
+  color: #fff;
+  font-family: var(--font-body);
 }
 
 /* core */
 p {
-  font-size: 2em;
-  font-family: var(--font-body);
-  font-weight: 400;
-  color: #fff;
+  font-size: 1.69em;
+  font-weight: 300;
 }
 
 h1 {
+  text-align: center;
   font-size: 4em;
   font-family: var(--font-title);
   font-weight: 700;
@@ -42,27 +45,38 @@ h3 {
 }
 
 code {
+  font-size: 1.69em;
   font-family: var(--font-code);
+  font-weight: 400;
 }
 
 /* property */
 a {
+  text-decoration: none;
+  color: var(--blue-cresc);
+}
+a:hover {
+  color: var(--blue-nova);
+}
+a:visited {
   color: var(--lilac-cresc);
 }
-a:hover {}
-a:visited {}
-a:visited:hover {}
+a:visited:hover {
+  color: var(--lilac-nova);
+}
 
 /* section */
 .footer {
+  background-color: #000;
+  text-align: center;
   font-family: var(--font-flavour);
 }
 
 /* dark */
-html (--darkness = false) {
+/* html:has(--darkness = false) {
   background-color: #fff;
-}
+} */
 
-p {
+/* p {
   color: #000;
-}
+} */
