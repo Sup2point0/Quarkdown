@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "Quarkdown Tokens Schema",
+  "description": "Schema for layout of token identifiers in Quarkdown’s parsing engine JSON.",
+  "properties":
+  {
+    "line":
+    {
+      "title": "Line-Wise Tokens",
+      "description": "Tokens processed across an entire line.",
+      "type": "object",
+      "properties": {
+        "shard": {
+          "title": "Token Shard",
+          "description": "A unique identifier for the token.",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Token Kind",
+          "description": "How the token will be processed.",
+          "type": "string",
+          "enum": ["#MONO", "#DUAL", "#POLY"]
+        },
+        "required-ctx": {
+          "title": "Required Context(s)",
+          "description": "The context(s) that must be active for this token to be activated.",
+          "type": "string"
+        },
+        "opens-ctx": {
+          "title": "Opened Context",
+          "description": "The context activated by the token.",
+          "type": "string"
+        },
+        "ctx-persists": {
+          "title": "Persisting Context",
+          "description": "Whether the context remains active between line breaks.",
+          "type": "boolean"
+        },
+        "variables": {
+          "title": "Variable Content",
+          "description": "Variables to extract from the token.",
+          "type": "object",
+          "properties": {}
+        },
+        "regex-open": {
+          "title": "RegEx Opening Pattern",
+          "description": "The regular expression that activates the token when matched.",
+          "type": "string"
+        },
+        "html-open": {
+          "title": "HTML Opening Tag",
+          "description": "The HTML tag to prepend to the text.",
+          "type": "string"
+        },
+        "html-replaces": {
+          "title": "HTML Text Replacement",
+          "description": "The text pattern to replace with the opening HTML tag.",
+          "type": "string"
+        },
+        "regex-close": {
+          "title": "RegEx Closing Pattern",
+          "description": "The regular expression that deactivates the token when matched.",
+          "type": "string"
+        },
+        "html-close": {
+          "title": "HTML Closing Tag",
+          "description": "The HTML tag to append to the text.",
+          "type": "string",
+          "enum": [
+            "#AUTO"
+          ]
+        }
+      },
+      "required": ["shard"]
+    },
+
+    "part": {}
+  }
+}
