@@ -5,14 +5,14 @@ Script for GitHub Actions that deploys Markdown files in Assort to GitHub Pages.
 import os
 import base64
 
-from github import GitHub
+from github import Github
 from github import Auth
 
 # import quarkdown
 
 
 ## setup
-git = GitHub(auth = Auth.Token(os.getenv("AQ")))
+git = Github(auth = Auth.Token(os.getenv("AQ")))
 repo = git.get_repo("Sup2point0/Assort")
 content = repo.get_contents("")
 
