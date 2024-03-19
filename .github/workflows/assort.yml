@@ -2,8 +2,8 @@ name: run assort.py
 
 on:
   push:
-    paths:
-      - 'origins.md'
+    # paths:
+    #   - 'origins.md'
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
 
       - name: Python.execute
         env:
-          SOME_SECRET: ${{ secrets.STIG }}
+          SOME_SECRET: ${{ secrets.AQ }}
         run: python assort.py
 
       # - name: Git.commit
