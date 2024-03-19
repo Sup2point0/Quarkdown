@@ -12,7 +12,7 @@ import quarkdown
 
 
 ## setup
-git = GitHub(auth = Auth.Token(os.getenv("STIG"))
+git = GitHub(auth = Auth.Token(os.getenv("AQ"))
 repo = git.get_repo("Sup2point0/Assort")
 content = repo.get_contents("")
 
@@ -40,11 +40,16 @@ while content:
 for file in files:
   text = base64.b64decode(file.content)
   print(text)
-  file = quarkdown.textualise(text)
-  path = f"docs/{file.path}.html"
+  # file = quarkdown.textualise(text)
+  # path = f"docs/{file.path}.html"
+
+  ## NOTE testing
+  path = f"docs/test.txt"
+  repo.create_file(path, "auto-assort", text)
+  continue
+  ##
 
   try:
-    break  ## NOTE testing
     existing = repo.get_contents(path)
     repo.update_file(path, "auto-assort", file.content, sha = existing.sha)
 
