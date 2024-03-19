@@ -1,5 +1,5 @@
 /* internal */
-@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@300..700');
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@200..700');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..700;1,300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 
@@ -15,31 +15,30 @@ html {
 }
 
 body {
-  margin: 0% 20%;
+  margin: 0px;
   background-color: var(--blue-night);
-  color: #fff;
   font-family: var(--font-body);
 }
 
 /* core */
 p {
-  font-size: 1.69em;
-  font-weight: 300;
+  font-size: 1.44em;
+  font-weight: 200;
 }
 
 h1 {
   text-align: center;
   font-size: 4em;
   font-family: var(--font-title);
-  font-weight: 700;
+  font-weight: 500;
 }
 h2 {
-  font-size: 3em;
+  font-size: 2em;
   font-family: var(--font-head);
   font-weight: 600;
 }
 h3 {
-  font-size: 2.5em;
+  font-size: 1.69em;
   font-family: var(--font-head);
   font-weight: 500;
 }
@@ -65,8 +64,14 @@ a:visited:hover {
   color: var(--lilac-nova);
 }
 
-/* section */
-.footer {
+/* specific */
+#core {
+  margin: 0 20%;
+  color: #fff;
+}
+
+#footer {
+  width: 100%;
   background-color: #000;
   text-align: center;
   font-family: var(--font-flavour);
