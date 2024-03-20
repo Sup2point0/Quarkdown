@@ -10,7 +10,7 @@ from github import Github
 from github.Repository import Repository
 from github.ContentFile import ContentFile
 
-import quarkdown
+# import quarkdown
 
 
 def extract_repo_files(repo: Repository) -> list[ContentFile]:
@@ -45,16 +45,16 @@ def export_and_deploy(
 
   for file in files:
     text = base64.base64decode(file.content)
-    path, content = quarkdown.textualise(text)
+    # path, content = quarkdown.textualise(text)
 
-    try:
-      repo.create_file(path, commit, content)
-    except:
-      existing = repo.get_contents(path)
-      repo.update_file(path, commit, content, existing.sha)
+    # try:
+    #   repo.create_file(path, commit, content)
+    # except:
+    #   existing = repo.get_contents(path)
+    #   repo.update_file(path, commit, content, existing.sha)
 
-    # reduce Unix timestamp for easier management
-    log[path]["last-updated"] = round(time.now() % 1710000000)
+    # # reduce Unix timestamp for easier management
+    # log[path]["last-updated"] = round(time.now() % 1710000000)
 
 
 def has_changed(file: ContentFile, log: dict) -> bool:
