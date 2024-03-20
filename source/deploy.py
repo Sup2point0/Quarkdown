@@ -10,7 +10,7 @@ from github import Github
 from github.Repository import Repository
 from github.ContentFile import ContentFile
 
-# import quarkdown
+import quarkdown
 
 
 def extract_repo_files(repo: Repository) -> list[ContentFile]:
@@ -34,33 +34,36 @@ def extract_repo_files(repo: Repository) -> list[ContentFile]:
 
 
 def export_and_deploy(
+  git: Github,
   repo: Repository,
   files: list[ContentFile],
   *,
   commit: str,
-) -> None:
+) -> dict:
   '''Export .md files to HTML and commit them to the `docs/` folder of a given GitHub repository.'''
 
-  log = extract_log(repo.name)
+  log = extract_logs(git, repo.name)
 
   for file in files:
     text = base64.base64decode(file.content)
-    # path, content = quarkdown.textualise(text)
+    path, content = quarkdown.textualise(text)
 
-    # try:
-    #   repo.create_file(path, commit, content)
-    # except:
-    #   existing = repo.get_contents(path)
-    #   repo.update_file(path, commit, content, existing.sha)
+    try:
+      repo.create_file(path, commit, content)
+    except:
+      existing = repo.get_contents(path)
+      repo.update_file(path, commit, content, existing.sha)
 
-    # # reduce Unix timestamp for easier management
-    # log[path]["last-updated"] = round(time.now() % 1710000000)
+    # reduce Unix timestamp for easier management
+    log[path]["last-updated"] = round(time.now())# % 1710000000)
+
+  return log
 
 
 def has_changed(file: ContentFile, log: dict) -> bool:
   '''Check if a file has been updated since the last export and deployment.'''
 
-  modified = file.last_modified_datetime.timestamp()
+  modified = round(file.last_modified_datetime.timestamp())
   deployed = log[file.name]
 
   print(f"modified: {modified}, deployed: {deployed}")
@@ -68,17 +71,32 @@ def has_changed(file: ContentFile, log: dict) -> bool:
   return modified - deployed > 0
 
 
-def extract_log(git: Github, name: str) -> dict:
-  '''Extract a log file for a particular repo.'''
+def extract_logs(
+  git: Github,
+  repo_name: str,
+) -> dict:
+  '''Extract logs for a particular repository.'''
 
   repo = git.get_repo("Sup2point0/Quarkdown")
-  file = repo.get_contents(f"source/logs/{name}.json")
+  file = repo.get_contents(f"source/logs/{repo_name.lower()}.json")
   text = base64.base64decode(file.content)
 
   return json.loads(text)
 
 
-def update_log(file: ContentFile):
-  '''Update deploy logs to track if files need to be updated.'''
+def update_logs(
+  git: Github,
+  repo_name: str,
+  log: dict,
+) -> None:
+  '''Update logs for a particular repository.'''
 
-  raise NotImplementedError()
+  repo = git.get_repo("Sup2point0/Quarkdown")
+  existing = repo.get_contents(f"source/logs/{repo_name}.json")
+
+  repo.update_file(
+    path = existing.path,
+    message = f"#QUARK update logs for {repo_name}",
+    content = json.dumps(log, indent = 2),
+    sha = existing.sha,
+  )
