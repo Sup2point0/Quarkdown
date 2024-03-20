@@ -44,7 +44,7 @@ with Github(auth = Auth.Token(os.getenv("AQ"))) as git:
     ## NOTE testing
     path = f"docs/test.txt"
     repo.create_file(path, "auto-assort", text)
-    continue
+    break
     ##
   
     ## FIXME?
