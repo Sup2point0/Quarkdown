@@ -24,7 +24,7 @@ jobs:
       - name: Python.execute
         env:
           AQ: ${{ secrets.AQ }}
-        run: python source/assort.py
+        run: python source/test.py
 
       # - name: Git.commit
       #   run: |
