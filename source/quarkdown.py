@@ -20,7 +20,7 @@ import render
 def textualise(source: str) -> str:
   '''Render Github-Flavoured Markdown to HTML.'''
 
-  response = requests.put(
+  response = requests.post(
     "https://api.github.com/markdown",
     json = {
       "mode": "markdown",
