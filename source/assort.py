@@ -43,11 +43,17 @@ with Github(auth = Auth.Token(os.getenv("AQ"))) as git:
   
     ## NOTE testing
     path = f"docs/test.txt"
-    repo.create_file(path, "auto-assort", text)
+    from datetime import datetime
+    text = str(datetime.now()) + text
+    try:
+      existing = repo.get_contents(path)
+      repo.update_file(path, "auto-assort", text, sha = existing.sha)
+    except:
+      repo.create_file(path, "auto-assort", text)
+    
     break
     ##
-  
-    ## FIXME?
+
     try:
       existing = repo.get_contents(path)
       repo.update_file(path, "auto-assort", file.content, sha = existing.sha)
