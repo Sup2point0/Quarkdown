@@ -6,10 +6,9 @@ import os
 import base64
 
 ## NOTE testing
-import json
 import github
 with open("test-output.txt", "w") as file:
-  file.write(json.dumps(github.__dict__))
+  file.write(", ".join(dir(github)))
 ##
 
 from github import Auth
