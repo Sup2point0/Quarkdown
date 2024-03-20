@@ -47,7 +47,7 @@ def export_and_deploy(
 
   for file in files:
     text = base64.base64decode(file.content)
-    path, content = quarkdown.textualise(text)
+    path, content = quarkdown.export(text)
 
     try:
       existing = repo.get_contents(path)

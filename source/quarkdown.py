@@ -12,11 +12,33 @@ import re
 from collections import namedtuple
 from io import StringIO
 
+import requests
+
 import render
 
 
-def textualise(source) -> namedtuple:
+def textualise(source: str) -> str:
+  '''Render Github-Flavoured Markdown to HTML.'''
+
+  response = requests.put(
+    "https://api.github.com/markdown",
+    json = {
+      "mode": "markdown",
+      "text": source,
+    },
+  )
+
+  if response.status_code == 200:
+    return response.text
+  else:
+    raise FileNotFoundError("#QUARK failed to access Github-Flavoured Markdown API")
+
+
+def export(source) -> namedtuple:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
+
+  Export = namedtuple("Export", ["path", "content"])
+  return Export("test", textualise(source))
 
   with open("tokens.json") as file:
     tokens = json.load(file)
