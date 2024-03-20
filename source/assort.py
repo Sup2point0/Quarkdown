@@ -6,12 +6,11 @@ import os
 import base64
 
 ## NOTE testing
-import github
-raise NotImplementedError(", ".join(dir(github)))
+from github import *
+raise NotImplementedError(str(globals()))
 ##
 
-from github import Auth
-from github import Github
+from github import Github, Auth
 
 # import quarkdown
 
