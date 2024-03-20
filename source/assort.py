@@ -5,8 +5,8 @@ Script for GitHub Actions that deploys Markdown files in Assort to GitHub Pages.
 import os
 import base64
 
-from github import Github
 from github import Auth
+from github import Github
 
 # import quarkdown
 
