@@ -34,12 +34,13 @@ with Github(auth = Auth.Token(os.getenv("AQ"))) as git:
     elif file.path.startswith("docs/"):
       docs.append(file.path)
   
-  ## render, upload
+  ## process
   for file in files:
+
+    ## render
     text = base64.b64decode(file.content)
-    print(text)
     # file = quarkdown.textualise(text)
-    # path = f"docs/{file.path}.html"
+    path = f"docs/{file.path}.html"
   
     ## NOTE testing
     path = f"docs/test.txt"
@@ -54,6 +55,7 @@ with Github(auth = Auth.Token(os.getenv("AQ"))) as git:
     break
     ##
 
+    ## upload
     try:
       existing = repo.get_contents(path)
       repo.update_file(path, "auto-assort", file.content, sha = existing.sha)
