@@ -60,7 +60,8 @@ def export_and_deploy(
       repo.update_file(path, commit, content, existing.sha)
 
     # reduce Unix timestamp for easier management
-    log[path]["last-updated"] = round(time.now())# % 1710000000)
+    log[path]["last-updated"] = round(time.time())# % 1710000000)
+    print(f"time.time() -> {time.time()}")
 
   return log
 
