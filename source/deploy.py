@@ -49,7 +49,7 @@ def export_and_deploy(
     if not has_changed(file, log):
       continue
     
-    text = base64.base64decode(file.content)
+    text = base64.b64decode(file.content)
     path, content = quarkdown.export(text)
 
     try:
@@ -84,7 +84,7 @@ def extract_logs(
 
   repo = git.get_repo("Sup2point0/Quarkdown")
   file = repo.get_contents(f"source/logs/{repo_name.lower()}.json")
-  text = base64.base64decode(file.content)
+  text = base64.b64decode(file.content)
 
   return json.loads(text)
 
