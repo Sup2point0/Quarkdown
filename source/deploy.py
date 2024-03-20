@@ -68,8 +68,11 @@ def export_and_deploy(
 def has_changed(file: ContentFile, log: dict) -> bool:
   '''Check if a file has been updated since the last export and deployment.'''
 
+  deployed = log.get(file.name.lower(), False)
+  if not deployed:
+    return True
+
   modified = round(file.last_modified_datetime.timestamp())
-  deployed = log[file.name.lower()]
 
   print(f"modified: {modified}, deployed: {deployed}")
 
