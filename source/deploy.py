@@ -43,9 +43,12 @@ def export_and_deploy(
 ) -> dict:
   '''Export .md files to HTML and commit them to the `docs/` folder of a given GitHub repository.'''
 
-  log = extract_logs(git, repo.name)
+  log = extract_logs(git, repo.name.lower())
 
   for file in files:
+    if not has_changed(file, log):
+      continue
+    
     text = base64.base64decode(file.content)
     path, content = quarkdown.export(text)
 
@@ -66,7 +69,7 @@ def has_changed(file: ContentFile, log: dict) -> bool:
   '''Check if a file has been updated since the last export and deployment.'''
 
   modified = round(file.last_modified_datetime.timestamp())
-  deployed = log[file.name]
+  deployed = log[file.name.lower()]
 
   print(f"modified: {modified}, deployed: {deployed}")
 
