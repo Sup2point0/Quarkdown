@@ -2,10 +2,13 @@
 Deploys .md files in a GitHub repo to GitHub Pages.
 '''
 
-import time
 import base64
+import json
+import time
 
-from github import Repository, ContentFile
+from github import Github
+from github.Repository import Repository
+from github.ContentFile import ContentFile
 
 import quarkdown
 
@@ -41,7 +44,7 @@ def export_and_deploy(
   log = extract_log(repo.name)
 
   for file in files:
-    text = base64decode(file.content)
+    text = base64.base64decode(file.content)
     path, content = quarkdown.textualise(text)
 
     try:
@@ -57,15 +60,22 @@ def export_and_deploy(
 def has_changed(file: ContentFile, log: dict) -> bool:
   '''Check if a file has been updated since the last export and deployment.'''
 
+  modified = file.last_modified_datetime.timestamp()
+  deployed = log[file.name]
+
+  print(f"modified: {modified}, deployed: {deployed}")
+
+  return modified - deployed > 0
+
 
 def extract_log(git: Github, name: str) -> dict:
   '''Extract a log file for a particular repo.'''
 
-  repo = git.get_repo(f"Sup2point0/Quarkdown")
-  file = repo.get_contents("source/logs/{name}.json")
-  text = str(base64decode(file.content))
+  repo = git.get_repo("Sup2point0/Quarkdown")
+  file = repo.get_contents(f"source/logs/{name}.json")
+  text = base64.base64decode(file.content)
 
-  return json.loads(content.)
+  return json.loads(text)
 
 
 def update_log(file: ContentFile):

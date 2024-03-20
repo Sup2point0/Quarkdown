@@ -7,8 +7,10 @@ available on GitHub: <https://github.com/Sup2point0/Quarkdown>
 '''
 
 import json
-from io import StringIO
+import re
+
 from collections import namedtuple
+from io import StringIO
 
 
 def textualise(source):
@@ -109,6 +111,7 @@ def export(text: str) -> namedtuple:
           continue
 
         if re.match():
+          ...
 
     while context[-1].done():
       context.pop()
