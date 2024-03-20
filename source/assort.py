@@ -5,6 +5,13 @@ Script for GitHub Actions that deploys Markdown files in Assort to GitHub Pages.
 import os
 import base64
 
+## NOTE testing
+import json
+import github
+with open("test-output.txt", "w") as file:
+  file.write(json.dumps(github.__dict__))
+##
+
 from github import Auth
 from github import Github
 
