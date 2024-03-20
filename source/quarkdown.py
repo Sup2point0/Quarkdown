@@ -12,6 +12,8 @@ import re
 from collections import namedtuple
 from io import StringIO
 
+import render
+
 
 def textualise(source):
   '''Convert Quarkdown-Flavoured Markdown to HTML.'''
