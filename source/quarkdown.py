@@ -24,7 +24,7 @@ def textualise(source: str) -> str:
     "https://api.github.com/markdown",
     json = {
       "mode": "markdown",
-      "text": source,
+      "text": source.decode(),
     },
   )
 
