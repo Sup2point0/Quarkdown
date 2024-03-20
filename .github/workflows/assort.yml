@@ -2,8 +2,6 @@ name: Quarkdown.assort
 
 on:
   push
-    # paths:
-    #   - 'origins.md'
 
 jobs:
   build:
