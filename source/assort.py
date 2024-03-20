@@ -7,8 +7,7 @@ import base64
 
 ## NOTE testing
 import github
-with open("test-output.txt", "w") as file:
-  file.write(", ".join(dir(github)))
+raise NotImplementedError(", ".join(dir(github)))
 ##
 
 from github import Auth
