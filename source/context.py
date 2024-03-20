@@ -5,7 +5,7 @@ class Context:
     '''Convert a `dict` into a `Context` object.'''
 
     self.shard = ctx["opens-ctx"]
-    self.kind = self.shard[self.shard.index(".")]
+    self.kind = self.shard[:self.shard.index(".")]
 
     self.clashes = ctx.get("ctx-clashes", [])
     self.persists = ctx.get("ctx-persists", False)
