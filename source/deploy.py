@@ -9,6 +9,7 @@ import time
 from github import Github
 from github.Repository import Repository
 from github.ContentFile import ContentFile
+from github.GithubException import UnknownObjectException
 
 import quarkdown
 
@@ -49,9 +50,10 @@ def export_and_deploy(
     path, content = quarkdown.textualise(text)
 
     try:
-      repo.create_file(path, commit, content)
-    except:
       existing = repo.get_contents(path)
+    except UnknownObjectException:
+      repo.create_file(path, commit, content)
+    else:
       repo.update_file(path, commit, content, existing.sha)
 
     # reduce Unix timestamp for easier management
