@@ -46,24 +46,19 @@ def textualise(source: str) -> str:
 def export(source) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
-  return {
-    "content" : textualise(source),
-    "path": "docs/test.html",
-  }
-
   with open("tokens.json") as file:
     tokens = json.load(file)
 
   content = StringIO()
   context = []
-  flags = []
+  flags = {"live": false}
 
   for i, line in enumerate(source):
-    if i >= QUARK_LINES and "#LIVE" not in flags:
+    if i >= QUARK_LINES and not flags["live"]:
       raise Quarkless()
       
     for token in tokens["line"]:
-      ...
+      pass
     
     # for idx, string in enumerate(re.split("(\W)", line)):
     for idx, string in enumerate(line.split(" ")):
@@ -133,12 +128,12 @@ def export(source) -> dict:
     while context[-1].done():
       context.pop()
 
-    content.write("\n")
+    content.write(line + "\n")
 
-  path = "test"
-  Export = namedtuple("Export", ["path", "content"])
-
-  return Export(path, content.getvalue())
+  return {
+    "content": content.value,
+    "flags": flags,
+  }
 
 
 def _should_skip_(ctx, token) -> bool:
