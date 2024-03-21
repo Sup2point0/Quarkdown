@@ -110,7 +110,7 @@ def update_logs(
   '''Update logs for a particular repository.'''
 
   repo = git.get_repo("Sup2point0/Quarkdown")
-  existing = repo.get_contents(f"source/logs/{repo_name}.json")
+  existing = repo.get_contents(f"source/logs/{repo_name.lower()}.json")
 
   repo.update_file(
     path = existing.path,
