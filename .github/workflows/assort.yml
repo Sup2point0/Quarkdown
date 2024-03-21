@@ -1,6 +1,8 @@
 name: Quarkup Assort
 
 on:
+  workflow_dispatch:
+  
   repository_dispatch:
     types: [trigger-workflow]
 
