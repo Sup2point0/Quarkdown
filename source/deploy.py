@@ -50,7 +50,14 @@ def export_and_deploy(
       continue
     
     text = base64.b64decode(file.content)
-    path, content = quarkdown.export(text)
+
+    try:
+      export = quarkdown.export(text)
+    except quarkdown.Quarkless:
+      continue
+
+    path = export["path"]
+    content = export["content"]
 
     try:
       existing = repo.get_contents(path)
@@ -62,7 +69,7 @@ def export_and_deploy(
     # reduce Unix timestamp for easier management
     log[path] = {
       "export-path": path,
-      "last-updated": round(time.time())# % 1710000000),
+      "last-updated": round(time.time() % 1710000000),
     }
 
   return log
@@ -75,9 +82,9 @@ def has_changed(file: ContentFile, log: dict) -> bool:
   if not deployed:
     return True
 
-  modified = round(file.last_modified_datetime.timestamp())
+  modified = round(file.last_modified_datetime.timestamp() % 1710000000)
 
-  print(f"modified: {modified}, deployed: {deployed}")
+  print(f"file {file.name} -> modified: {modified}, deployed: {deployed}")
 
   return modified - deployed > 0
 
