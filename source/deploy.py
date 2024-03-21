@@ -1,5 +1,5 @@
 '''
-Deploys .md files in a GitHub repo to GitHub Pages.
+Deploys .md files in a GitHub repository to GitHub Pages.
 '''
 
 import base64
@@ -14,11 +14,11 @@ from github.GithubException import UnknownObjectException
 import quarkdown
 
 
-def extract_repo_files(repo: Repository) -> list[ContentFile]:
+def extract_repo_files(repo: Repository, path = "") -> list[ContentFile]:
   '''Extract all .md files from a GitHub repository.'''
 
   out = []
-  content = repo.get_contents("")
+  content = repo.get_contents(path)
 
   while content:
     file = content.pop(0)
@@ -61,9 +61,9 @@ def export_and_deploy(
 
     # reduce Unix timestamp for easier management
     log[path] = {
-      "last-updated": round(time.time())# % 1710000000)
+      "export-path": path,
+      "last-updated": round(time.time())# % 1710000000),
     }
-    print(f"time.time() -> {time.time()}")
 
   return log
 
