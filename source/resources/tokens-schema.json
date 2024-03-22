@@ -57,6 +57,12 @@
             "type": "object",
             "properties": {}
           },
+          "flags": {
+            "title": "Trigger Flags",
+            "description": "Flags to trigger from the token's activation.",
+            "type": "object",
+            "properties": {}
+          },
           "regex-open": {
             "title": "RegEx Opening Pattern",
             "description": "The regular expression that activates the token when matched.",
@@ -109,6 +115,7 @@
             "ctx-persists": false,
             "ctx-clashes": false,
             "variables": {},
+            "flags": {},
             "regex-open": "~",
             "html-open": "<>",
             "html-replaces": "#AUTO",
