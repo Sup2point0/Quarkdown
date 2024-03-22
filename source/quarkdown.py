@@ -43,12 +43,12 @@ def textualise(text: str) -> str:
 def export(text: str) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
+  with open("tokens.json") as file:
+    tokens = json.load(file)["tokens"]
+
   # TODO this is a bit inefficient, we should find a better way to do this
   if "#QUARK LIVE" not in text:
     raise Quarkless("#QUARK file inactive")
-
-  with open("tokens.json") as file:
-    tokens = json.load(file)["tokens"]
 
   content = StringIO()
   context = []
@@ -75,12 +75,12 @@ def export(text: str) -> dict:
           if token["required-idx"] is not None:
             assert idx == token["required-idx"]
 
-          # pattern = info["re.open"]
+          pattern = token["regex.open"]
           # if pattern is None:
           #   pattern = r"\n"
 
-          # match = re.search(pattern, string)
-          # assert match is not None
+          match = re.search(pattern, string)
+          assert match is not None
 
           # if info["ctx.kind"] is None:
           #   suf = info["re.close"]
@@ -127,7 +127,7 @@ def export(text: str) -> dict:
     while context[-1].done():
       context.pop()
 
-    content.write(line + "\n")
+    # content.write(line + "\n")
 
   with open("resources/core.html") as file:
     final = file.read().format(
