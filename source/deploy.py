@@ -49,9 +49,10 @@ def export_and_deploy(
     if not has_changed(file, log):
       continue
     
-    text: str = base64.b64decode(file.content).decode()
+    decoded: str = base64.b64decode(file.content).decode()
 
     try:
+      text = quarkdown.textualise(decoded)
       export = quarkdown.export(text)
     except quarkdown.Quarkless:
       continue
