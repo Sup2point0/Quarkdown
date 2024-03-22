@@ -44,19 +44,19 @@ def export(text: str) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
   # TODO this is a bit inefficient, we should find a better way to do this
-  if "#QUARK LIVE" not in source:
+  if "#QUARK LIVE" not in text:
     raise Quarkless("#QUARK file inactive")
 
   with open("tokens.json") as file:
-    tokens = json.load(file)
+    tokens = json.load(file)["tokens"]
 
   content = StringIO()
   context = []
   flags = {}
 
-  # TODO do we process by line or in one single pass?
-  for i, line in enumerate(source.split("\n")):
-    for token in tokens["line"]:
+  # TODO splitting is really slow, how do we optimise this
+  for i, line in enumerate(text.split("\n")):
+    for token in tokens:
       pass
     
     # for idx, string in enumerate(re.split("(\W)", line)):
@@ -66,14 +66,14 @@ def export(text: str) -> dict:
         if _should_skip_(context, token):
           continue
 
-        # skip processing if currently under HTML context
         if context[-1].kind == "html":
-          continue
+          if "quark" not in token["id"]:
+            continue
 
         # using try-except to reduce any more excessive indentation than there already is!
         try:
-          # if info["idx"] is not None:
-          #   assert idx == info["idx"]
+          if token["required-idx"] is not None:
+            assert idx == token["required-idx"]
 
           # pattern = info["re.open"]
           # if pattern is None:
@@ -129,8 +129,14 @@ def export(text: str) -> dict:
 
     content.write(line + "\n")
 
+  with open("resources/core.html") as file:
+    final = file.read().format(
+      header = flags["header"],
+      content = content.value,
+    )
+  
   return {
-    "content": content.value,
+    "content": final,
     "flags": flags,
   }
 

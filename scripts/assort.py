@@ -6,7 +6,7 @@ import os
 
 from github import Github, Auth
 
-from source import deploy
+from ..source import deploy
 
 
 with Github(auth = Auth.Token(os.getenv("AQ"))) as git:
