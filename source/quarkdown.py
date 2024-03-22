@@ -17,23 +17,20 @@ import requests
 import render
 
 
-QUARK_LINES = 4
-
-
 class Quarkless(Exception):
   '''Exception raised when a file has no `#QUARK LIVE` flag.'''
 
   pass
 
 
-def textualise(source: str) -> str:
-  '''Render Github-Flavoured Markdown to HTML.'''
+def textualise(text: str) -> str:
+  '''Render Github-Flavoured Markdown to HTML through the GitHub API.'''
 
   response = requests.post(
     "https://api.github.com/markdown",
     json = {
       "mode": "markdown",
-      "text": source.decode(),
+      "text": text,
     },
   )
 
@@ -43,20 +40,22 @@ def textualise(source: str) -> str:
     raise FileNotFoundError("#QUARK failed to access Github-Flavoured Markdown API")
 
 
-def export(source) -> dict:
+def export(text: str) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
+
+  # TODO this is a bit inefficient, we should find a better way to do this
+  if "#QUARK LIVE" not in source:
+    raise Quarkless("#QUARK file inactive")
 
   with open("tokens.json") as file:
     tokens = json.load(file)
 
   content = StringIO()
   context = []
-  flags = {"live": false}
+  flags = {}
 
-  for i, line in enumerate(source):
-    if i >= QUARK_LINES and not flags["live"]:
-      raise Quarkless()
-      
+  # TODO do we process by line or in one single pass?
+  for i, line in enumerate(source.split("\n")):
     for token in tokens["line"]:
       pass
     
