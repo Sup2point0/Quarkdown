@@ -4,14 +4,16 @@
   "description": "Schema for layout of token identifiers in Quarkdown’s parsing engine JSON.",
   "properties":
   {
-    "line":
+    "quarks":
     {
       "title": "Line-Wise Tokens",
       "description": "Tokens processed across an entire line.",
       "type": "array",
       "items": {
         "type": "object",
-        "properties": {
+        "required": ["shard", "kind", "opens-ctx", "regex-open", "html-open", "regex-close", "html-close"],
+        "properties":
+        {
           "shard": {
             "title": "Token Shard",
             "description": "A unique identifier for the token.",
@@ -68,7 +70,7 @@
           "html-replaces": {
             "title": "HTML Text Replacement",
             "description": "The text pattern to replace with the opening HTML tag.",
-            "oneOf": [
+            "anyOf": [
               {"type": "null"},
               {"type": "string"},
               {"enum": ["#AUTO"]}
@@ -85,7 +87,7 @@
           "html-close": {
             "title": "HTML Closing Tag",
             "description": "The HTML tag to append to the text.",
-            "oneOf": [
+            "anyOf": [
               {"type": "null"},
               {"type": "string"},
               {"enum": ["#AUTO"]}
@@ -93,9 +95,28 @@
           }
         }
       },
-      "required": ["shard", "kind", "opens-ctx", "regex-open", "html-open", "regex-close", "html-close"]
-    },
-
-    "part": {}
+      "defaultSnippets":
+      [
+        {
+          "label": "defaults",
+          "description": "Default configurations for a token.",
+          "body": {
+            "shard": "~",
+            "kind": "~",
+            "required-ctx": null,
+            "required-idx": null,
+            "opens-ctx": null,
+            "ctx-persists": false,
+            "ctx-clashes": false,
+            "variables": {},
+            "regex-open": "~",
+            "html-open": "<>",
+            "html-replaces": "#AUTO",
+            "regex-close": null,
+            "html-close": "#AUTO"
+          }
+        }
+      ]
+    }
   }
 }
