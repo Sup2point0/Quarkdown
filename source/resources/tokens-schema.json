@@ -11,7 +11,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["shard", "kind", "opens-ctx", "regex-open", "html-open", "regex-close", "html-close"],
+        "required": ["shard", "kind", "regex-open"],
         "properties":
         {
           "shard": {
@@ -23,7 +23,7 @@
             "title": "Token Kind",
             "description": "How the token will be processed.",
             "type": "string",
-            "enum": ["#MONO", "#DUAL", "#POLY"]
+            "enum": ["#MONO", "#DUAL", "#POLY", "#FLAG"]
           },
           "required-ctx": {
             "title": "Required Context(s)",
@@ -98,32 +98,37 @@
               {"type": "string"},
               {"enum": ["#AUTO"]}
             ]
+          },
+          "ctx-collapses": {
+            "title": "Context Collapsing",
+            "description": "How many layers to collapse the context stack by after this context is deactivated.",
+            "type": "integer",
+            "minimum": 0
           }
-        }
-      },
-      "defaultSnippets":
-      [
-        {
-          "label": "defaults",
-          "description": "Default configurations for a token.",
-          "body": {
-            "shard": "~",
-            "kind": "~",
-            "required-ctx": null,
-            "required-idx": null,
-            "opens-ctx": null,
-            "ctx-persists": false,
-            "ctx-clashes": false,
-            "variables": {},
-            "flags": {},
-            "regex-open": "~",
-            "html-open": "<>",
-            "html-replaces": "#AUTO",
-            "regex-close": null,
-            "html-close": "#AUTO"
+        },
+        "defaultSnippets":
+        [
+          {
+            "label": "defaults",
+            "description": "Default configurations for a token.",
+            "body": {
+              "shard": "~",
+              "kind": "~",
+              "required-ctx": null,
+              "opens-ctx": null,
+              "ctx-persists": false,
+              "ctx-clashes": true,
+              "variables": {},
+              "flags": {},
+              "regex-open": "~",
+              "html-open": "<>",
+              "html-replaces": "#AUTO",
+              "regex-close": null,
+              "html-close": "#AUTO"
+            }
           }
-        }
-      ]
+        ]
+      }
     }
   }
 }
