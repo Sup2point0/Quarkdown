@@ -6,7 +6,7 @@ import os
 
 from github import Github, Auth
 
-from ..source import deploy
+from source import deploy
 
 
 key = os.getenv("AQ")

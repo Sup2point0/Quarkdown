@@ -1,20 +1,21 @@
 '''
 Quarkdown
 v1.0.0
-Markdown to HTML renderer
+
+A Markdown to HTML renderer
 by Sup#2.0 (@Sup2point0)
-available on GitHub: <https://github.com/Sup2point0/Quarkdown>
+
+Available at: <https://github.com/Sup2point0/Quarkdown>
 '''
 
 import json
 import re
 
-from collections import namedtuple
 from io import StringIO
 
 import requests
 
-import render
+from context import Context
 
 
 class Quarkless(Exception):
@@ -26,43 +27,15 @@ class Quarkless(Exception):
 def process_quarks(text: str) -> dict:
   '''Extract #QUARK quarks from Quarkdown-Flavoured Markdown.'''
 
-  flags = {}
-
-  return {
-    "content": content,
-    "flags": flags,
-  }
-
-
-def textualise(text: str) -> str:
-  '''Render Github-Flavoured Markdown to HTML through the GitHub API.'''
-
-  response = requests.post(
-    "https://api.github.com/markdown",
-    json = {
-      "mode": "markdown",
-      "text": text,
-    },
-  )
-
-  if response.status_code == 200:
-    return response.text
-  else:
-    raise FileNotFoundError("#QUARK failed to access Github-Flavoured Markdown API")
-
-
-def export(text: str) -> dict:
-  '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
-
-  with open("tokens.json") as file:
-    tokens = json.load(file)["tokens"]
-
   # TODO this is a bit inefficient, we should find a better way to do this
   if "#QUARK LIVE" not in text:
     raise Quarkless("#QUARK file inactive")
 
-  content = StringIO()
+  with open("tokens.json") as file:
+    tokens = json.load(file)["tokens"]
+
   context = []
+  ctx = lambda: context[-1]
   flags = {}
 
   # TODO splitting is really slow, how do we optimise this
@@ -140,6 +113,32 @@ def export(text: str) -> dict:
 
     # content.write(line + "\n")
 
+  return {
+    "content": content,
+    "flags": flags,
+  }
+
+
+def textualise(text: str) -> str:
+  '''Render Github-Flavoured Markdown to HTML through the GitHub API.'''
+
+  response = requests.post(
+    "https://api.github.com/markdown",
+    json = {
+      "mode": "markdown",
+      "text": text,
+    },
+  )
+
+  if response.status_code == 200:
+    return response.text
+  else:
+    raise FileNotFoundError("#QUARK failed to access Github-Flavoured Markdown API")
+
+
+def export(text: str) -> dict:
+  '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
+
   with open("resources/core.html") as file:
     final = file.read().format(
       header = flags["header"],
@@ -162,3 +161,23 @@ def _should_skip_(ctx, token) -> bool:
   if token["ctx-clashes"]:
     if ctx[-1].shard in token["ctx-clashes"]:
       return True
+
+
+def _can_activate(ctx: list[Context], token: dict) -> True:
+  '''Check if a context meets its activation requirements.'''
+ 
+  assert ctx[-1].shard == token["requires-ctx"]
+ 
+  if (
+       ctx[-1].clashes is True
+    or token["ctx-clashes"] is True
+    or isinstance(ctx[-1].clashes, str)
+    or isinstance(token["ctx-clashes"], str)
+  ):
+    assert token["opens-ctx"] not in ctx
+ 
+  # FIXME
+  if isinstance(ctx.clashes, list):
+    assert token["opens-ctx"] not in ctx.clashes
+  if isinstance(token["ctx-clashes"], list):
+    assert ctx.shard not in token["opens-ctx"]
