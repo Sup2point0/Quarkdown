@@ -31,22 +31,17 @@ def process_quarks(text: str) -> dict:
   if "#QUARK LIVE" not in text:
     raise Quarkless("#QUARK file inactive")
 
-  with open("tokens.json") as file:
-    tokens = json.load(file)["tokens"]
+  with open("resources/tokens.json") as file:
+    tokens = json.load(file)["quarks"]
 
-  context = []
-  ctx = lambda: context[-1]
+  content = StringIO()
   flags = {}
+  context = [Context({"kind": "#ROOT", "opens-ctx": None})]
+  ctx = lambda: context[-1]
 
   # TODO splitting is really slow, how do we optimise this
-  for i, line in enumerate(text.split("\n")):
+  for part in re.split(" ", text):
     for token in tokens:
-      pass
-    
-    # for idx, string in enumerate(re.split("(\W)", line)):
-    for idx, string in enumerate(line.split(" ")):
-      for token in tokens:
-
         if _should_skip_(context, token):
           continue
 
@@ -54,17 +49,18 @@ def process_quarks(text: str) -> dict:
           if "quark" not in token["id"]:
             continue
 
+        # parse by word
+        # check which token matches regex-open
+        # activate ctx
+        # trigger flags
+        # check which token matches regex-close
+
         # using try-except to reduce any more excessive indentation than there already is!
         try:
-          if token["required-idx"] is not None:
-            assert idx == token["required-idx"]
-
-          pattern = token["regex.open"]
-          # if pattern is None:
-          #   pattern = r"\n"
-
-          match = re.search(pattern, string)
+          match = re.search(token["regex.open"], part)
           assert match is not None
+
+          assert _can_activate(ctx(), token)
 
           # if info["ctx.kind"] is None:
           #   suf = info["re.close"]
@@ -81,6 +77,12 @@ def process_quarks(text: str) -> dict:
           # if not pre.startswith("<"):
           #   pre = f"<div class="{tag}">"
           # content.write(f"{pre}{string}{suf}")
+
+          for flag, value in token["flags"].items():
+            flags[flag] = part if value == "#VALUE" else value
+
+          if token["opens-ctx"] is not None:
+            context.append(Context(token))
 
           break
 
@@ -108,15 +110,22 @@ def process_quarks(text: str) -> dict:
         except AssertionError:
           pass
 
-    while context[-1].done():
+    # collapse context stack
+    while (cx := ctx()).done():
       context.pop()
-
-    # content.write(line + "\n")
+      for i in range(cx.collapses):
+        context.pop()
 
   return {
-    "content": content,
+    "content": text,#content,
     "flags": flags,
   }
+
+
+def clear_comments(text: str) -> str:
+  '''Remove HTML comments from given text.'''
+
+  return re.sub("<!--.*-->", "", text)
 
 
 def textualise(text: str) -> str:
@@ -136,23 +145,23 @@ def textualise(text: str) -> str:
     raise FileNotFoundError("#QUARK failed to access Github-Flavoured Markdown API")
 
 
-def export(text: str) -> dict:
+def export(data: dict) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
   with open("resources/core.html") as file:
-    final = file.read().format(
-      header = flags["header"],
-      content = content.value,
+    data["content"] = file.read().format(
+      header = data["flags"]["header"],
+      content = data["content"],
     )
   
-  return {
-    "content": final,
-    "flags": flags,
-  }
+  return data
 
 
 def _should_skip_(ctx, token) -> bool:
   '''Check if processing for a token should be skipped (when activation requisites are not fulfilled).'''
+
+  if ctx is None:
+    return False
 
   if token["required-ctx"]:
     if ctx[-1].shard != token["required-ctx"]:
