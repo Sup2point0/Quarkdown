@@ -23,6 +23,17 @@ class Quarkless(Exception):
   pass
 
 
+def process_quarks(text: str) -> dict:
+  '''Extract #QUARK quarks from Quarkdown-Flavoured Markdown.'''
+
+  flags = {}
+
+  return {
+    "content": content,
+    "flags": flags,
+  }
+
+
 def textualise(text: str) -> str:
   '''Render Github-Flavoured Markdown to HTML through the GitHub API.'''
 
