@@ -9,6 +9,10 @@ from github import Github, Auth
 import deploy
 
 
+import quarkdown
+print(quarkdown.process_quarks("test #QUARK LIVE test"))
+
+
 key = os.getenv("AQ")
 if key is None:
   raise ValueError("no access key found!")
