@@ -31,3 +31,4 @@ jobs:
         env:
           AQ: ${{ secrets.CHARM }}
         run: python scripts/assort.py
+        working-directory: ./
