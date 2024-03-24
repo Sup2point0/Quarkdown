@@ -8,11 +8,20 @@ import os
 
 from io import StringIO
 
-from .structs import Quarkless, ContextOpened
-from .textualise import tokenise
+from . import textualise
 
 
 __all__ = ["export"]
+
+
+class Quarkless(Exception):
+  '''Exception raised when a file has no `#QUARK LIVE` flag.'''
+  pass
+
+class ContextOpened(Exception):
+  '''Exception raised when a context has been successfully activated.'''
+  pass
+
 
 
 def export(text: str) -> dict:
@@ -20,13 +29,19 @@ def export(text: str) -> dict:
 
   load = extract_quarks(text)
 
+  content = load["content"]
+  content = textualise.render_html(content)
+  content = textualise.clear_comments(content)
+
   root = os.path.split(os.path.abspath(__file__))[0]
   with open(os.path.join(root, "resources/core.html")) as file:
-    load["content"] = file.read().format(
+    content = file.read().format(
       header = load["flags"].get("header", ""),
       content = load["content"],
     )
   
+  load["content"] = content
+  load["path"] = "docs/" + load["path"] + ".html"
   return load
 
 
@@ -45,7 +60,7 @@ def extract_quarks(text: str) -> dict:
   with open(os.path.join(root, "resources/tokens-schema.json")) as file:
     defaults = json.load(file)["properties"]["tokens"]["items"]["defaultSnippets"][0]["body"]
   
-  context = [tokenise({}, defaults)]
+  context = [textualise.tokenise({}, defaults)]
   flags = {}
 
   # TODO splitting is really slow, how do we optimise this
@@ -53,7 +68,7 @@ def extract_quarks(text: str) -> dict:
     print(f"\nprocessing {part}")
     print(f"context = {', '.join(each['shard'] for each in context)}")
     for token in tokens:
-      token = tokenise(token, defaults)
+      token = textualise.tokenise(token, defaults)
       print(f"checking {token['shard']}")
 
       '''

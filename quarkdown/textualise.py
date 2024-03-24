@@ -13,13 +13,7 @@ def tokenise(token: dict, defaults: dict) -> dict:
   return {key: token.get(key, val) for key, val in defaults.items()}
 
 
-def clear_comments(text: str) -> str:
-  '''Remove HTML comments from given text.'''
-
-  return re.sub("<!--.*-->", "", text)
-
-
-def textualise(text: str) -> str:
+def render_html(text: str) -> str:
   '''Render Github-Flavoured Markdown to HTML through the GitHub API.'''
 
   response = requests.post(
@@ -34,3 +28,9 @@ def textualise(text: str) -> str:
     return response.text
   else:
     raise FileNotFoundError("#QUARK failed to access Github-Flavoured Markdown API")
+
+
+def clear_comments(text: str) -> str:
+  '''Remove HTML comments from given text.'''
+
+  return re.sub("<!--.*-->", "", text)
