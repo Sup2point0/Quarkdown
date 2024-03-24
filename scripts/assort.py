@@ -2,6 +2,8 @@
 Script for GitHub Actions that deploys Markdown files in Assort to GitHub Pages.
 '''
 
+print(f"CURRENT PATH IS {__file__}")
+
 import os
 
 from github import Github, Auth
