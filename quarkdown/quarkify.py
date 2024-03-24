@@ -64,7 +64,8 @@ def extract_quarks(text: str) -> dict:
   flags = {}
 
   # TODO splitting is really slow, how do we optimise this
-  for part in re.split(" ", text):
+  # for part in re.split(" ", text):
+  for part in text.split():
     for token in tokens:
       token = textualise.tokenise(token, defaults)
 
