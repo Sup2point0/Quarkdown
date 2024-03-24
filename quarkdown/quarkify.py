@@ -12,19 +12,25 @@ from .structs import Quarkless, ContextOpened
 from .textualise import tokenise
 
 
-def export(data: dict) -> dict:
+__all__ = ["export"]
+
+
+def export(text: str) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
-  with open(".resources/core.html") as file:
-    data["content"] = file.read().format(
-      header = data["flags"]["header"],
-      content = data["content"],
+  load = extract_quarks(text)
+
+  root = os.path.split(os.path.abspath(__file__))[0]
+  with open(os.path.join(root, "resources/core.html")) as file:
+    load["content"] = file.read().format(
+      header = load["flags"].get("header", ""),
+      content = load["content"],
     )
   
-  return data
+  return load
 
 
-def process_quarks(text: str) -> dict:
+def extract_quarks(text: str) -> dict:
   '''Extract #QUARK quarks from Quarkdown-Flavoured Markdown.'''
 
   # TODO this is a bit inefficient, we should find a better way to do this
@@ -59,14 +65,14 @@ def process_quarks(text: str) -> dict:
       '''
 
       try:
-        _check_open(context, part, token, flags)
+        check_open(context, part, token, flags)
       except ContextOpened:
         break
       except AssertionError:
         continue
 
       try:
-        _check_close(context, part, token, flags)
+        check_close(context, part, token, flags)
       except AssertionError:
         continue
     
@@ -78,11 +84,11 @@ def process_quarks(text: str) -> dict:
   }
 
 
-def _check_open(ctx: list[dict], part: str, token: dict, flags: dict):
+def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   '''Check for contexts to open. Raises `AssertionError` if processing can be skipped, or `ContextOpened` if a context is successfully activated.'''
 
   print(f"checking {token['shard']}")
-  assert not _should_skip_(ctx, token)
+  assert not should_skip(ctx, token)
 
   if ctx[-1]["kind"] == "html":
     assert "quark" in token["shard"]
@@ -90,7 +96,7 @@ def _check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   match = re.search(token["regex-open"], part)
   assert match is not None
 
-  _can_activate(ctx, token)
+  can_activate(ctx, token)
 
   for flag, value in token["flags"].items():
     flags[flag] = part if value == "#VALUE" else value
@@ -104,7 +110,7 @@ def _check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   raise ContextOpened()
 
 
-def _check_close(ctx: list[dict], part: str, token: dict, flags: dict):
+def check_close(ctx: list[dict], part: str, token: dict, flags: dict):
   '''Check for contexts to close. Raises `AssertionError` if processing can be skipped.'''
 
   print(f"current = {ctx().shard}, target = {token.get('opens-ctx', None)}")
@@ -123,7 +129,7 @@ def _check_close(ctx: list[dict], part: str, token: dict, flags: dict):
     ctx.pop()
 
 
-def _should_skip_(ctx: list[dict], token: dict) -> bool:
+def should_skip(ctx: list[dict], token: dict) -> bool:
   '''Check if processing for a token should be skipped (when activation requisites are not fulfilled).'''
 
   if token["required-ctx"]:
@@ -138,7 +144,7 @@ def _should_skip_(ctx: list[dict], token: dict) -> bool:
       return True
 
 
-def _can_activate(ctx: list[dict], token: dict):
+def can_activate(ctx: list[dict], token: dict):
   '''Check if a context meets its activation requirements.'''
  
   if token["required-ctx"]:

@@ -14,6 +14,9 @@ from github.GithubException import UnknownObjectException
 from . import quarkify
 
 
+__all__ = ["extract_repo_files", "export_and_deploy", "update_logs"]
+
+
 def extract_repo_files(repo: Repository, path = "") -> list[ContentFile]:
   '''Extract all .md files from a GitHub repository.'''
 
@@ -41,7 +44,7 @@ def export_and_deploy(
   *,
   commit: str,
 ) -> dict:
-  '''Export .md files to HTML and commit them to the `docs/` folder of a given GitHub repository.'''
+  '''Export .md files to HTML and commit them to the `docs/` folder of a given GitHub repository. Returns a `dict` log of changed files.'''
 
   log = extract_logs(git, repo.name.lower())
 
@@ -49,16 +52,15 @@ def export_and_deploy(
     if not has_changed(file, log):
       continue
     
-    decoded: str = base64.b64decode(file.content).decode()
+    text = base64.b64decode(file.content).decode()
 
     try:
-      text = quarkify.textualise(decoded)
       export = quarkify.export(text)
     except quarkify.Quarkless:
       continue
 
-    path = export["path"]
     content = export["content"]
+    path = export["path"]
 
     try:
       existing = repo.get_contents(path)
