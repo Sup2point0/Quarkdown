@@ -1,3 +1,14 @@
+'''
+Implements utility classes for use in the parsing engine.
+'''
+
+
+class Quarkless(Exception):
+  '''Exception raised when a file has no `#QUARK LIVE` flag.'''
+
+  pass
+
+
 class Context:
   '''Represents a parsing context for dynamic awareness of the text being processed.'''
 
@@ -16,9 +27,6 @@ class Context:
 
   def done(self) -> bool:
     '''Check if context should be deactivated (when deactivation requisites are met).'''
-
-    if self.kind == "#FLAG":
-      return True
 
     # if self.autocloses or not self.persists:
     #   return True

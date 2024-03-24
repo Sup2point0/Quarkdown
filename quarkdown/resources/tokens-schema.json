@@ -4,7 +4,7 @@
   "description": "Schema for layout of token identifiers in Quarkdown’s parsing engine JSON.",
   "properties":
   {
-    "quarks":
+    "tokens":
     {
       "title": "Line-Wise Tokens",
       "description": "Tokens processed across an entire line.",

@@ -11,7 +11,7 @@ from github.Repository import Repository
 from github.ContentFile import ContentFile
 from github.GithubException import UnknownObjectException
 
-import quarkdown
+from . import quarkify
 
 
 def extract_repo_files(repo: Repository, path = "") -> list[ContentFile]:
@@ -52,9 +52,9 @@ def export_and_deploy(
     decoded: str = base64.b64decode(file.content).decode()
 
     try:
-      text = quarkdown.textualise(decoded)
-      export = quarkdown.export(text)
-    except quarkdown.Quarkless:
+      text = quarkify.textualise(decoded)
+      export = quarkify.export(text)
+    except quarkify.Quarkless:
       continue
 
     path = export["path"]
