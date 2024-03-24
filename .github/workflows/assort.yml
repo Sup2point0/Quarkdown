@@ -9,9 +9,9 @@ on:
 jobs:
   Assort:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./
+    # defaults:
+    #   run:
+    #     working-directory: ./
 
     steps:
       - name: 'Git: checkout'
@@ -29,6 +29,5 @@ jobs:
 
       - name: 'Python: execute'
         env:
-          AQ: ${{ secrets.CHARM }}
+          CHARM: ${{ secrets.CHARM }}
         run: python scripts/assort.py
-        working-directory: ./
