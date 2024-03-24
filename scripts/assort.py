@@ -6,7 +6,7 @@ import os
 import sys
 
 # this is ugly, but it'll have to do until we find a workaround
-sys.path[0] = sys.path[0].split("/")[:-1]
+sys.path[0] = "/".join(sys.path[0].split("/")[:-1])
 print(f"PATH = {sys.path[0]}")
 
 from github import Github, Auth
