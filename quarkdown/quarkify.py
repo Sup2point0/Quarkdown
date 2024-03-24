@@ -37,7 +37,7 @@ def export(text: str) -> dict:
   with open(os.path.join(root, "resources/core.html")) as file:
     content = file.read().format(
       header = load.get("header", ""),
-      content = load["content"],
+      content = content,
     )
   
   load["content"] = content
