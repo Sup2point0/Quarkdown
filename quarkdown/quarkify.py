@@ -80,7 +80,7 @@ def extract_quarks(text: str) -> dict:
       except AssertionError:
         continue
 
-  return {"content": text, **flags.items()}
+  return {"content": text, **flags}
 
 
 def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
