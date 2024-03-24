@@ -117,7 +117,8 @@
               "html-open": "<>",
               "html-replaces": "#AUTO",
               "regex-close": null,
-              "html-close": "#AUTO"
+              "html-close": "#AUTO",
+              "ctx-collapses": 0
             }
           }
         ]

@@ -9,9 +9,7 @@ from github import Github, Auth
 import quarkdown as qk
 
 
-with open("../resources/tokens.json") as file:
-  pass
-# print(qk.process_quarks("<!-- #QUARK LIVE --> <!-- #QUARK \n EXPORT test/test --> test"))
+print(qk.process_quarks("<!-- #QUARK LIVE --> <!-- #QUARK \n EXPORT test/test --> test"))
 
 
 # key = os.getenv("AQ")

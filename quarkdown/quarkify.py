@@ -32,17 +32,20 @@ def process_quarks(text: str) -> dict:
     raise Quarkless("#QUARK file inactive")
 
   # FIXME path
-  with open("../quarkdown/resources/tokens.json") as file:
+  root = os.path.split(os.path.abspath(__file__))[0]
+  with open(os.path.join(root, "resources/tokens.json")) as file:
     tokens = json.load(file)["tokens"]
 
-  defaults = tokens["tokens"]["items"]["defaultSnippets"]
+  with open(os.path.join(root, "resources/tokens-schema.json")) as file:
+    defaults = json.load(file)["properties"]["tokens"]["items"]["defaultSnippets"][0]["body"]
+  
   context = [tokenise({}, defaults)]
   flags = {}
 
   # TODO splitting is really slow, how do we optimise this
   for part in re.split(" ", text):
     print(f"\nprocessing {part}")
-    print(f"context = {', '.join('None' if each.shard is None else each.shard for each in context)}")
+    print(f"context = {', '.join(each['shard'] for each in context)}")
     for token in tokens:
       token = tokenise(token, defaults)
       print(f"checking {token['shard']}")
@@ -75,11 +78,11 @@ def process_quarks(text: str) -> dict:
   }
 
 
-def _check_open(ctx: list[dict], part: str, token: dict, *, flags: dict):
+def _check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   '''Check for contexts to open. Raises `AssertionError` if processing can be skipped, or `ContextOpened` if a context is successfully activated.'''
 
   print(f"checking {token['shard']}")
-  assert not _should_skip_(ctx[-1], token)
+  assert not _should_skip_(ctx, token)
 
   if ctx[-1]["kind"] == "html":
     assert "quark" in token["shard"]
@@ -101,7 +104,7 @@ def _check_open(ctx: list[dict], part: str, token: dict, *, flags: dict):
   raise ContextOpened()
 
 
-def _check_close(ctx: list[dict], part: str, token: dict, *, flags: dict):
+def _check_close(ctx: list[dict], part: str, token: dict, flags: dict):
   '''Check for contexts to close. Raises `AssertionError` if processing can be skipped.'''
 
   print(f"current = {ctx().shard}, target = {token.get('opens-ctx', None)}")
@@ -120,18 +123,18 @@ def _check_close(ctx: list[dict], part: str, token: dict, *, flags: dict):
     ctx.pop()
 
 
-def _should_skip_(ctx, token) -> bool:
+def _should_skip_(ctx: list[dict], token: dict) -> bool:
   '''Check if processing for a token should be skipped (when activation requisites are not fulfilled).'''
 
   if token["required-ctx"]:
-    if ctx.shard != token["required-ctx"]:
+    if ctx[-1]["shard"] != token["required-ctx"]:
       return True
 
   if token["ctx-clashes"] is True:
-    if ctx.shard == token["opens-ctx"]:
+    if ctx[-1]["shard"] == token["opens-ctx"]:
       return True
   elif token["ctx-clashes"]:
-    if ctx.shard in token["ctx-clashes"]:
+    if ctx[-1]["shard"] in token["ctx-clashes"]:
       return True
 
 
@@ -139,12 +142,12 @@ def _can_activate(ctx: list[dict], token: dict):
   '''Check if a context meets its activation requirements.'''
  
   if token["required-ctx"]:
-    assert ctx[-1].shard == token["required-ctx"], "required ctx not active"
+    assert ctx[-1]["shard"] == token["required-ctx"], "required ctx not active"
 
   if (
-       ctx[-1].clashes is True
+       ctx[-1]["ctx-clashes"] is True
     or token["ctx-clashes"] is True
-    or isinstance(ctx[-1].clashes, str)
+    or isinstance(ctx[-1]["ctx-clashes"], str)
     or isinstance(token["ctx-clashes"], str)
   ):
     assert token["opens-ctx"] not in ctx, "clashing with active ctx"
