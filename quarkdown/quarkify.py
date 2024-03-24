@@ -36,7 +36,7 @@ def export(text: str) -> dict:
   root = os.path.split(os.path.abspath(__file__))[0]
   with open(os.path.join(root, "resources/core.html")) as file:
     content = file.read().format(
-      header = load["flags"].get("header", ""),
+      header = load.get("header", ""),
       content = load["content"],
     )
   
