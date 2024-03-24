@@ -8,7 +8,7 @@ import os
 
 from github import Github, Auth
 
-import quarkdown as qk
+from .. import quarkdown as qk
 
 
 key = os.getenv("CHARM")
