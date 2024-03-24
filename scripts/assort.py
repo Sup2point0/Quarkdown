@@ -2,14 +2,16 @@
 Script for GitHub Actions that deploys Markdown files in Assort to GitHub Pages.
 '''
 
-import sys
-print(f"CURRENT PATH IS {sys.path}")
-
 import os
+import sys
 
 from github import Github, Auth
 
 import quarkdown as qk
+
+
+# this is ugly, but it'll have to do until we find a workaround
+sys.path[0] = sys.path[0].split("/")[:-1]
 
 
 key = os.getenv("CHARM")
