@@ -9,24 +9,29 @@ class Quarkless(Exception):
   pass
 
 
-class Context:
-  '''Represents a parsing context for dynamic awareness of the text being processed.'''
+class ContextOpened(Exception):
+  '''Exception raised when a context has been successfully activated.'''
+  pass
 
-  def __init__(self, ctx: dict):
-    '''Convert a `dict` into a `Context` object.'''
 
-    self.shard = ctx["opens-ctx"]
-    # self.~ = self.shard[:self.shard.index(".")]
-    self.kind = ctx["kind"]
+# class Context:
+#   '''Represents a parsing context for dynamic awareness of the text being processed.'''
 
-    self.clashes = ctx.get("ctx-clashes", [])
-    self.persists = ctx.get("ctx-persists", False)
+#   def __init__(self, ctx: dict):
+#     '''Convert a `dict` into a `Context` object.'''
 
-    self.autocloses = (ctx.get("regex.close") == "#AUTO")
-    self.collapses = ctx.get("ctx-collapses", 0)
+#     self.shard = ctx["opens-ctx"]
+#     # self.~ = self.shard[:self.shard.index(".")]
+#     self.kind = ctx["kind"]
 
-  def done(self) -> bool:
-    '''Check if context should be deactivated (when deactivation requisites are met).'''
+#     self.clashes = ctx.get("ctx-clashes", [])
+#     self.persists = ctx.get("ctx-persists", False)
 
-    # if self.autocloses or not self.persists:
-    #   return True
+#     self.autocloses = (ctx.get("regex.close") == "#AUTO")
+#     self.collapses = ctx.get("ctx-collapses", 0)
+
+#   def done(self) -> bool:
+#     '''Check if context should be deactivated (when deactivation requisites are met).'''
+
+#     # if self.autocloses or not self.persists:
+#     #   return True

@@ -40,11 +40,6 @@
             "description": "The context activated by the token.",
             "type": ["string", "null"]
           },
-          "ctx-persists": {
-            "title": "Persisting Context",
-            "description": "Whether this context remains active between line breaks.",
-            "type": "boolean"
-          },
           "ctx-clashes": {
             "title": "Context Clashes",
             "description": "The token will not activate if these contexts are active. If set to a boolean, this specifies whether the context clashes with itself.",
@@ -116,9 +111,7 @@
               "kind": "~",
               "required-ctx": null,
               "opens-ctx": null,
-              "ctx-persists": false,
               "ctx-clashes": true,
-              "variables": {},
               "flags": {},
               "regex-open": "~",
               "html-open": "<>",

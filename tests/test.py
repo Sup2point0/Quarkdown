@@ -6,11 +6,12 @@ import os
 
 from github import Github, Auth
 
-from quarkdown import deploy
+import quarkdown as qk
 
 
-import quarkdown.quarkify as quarkify
-print(quarkify.process_quarks("<!-- #QUARK LIVE --> <!-- #QUARK \n EXPORT test/test --> test"))
+with open("../resources/tokens.json") as file:
+  pass
+# print(qk.process_quarks("<!-- #QUARK LIVE --> <!-- #QUARK \n EXPORT test/test --> test"))
 
 
 # key = os.getenv("AQ")

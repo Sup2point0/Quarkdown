@@ -7,6 +7,12 @@ import re
 import requests
 
 
+def tokenise(token: dict, defaults: dict) -> dict:
+  '''Fill in unspecified attributes of a token with their defaults.'''
+
+  return {token.get(key, val) for key, val in defaults.items()}
+
+
 def clear_comments(text: str) -> str:
   '''Remove HTML comments from given text.'''
 

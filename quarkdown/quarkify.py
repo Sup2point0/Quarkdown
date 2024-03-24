@@ -4,16 +4,18 @@ Implements the Quarkdown parsing engine.
 
 import json
 import re
+import os
 
 from io import StringIO
 
-from .structs import Context, Quarkless
+from .structs import Quarkless, ContextOpened
+from .textualise import tokenise
 
 
 def export(data: dict) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
-  with open("resources/core.html") as file:
+  with open(".resources/core.html") as file:
     data["content"] = file.read().format(
       header = data["flags"]["header"],
       content = data["content"],
@@ -29,101 +31,41 @@ def process_quarks(text: str) -> dict:
   if "#QUARK LIVE" not in text:
     raise Quarkless("#QUARK file inactive")
 
-  with open("resources/tokens.json") as file:
+  # FIXME path
+  with open("../quarkdown/resources/tokens.json") as file:
     tokens = json.load(file)["tokens"]
 
-  content = StringIO()
+  defaults = tokens["tokens"]["items"]["defaultSnippets"]
+  context = [tokenise({}, defaults)]
   flags = {}
-  context = [Context({"kind": "#ROOT", "opens-ctx": None})]
-  ctx = lambda: context[-1]
 
   # TODO splitting is really slow, how do we optimise this
   for part in re.split(" ", text):
     print(f"\nprocessing {part}")
     print(f"context = {', '.join('None' if each.shard is None else each.shard for each in context)}")
     for token in tokens:
+      token = tokenise(token, defaults)
       print(f"checking {token['shard']}")
-      for i in range(1):
-        if _should_skip_(ctx(), token):
-          continue
 
-        if ctx().kind == "html":
-          if "quark" not in token["shard"]:
-            continue
+      '''
+      parse by word
+      check which token matches regex-open
+      activate ctx
+      trigger flags
+      check which token matches regex-close
+      '''
 
-        '''
-        parse by word
-        check which token matches regex-open
-        activate ctx
-        trigger flags
-        check which token matches regex-close
-        '''
-
-        # using try-except to reduce any more excessive indentation than there already is!
-        try:
-          match = re.search(token["regex-open"], part)
-          assert match is not None
-
-          _can_activate(context, token)
-
-          # if info["ctx.kind"] is None:
-          #   suf = info["re.close"]
-          # else:
-          #   suf = None
-          #   context.append({
-          #     "id": info["ctx.id"],
-          #     "kind": info["ctx.kind"],
-          #     "persist": info["ctx.persist"]
-          #   })
-
-          # pre = info["html.open"]
-          # assert pre is not None
-          # if not pre.startswith("<"):
-          #   pre = f"<div class="{tag}">"
-          # content.write(f"{pre}{string}{suf}")
-
-          for flag, value in token.get("flags", {}).items():
-            flags[flag] = part if value == "#VALUE" else value
-
-          if token.get("opens-ctx", None):
-            context.append(Context(token))
-          else:
-            for i in range(token.get("ctx-collapses", 0)):
-              context.pop()
-
-          print("breaking")
-          break
-
-        except AssertionError:
-          pass
-
-      # close context
       try:
-        print(f"current = {ctx().shard}, target = {token.get('opens-ctx', None)}")
-        assert ctx().shard == token.get("opens-ctx", None)
-
-        pattern = token.get("regex-close", None)
-        assert pattern is not None
-        match = re.search(pattern, part)
-        print(f"closing match = {match}")
-        assert match is not None
-
-        cx = ctx()
-        context.pop()
-        for i in range(cx.collapses):
-          context.pop()
-
-        # suf = info["html.close"]
-        # if suf is None:
-        #   suf = "</div>"
-        # content.write(f"{string}{suf}")
-
+        _check_open(context, part, token, flags)
+      except ContextOpened:
+        break
       except AssertionError:
-        pass
+        continue
 
-    # collapse context stack
-    while (cx := ctx()).done():
-      context.pop()
+      try:
+        _check_close(context, part, token, flags)
+      except AssertionError:
+        continue
     
     print(f"flags = {flags}")
 
@@ -133,34 +75,79 @@ def process_quarks(text: str) -> dict:
   }
 
 
+def _check_open(ctx: list[dict], part: str, token: dict, *, flags: dict):
+  '''Check for contexts to open. Raises `AssertionError` if processing can be skipped, or `ContextOpened` if a context is successfully activated.'''
+
+  print(f"checking {token['shard']}")
+  assert not _should_skip_(ctx[-1], token)
+
+  if ctx[-1]["kind"] == "html":
+    assert "quark" in token["shard"]
+
+  match = re.search(token["regex-open"], part)
+  assert match is not None
+
+  _can_activate(ctx, token)
+
+  for flag, value in token["flags"].items():
+    flags[flag] = part if value == "#VALUE" else value
+
+  if token["opens-ctx"]:
+    ctx.append(token)
+  else:
+    for i in range(token["ctx-collapses"]):
+      ctx.pop()
+
+  raise ContextOpened()
+
+
+def _check_close(ctx: list[dict], part: str, token: dict, *, flags: dict):
+  '''Check for contexts to close. Raises `AssertionError` if processing can be skipped.'''
+
+  print(f"current = {ctx().shard}, target = {token.get('opens-ctx', None)}")
+  # context must be active to be deactivated
+  assert ctx[-1].shard == token["opens-ctx"]
+
+  pattern = token["regex-close"]
+  assert pattern is not None
+  match = re.search(pattern, part)
+  print(f"closing match = {match}")
+  assert match is not None
+
+  cx = ctx[-1]
+  ctx.pop()
+  for i in range(cx["ctx-collapses"]):
+    ctx.pop()
+
+
 def _should_skip_(ctx, token) -> bool:
   '''Check if processing for a token should be skipped (when activation requisites are not fulfilled).'''
 
-  if token.get("required-ctx", None):
+  if token["required-ctx"]:
     if ctx.shard != token["required-ctx"]:
       return True
 
-  if token.get("ctx-clashes", None) is True:
+  if token["ctx-clashes"] is True:
     if ctx.shard == token["opens-ctx"]:
       return True
-  elif token.get("ctx-clashes", None):
+  elif token["ctx-clashes"]:
     if ctx.shard in token["ctx-clashes"]:
       return True
 
 
-def _can_activate(ctx: list[Context], token: dict):
+def _can_activate(ctx: list[dict], token: dict):
   '''Check if a context meets its activation requirements.'''
  
-  if token.get("required-ctx", None):
+  if token["required-ctx"]:
     assert ctx[-1].shard == token["required-ctx"], "required ctx not active"
 
   if (
        ctx[-1].clashes is True
-    or token.get("ctx-clashes", None) is True
+    or token["ctx-clashes"] is True
     or isinstance(ctx[-1].clashes, str)
-    or isinstance(token.get("ctx-clashes", None), str)
+    or isinstance(token["ctx-clashes"], str)
   ):
-    assert token.get("opens-ctx", None) not in ctx, "clashing with active ctx"
+    assert token["opens-ctx"] not in ctx, "clashing with active ctx"
  
   # FIXME
   # if isinstance(ctx[-1].clashes, list):
