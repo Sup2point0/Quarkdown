@@ -99,7 +99,7 @@ def extract_logs(
   '''Extract logs for a particular repository.'''
 
   repo = git.get_repo("Sup2point0/Quarkdown")
-  file = repo.get_contents(f"source/logs/{repo_name.lower()}.json")
+  file = repo.get_contents(f"quarkdown/logs/{repo_name.lower()}.json")
   text = base64.b64decode(file.content)
 
   return json.loads(text)
@@ -113,7 +113,7 @@ def update_logs(
   '''Update logs for a particular repository.'''
 
   repo = git.get_repo("Sup2point0/Quarkdown")
-  existing = repo.get_contents(f"source/logs/{repo_name.lower()}.json")
+  existing = repo.get_contents(f"quarkdown/logs/{repo_name.lower()}.json")
 
   repo.update_file(
     path = existing.path,
