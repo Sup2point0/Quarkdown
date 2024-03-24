@@ -65,19 +65,8 @@ def extract_quarks(text: str) -> dict:
 
   # TODO splitting is really slow, how do we optimise this
   for part in re.split(" ", text):
-    print(f"\nprocessing {part}")
-    print(f"context = {', '.join(each['shard'] for each in context)}")
     for token in tokens:
       token = textualise.tokenise(token, defaults)
-      print(f"checking {token['shard']}")
-
-      '''
-      parse by word
-      check which token matches regex-open
-      activate ctx
-      trigger flags
-      check which token matches regex-close
-      '''
 
       try:
         check_open(context, part, token, flags)
@@ -90,8 +79,6 @@ def extract_quarks(text: str) -> dict:
         check_close(context, part, token, flags)
       except AssertionError:
         continue
-    
-    print(f"flags = {flags}")
 
   return {
     "content": text,#content,
@@ -102,7 +89,6 @@ def extract_quarks(text: str) -> dict:
 def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   '''Check for contexts to open. Raises `AssertionError` if processing can be skipped, or `ContextOpened` if a context is successfully activated.'''
 
-  print(f"checking {token['shard']}")
   assert not should_skip(ctx, token)
 
   if ctx[-1]["kind"] == "html":
@@ -128,14 +114,12 @@ def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
 def check_close(ctx: list[dict], part: str, token: dict, flags: dict):
   '''Check for contexts to close. Raises `AssertionError` if processing can be skipped.'''
 
-  print(f"current = {ctx().shard}, target = {token.get('opens-ctx', None)}")
   # context must be active to be deactivated
   assert ctx[-1].shard == token["opens-ctx"]
 
   pattern = token["regex-close"]
   assert pattern is not None
   match = re.search(pattern, part)
-  print(f"closing match = {match}")
   assert match is not None
 
   cx = ctx[-1]
