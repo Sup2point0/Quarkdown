@@ -30,5 +30,4 @@ jobs:
       - name: 'Python: execute'
         env:
           AQ: ${{ secrets.CHARM }}
-        # run: python scripts/assort.py
-        run: python source/test.py
+        run: python scripts/assort.py
