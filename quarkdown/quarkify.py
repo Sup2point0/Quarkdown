@@ -6,8 +6,6 @@ import json
 import re
 import os
 
-from io import StringIO
-
 from . import textualise
 
 
@@ -21,7 +19,6 @@ class Quarkless(Exception):
 class ContextOpened(Exception):
   '''Exception raised when a context has been successfully activated.'''
   pass
-
 
 
 def export(text: str) -> dict:
