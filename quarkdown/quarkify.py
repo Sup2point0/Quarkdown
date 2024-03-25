@@ -34,10 +34,13 @@ def export(text: str) -> dict:
   content = textualise.clear_comments(content)
 
   root = os.path.split(os.path.abspath(__file__))[0]
-  with open(os.path.join(root, "resources/core.html")) as file:
+  path = os.path.join(root, "resources/core.html")
+  with open(path) as file:
     content = file.read().format(
+      polarity = load.get("polarity", "#LIGHT") == "#DARK",
       header = load.get("header", ""),
       content = content,
+      source = "https://github.com/Sup2point0/Assort/" + load.get("source", ""),
     )
   
   load["content"] = content
