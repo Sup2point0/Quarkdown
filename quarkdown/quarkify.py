@@ -34,7 +34,7 @@ def export(text: str) -> dict:
   path = os.path.join(root, "resources/core.html")
   with open(path) as file:
     content = file.read().format(
-      polarity = load.get("polarity", "#LIGHT") == "#DARK",
+      darkness = load.get("polarity", "#LIGHT") == "#DARK",
       header = load.get("header", ""),
       content = content,
       source = "https://github.com/Sup2point0/Assort/" + load.get("source", ""),
