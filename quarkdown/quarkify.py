@@ -34,10 +34,13 @@ def export(text: str) -> dict:
   content = textualise.clear_comments(content)
 
   root = os.path.split(os.path.abspath(__file__))[0]
-  with open(os.path.join(root, "resources/core.html")) as file:
+  path = os.path.join(root, "resources/core.html")
+  with open(path) as file:
     content = file.read().format(
-      header = load["flags"].get("header", ""),
-      content = load["content"],
+      polarity = load.get("polarity", "#LIGHT") == "#DARK",
+      header = load.get("header", ""),
+      content = content,
+      source = "https://github.com/Sup2point0/Assort/" + load.get("source", ""),
     )
   
   load["content"] = content
@@ -64,7 +67,8 @@ def extract_quarks(text: str) -> dict:
   flags = {}
 
   # TODO splitting is really slow, how do we optimise this
-  for part in re.split(" ", text):
+  # for part in re.split(" ", text):
+  for part in text.split():
     for token in tokens:
       token = textualise.tokenise(token, defaults)
 
@@ -80,10 +84,7 @@ def extract_quarks(text: str) -> dict:
       except AssertionError:
         continue
 
-  return {
-    "content": text,#content,
-    "flags": flags,
-  }
+  return {"content": text, **flags}
 
 
 def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
