@@ -56,6 +56,7 @@ def export_and_deploy(
 
     try:
       export = quarkify.export(text)
+      print(f"export = {export}")
     except quarkify.Quarkless:
       continue
 
@@ -70,7 +71,7 @@ def export_and_deploy(
       repo.update_file(path, commit, content, existing.sha)
 
     # reduce Unix timestamp for easier management
-    log[path] = {
+    log[file.path.lower()] = {
       "export-path": path,
       "last-updated": round(time.time() % 1710000000),
     }
@@ -81,14 +82,13 @@ def export_and_deploy(
 def has_changed(file: ContentFile, log: dict) -> bool:
   '''Check if a file has been updated since the last export and deployment.'''
 
-  deployed = log.get(file.name.lower(), False)
+  deployed = log.get(file.path.lower(), False)
   if not deployed:
     return True
 
   modified = round(file.last_modified_datetime.timestamp() % 1710000000)
 
   print(f"file {file.name} -> modified: {modified}, deployed: {deployed}")
-
   return modified - deployed > 0
 
 
