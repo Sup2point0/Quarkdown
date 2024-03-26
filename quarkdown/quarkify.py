@@ -66,8 +66,7 @@ def extract_quarks(text: str) -> dict:
   context = [textualise.tokenise({}, defaults)]
   flags = {}
 
-  # TODO splitting is really slow, how do we optimise this
-  # for part in re.split(" ", text):
+  # TODO splitting is pretty slow, how do we optimise this
   for part in text.split():
     if len(context) > 1: print(f"processing '{part}', context = [" + ", ".join(each["shard"] for each in context) + "]")  # NOTE testing
     for token in tokens:
@@ -94,7 +93,7 @@ def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   assert not should_skip(ctx, token)
 
   if ctx[-1]["kind"] == "html":
-    assert "quark" in token["shard"]
+    assert "quark" in token["opens-ctx"]
 
   match = re.search(token["regex-open"], part)
   assert match is not None
@@ -117,7 +116,7 @@ def check_close(ctx: list[dict], part: str, token: dict, flags: dict):
   '''Check for contexts to close. Raises `AssertionError` if processing can be skipped.'''
 
   # context must be active to be deactivated
-  assert ctx[-1]["shard"] == token["opens-ctx"]
+  assert ctx[-1]["opens-ctx"] == token["opens-ctx"]
 
   pattern = token["regex-close"]
   assert pattern is not None
