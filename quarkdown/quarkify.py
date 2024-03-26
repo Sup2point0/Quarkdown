@@ -77,8 +77,9 @@ def extract_quarks(text: str) -> dict:
       except ContextOpened:
         break
       except AssertionError:
-        pass
+        print()
 
+      print("trying to close")
       try:
         check_close(context, part, token, flags)
       except AssertionError:
@@ -100,6 +101,7 @@ def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
 
   for flag, value in token["flags"].items():
     flags[flag] = part if value == "#VALUE" else value
+  print(f"flags = {flags}")
 
   if token["opens-ctx"]:
     ctx.append(token)
