@@ -10,6 +10,7 @@ from . import textualise
 
 
 __all__ = ["export"]
+__version__ = "1.1.0"
 
 
 class Quarkless(Exception):
@@ -38,6 +39,7 @@ def export(text: str) -> dict:
       header = load.get("header", ""),
       content = content,
       source = "https://github.com/Sup2point0/Assort/" + load.get("source", ""),
+      version = __version__,
     )
   
   load["content"] = content
