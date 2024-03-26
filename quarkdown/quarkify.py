@@ -79,7 +79,6 @@ def extract_quarks(text: str) -> dict:
       except AssertionError:
         pass
 
-      print("trying to close")
       try:
         check_close(context, part, token, flags)
       except AssertionError:
