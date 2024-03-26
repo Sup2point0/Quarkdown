@@ -84,7 +84,7 @@ def extract_quarks(text: str) -> dict:
       except AssertionError:
         pass
         
-    print(f"finished '{part}', context = [" + ", ".join(each["shard"] for each in context) + "]")  # NOTE testing
+    # print(f"finished '{part}', context = [" + ", ".join(each["shard"] for each in context) + "]")  # NOTE testing
 
   return {**flags, "content": text}
 
@@ -110,6 +110,7 @@ def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
     for i in range(token["ctx-collapses"]):
       ctx.pop()
 
+  print(f"ACTIVATED {token['shard']}")
   raise ContextOpened()
 
 
@@ -134,9 +135,9 @@ def can_activate(ctx: list[dict], token: dict):
   '''Check if a context meets its activation requirements. Raises `AssertionError` if not.'''
 
   if token["required-ctx"]:
-    assert ctx[-1]["shard"] == token["required-ctx"]
+    assert ctx[-1]["opens-ctx"] == token["required-ctx"]
 
   if token["ctx-clashes"] is True or ctx[-1]["ctx-clashes"] is True:
-    assert ctx[-1]["shard"] != token["opens-ctx"]
+    assert ctx[-1]["opens-ctx"] != token["opens-ctx"]
   elif token["ctx-clashes"] or ctx[-1]["ctx-clashes"]:
-    assert ctx[-1]["shard"] not in token["ctx-clashes"]
+    assert ctx[-1]["opens-ctx"] not in token["ctx-clashes"]
