@@ -73,7 +73,7 @@ def export_and_deploy(
     # reduce Unix timestamp for easier management
     log[file.path.lower()] = {
       "export-path": path,
-      "last-updated": round(time.time() % 1710000000),
+      "last-export": round(time.time() % 1710000000),
     }
 
   return log
