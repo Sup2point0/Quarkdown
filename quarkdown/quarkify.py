@@ -69,7 +69,7 @@ def extract_quarks(text: str) -> dict:
   # TODO splitting is really slow, how do we optimise this
   # for part in re.split(" ", text):
   for part in text.split():
-    print(f"processing {part}, context = {context}")
+    if len(context) > 1: print("context = [" + ", ".join(each["shard"] for each in context) + "]")
     for token in tokens:
       token = textualise.tokenise(token, defaults)
 
