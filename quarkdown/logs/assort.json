@@ -6,5 +6,53 @@
   "docs/origins.html": {
     "export-path": "docs/origins.html",
     "last-updated": 1297473
+  },
+  "slinqui.md": {
+    "export-path": "docs/slinqui.html",
+    "last-updated": 1468689
+  },
+  "yu-gi-oh!/readme.md": {
+    "export-path": "docs/yu-gi-oh/index.html",
+    "last-updated": 1468698
+  },
+  "xeriqui/readme.md": {
+    "export-path": "docs/xeriqui/index.html",
+    "last-updated": 1468704
+  },
+  "~writing/python syntax.md": {
+    "export-path": "docs/python-syntax.html",
+    "last-updated": 1468719
+  },
+  "~writing/wormhole of wikipedia.md": {
+    "export-path": "docs/wormhole-of-wikipedia.html",
+    "last-updated": 1468720
+  },
+  "~writing/origins.md": {
+    "export-path": "docs/origins.html",
+    "last-updated": 1468722
+  },
+  "~writing/writing.md": {
+    "export-path": "docs/writing.html",
+    "last-updated": 1468723
+  },
+  "~writing/creative/eclipse.md": {
+    "export-path": "docs/eclipse.html",
+    "last-updated": 1468757
+  },
+  "~writing/creative/expanse.md": {
+    "export-path": "docs/expanse.html",
+    "last-updated": 1468759
+  },
+  "~writing/creative/precipice.md": {
+    "export-path": "docs/precipice.html",
+    "last-updated": 1468760
+  },
+  "~writing/creative/seclusion.md": {
+    "export-path": "docs/seclusion.html",
+    "last-updated": 1468762
+  },
+  "~writing/creative/the last cavern.md": {
+    "export-path": "docs/the-last-cavern.html",
+    "last-updated": 1468763
   }
 }
