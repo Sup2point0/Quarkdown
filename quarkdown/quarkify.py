@@ -117,7 +117,7 @@ def check_close(ctx: list[dict], part: str, token: dict, flags: dict):
   '''Check for contexts to close. Raises `AssertionError` if processing can be skipped.'''
 
   # context must be active to be deactivated
-  assert ctx[-1].shard == token["opens-ctx"]
+  assert ctx[-1]["shard"] == token["opens-ctx"]
 
   pattern = token["regex-close"]
   assert pattern is not None
