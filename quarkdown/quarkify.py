@@ -26,6 +26,7 @@ def export(text: str) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
   load = extract_quarks(text)
+  print(f"load = {load}")
 
   content = load["content"]
   content = textualise.render_html(content)
