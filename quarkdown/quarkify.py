@@ -90,15 +90,13 @@ def extract_quarks(text: str) -> dict:
 def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   '''Check for contexts to open. Raises `AssertionError` if processing can be skipped, or `ContextOpened` if a context is successfully activated.'''
 
-  assert not should_skip(ctx, token)
+  can_activate(ctx, token)
 
   if ctx[-1]["kind"] == "html":
     assert "quark" in token["opens-ctx"]
 
   match = re.search(token["regex-open"], part)
   assert match is not None
-
-  can_activate(ctx, token)
 
   for flag, value in token["flags"].items():
     flags[flag] = part if value == "#VALUE" else value
@@ -129,37 +127,13 @@ def check_close(ctx: list[dict], part: str, token: dict, flags: dict):
     ctx.pop()
 
 
-def should_skip(ctx: list[dict], token: dict) -> bool:
-  '''Check if processing for a token should be skipped (when activation requisites are not fulfilled).'''
-
-  if token["required-ctx"]:
-    if ctx[-1]["shard"] != token["required-ctx"]:
-      return True
-
-  if token["ctx-clashes"] is True:
-    if ctx[-1]["shard"] == token["opens-ctx"]:
-      return True
-  elif token["ctx-clashes"]:
-    if ctx[-1]["shard"] in token["ctx-clashes"]:
-      return True
-
-
 def can_activate(ctx: list[dict], token: dict):
-  '''Check if a context meets its activation requirements.'''
- 
-  if token["required-ctx"]:
-    assert ctx[-1]["shard"] == token["required-ctx"], "required ctx not active"
+  '''Check if a context meets its activation requirements. Raises `AssertionError` if not.'''
 
-  if (
-       ctx[-1]["ctx-clashes"] is True
-    or token["ctx-clashes"] is True
-    or isinstance(ctx[-1]["ctx-clashes"], str)
-    or isinstance(token["ctx-clashes"], str)
-  ):
-    assert token["opens-ctx"] not in ctx, "clashing with active ctx"
- 
-  # FIXME
-  # if isinstance(ctx[-1].clashes, list):
-  #   assert token["opens-ctx"] not in ctx[-1].clashes
-  # if isinstance(token["ctx-clashes"], list):
-  #   assert ctx[-1].shard not in token["opens-ctx"]
+  if token["required-ctx"]:
+    assert ctx[-1]["shard"] == token["required-ctx"]
+
+  if token["ctx-clashes"] is True or ctx[-1]["ctx-clashes"] is True:
+    assert ctx[-1]["shard"] != token["opens-ctx"]
+  elif token["ctx-clashes"] or ctx[-1]["ctx-clashes"]:
+    assert ctx[-1]["shard"] not in token["ctx-clashes"]
