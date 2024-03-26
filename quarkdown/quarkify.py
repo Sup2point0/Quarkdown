@@ -85,6 +85,8 @@ def extract_quarks(text: str) -> dict:
       except AssertionError:
         pass
 
+    if len(context) > 1: print(f"finished '{part}', context = [" + ", ".join(each["shard"] for each in context) + "]")  # NOTE testing
+
   return {**flags, "content": text}
 
 
