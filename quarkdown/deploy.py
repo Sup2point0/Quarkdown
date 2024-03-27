@@ -128,11 +128,11 @@ def update_logs(
 def has_changed(file: ContentFile, log: dict) -> bool:
   '''Check if a file has been updated since the last export and deployment.'''
 
-  deployed = log.get(file.path.lower(), False)
-  if not deployed:
+  existing = log.get(file.path.lower(), False)
+  if not existing:
     return True
-
+  
+  deployed = existing["last-export"]
   modified = round(file.last_modified_datetime.timestamp() - EPOCH_OFFSET)
 
-  print(f"file {file.name} -> modified: {modified}, deployed: {deployed}")
   return modified - deployed > 0
