@@ -66,7 +66,7 @@ def export_and_deploy(
 ) -> dict:
   '''Export .md files to HTML and commit them to the `docs/` folder of a given GitHub repository. Returns a `dict` log of changed files.'''
 
-  log_home = extract_repo_json(home, f"quarkdown/logs/log.json")
+  log_home = extract_repo_json(home, f"quarkdown/logs/quarkup.json")
   log_repo = extract_repo_json(home, f"quarkdown/logs/{repo.name.lower()}.json")
 
   log_home.insert(0, {

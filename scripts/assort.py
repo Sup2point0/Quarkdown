@@ -23,5 +23,5 @@ with Github(auth = Auth.Token(key)) as git:
   files = qk.extract_repo_files(repo)
   log_home, log_repo = qk.export_and_deploy(home, repo, files, commit = "auto-assort")
 
-  qk.update_logs(home, "logs", log_home)
+  qk.update_logs(home, "quarkup", log_home)
   qk.update_logs(home, "assort", log_repo)
