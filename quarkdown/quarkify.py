@@ -36,6 +36,7 @@ def export(text: str) -> dict:
   path = os.path.join(root, "resources/core.html")
   with open(path) as file:
     content = file.read().format(
+      style = load.get("style", "default"),
       darkness = load.get("polarity", "#LIGHT") == "#DARK",
       header = load.get("header", ""),
       content = content,
