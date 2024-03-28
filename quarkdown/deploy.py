@@ -119,7 +119,7 @@ def update_logs(
 
   home.update_file(
     existing.path,
-    message = commit or f"#QUARK update logs for {path}",
+    message = commit or f"#QUARK update logs",
     content = json.dumps(data, indent = 2),
     sha = existing.sha,
   )
