@@ -54,5 +54,9 @@
   "~writing/creative/the last cavern.md": {
     "export-path": "docs/the-last-cavern.html",
     "last-export": 1468763
+  },
+  "~poetry/nameless.md": {
+    "export-path": "docs/poetry/nameless.html",
+    "last-export": 1622402
   }
 }
