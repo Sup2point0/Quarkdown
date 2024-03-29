@@ -1,15 +1,74 @@
 [
   {
-    "run": 14,
-    "epox": 1622374,
-    "changes": 1,
+    "run": 0,
+    "epox": 1647752,
+    "changes": 13,
     "data": [
+      {
+        "path": "docs/slinqui.html",
+        "live": true,
+        "style": "#PERSONAL",
+        "polarity": "#DARK"
+      },
+      {
+        "path": "docs/yu-gi-oh/index.html",
+        "live": true,
+        "style": "#AUTO",
+        "polarity": "#DARK"
+      },
+      {
+        "path": "docs/xeriqui/index.html",
+        "live": true,
+        "style": "#AUTO",
+        "polarity": "#DARK"
+      },
       {
         "path": "docs/poetry/nameless.html",
         "live": true,
         "style": "#creative",
-        "polarity": "#light",
-        "content": "<!DOCTYPE html>\n\n<!-- Quarkdown Template v1.2.0 -->\n<html>\n\n<head>\n  <link href=\"nova.css\" rel=\"stylesheet\">\n  <link href=\"essence.css\" rel=\"stylesheet\">\n</head>\n\n<body style=\"--darkness: False\">\n  <article>\n  \n    <div id=\"header\">\n      \n    </div>\n\n    <div id=\"content\">\n      <div class=\"markdown-heading\"><h1 class=\"heading-element\">Nameless</h1><a id=\"user-content-nameless\" class=\"anchor\" aria-label=\"Permalink: Nameless\" href=\"#nameless\"><span aria-hidden=\"true\" class=\"octicon octicon-link\"></span></a></div>\n\n<p>Words are knives.<br>\nThey mercilessly slice apart your skin<br>\nAnd deep into the flesh within<br>\nIn searing agony they carve<br>\nTwo hundred thousand bloody scars<br>\nWe carry through our lives.</p>\n<p>Words are spears.<br>\nThey pierce the heart to cut the soul<br>\nAnd in their wake an aching hole<br>\nIt takes all of your life to seal<br>\nThe marks they leave that never heal<br>\nFrozen dry by tears.</p>\n<p>Words are pain.<br>\nThe kind that grows in cold neglect<br>\nWithin the heat of rage should we forget<br>\nThe consequences of our words<br>\nof everlasting shame and hurt<br>\nWords are not a game.</p>\n<br>\n<p>(May 2023)</p>\n\n\n    </div>\n\n    <div id=\"footer\">\n      <p> by <a href=\"https://github.com/Sup2point0\">Sup#2.0</a> </p>\n      <p> Auto-rendered by <a href=\"https://github.com/Sup2point0/Quarkdown\">Quarkdown</a> v1.1.0 </p>\n      <p> <a href=\"https://github.com/Sup2point0/Assort/\">View on GitHub</a> </p>\n    </div>\n  \n  </article>\n</body>\n\n</html>\n"
+        "polarity": "#light"
+      },
+      {
+        "path": "docs/python-syntax.html"
+      },
+      {
+        "path": "docs/wormhole-of-wikipedia.html",
+        "live": true
+      },
+      {
+        "path": "docs/origins.html",
+        "live": true,
+        "style": "#AUTO",
+        "polarity": "#LIGHT"
+      },
+      {
+        "path": "docs/writing.html",
+        "live": true
+      },
+      {
+        "path": "docs/eclipse.html",
+        "live": true,
+        "style": "#CREATIVE"
+      },
+      {
+        "path": "docs/expanse.html",
+        "live": true,
+        "style": "#CREATIVE"
+      },
+      {
+        "path": "docs/precipice.html",
+        "live": true,
+        "style": "#CREATIVE"
+      },
+      {
+        "path": "docs/seclusion.html",
+        "live": true,
+        "style": "#CREATIVE"
+      },
+      {
+        "path": "docs/the-last-cavern.html",
+        "live": true,
+        "style": "#CREATIVE"
       }
     ]
   }

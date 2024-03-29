@@ -95,6 +95,8 @@ def export_and_deploy(
     else:
       repo.update_file(path, commit, export["content"], existing.sha)
 
+    # we won’t track exported content (too much text)
+    export.pop("content")
     log_home[0]["changes"] += 1
     log_home[0]["data"].append({"path": file.path, **export})
 
