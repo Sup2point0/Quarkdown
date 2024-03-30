@@ -101,7 +101,7 @@ def export_and_deploy(
     log_home[0]["changes"] += 1
     log_home[0]["data"].append({"path": file.path, **export})
 
-    log_repo[file.path.lower()] = {
+    log_repo[file.path] = {
       "version": __version__,
       "export-path": path,
       "last-export": round(time.time() - EPOCH_OFFSET),
@@ -132,7 +132,7 @@ def update_logs(
 def has_changed(file: ContentFile, log: dict) -> bool:
   '''Check if a file has been updated since the last export and deployment.'''
 
-  existing = log.get(file.path.lower(), False)
+  existing = log.get(file.path, False)
   if not existing:
     return True
   
