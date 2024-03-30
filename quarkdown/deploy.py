@@ -12,6 +12,7 @@ from github.ContentFile import ContentFile
 from github.GithubException import UnknownObjectException
 
 from . import quarkify
+from .__version__ import __version__
 
 
 EPOCH_OFFSET = 1710000000
@@ -101,6 +102,7 @@ def export_and_deploy(
     log_home[0]["data"].append({"path": file.path, **export})
 
     log_repo[file.path.lower()] = {
+      "version": __version__,
       "export-path": path,
       "last-export": round(time.time() - EPOCH_OFFSET),
     }
@@ -132,6 +134,9 @@ def has_changed(file: ContentFile, log: dict) -> bool:
 
   existing = log.get(file.path.lower(), False)
   if not existing:
+    return True
+  
+  if existing["version"] != __version__:
     return True
   
   deployed = existing["last-export"]

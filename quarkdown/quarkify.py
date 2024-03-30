@@ -7,10 +7,10 @@ import re
 import os
 
 from . import textualise
+from .__version__ import __version__
 
 
 __all__ = ["export"]
-__version__ = "1.1.0"
 
 
 class Quarkless(Exception):
