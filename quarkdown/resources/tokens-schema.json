@@ -11,7 +11,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["shard", "kind", "regex-open"],
+        "required": ["shard", "regex-open"],
         "properties":
         {
           "shard": {

@@ -90,6 +90,7 @@ def extract_quarks(text: str) -> dict:
 def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   '''Check for contexts to open. Raises `AssertionError` if processing can be skipped, or `ContextOpened` if a context is successfully activated.'''
 
+  ## ensure the context can be activated
   can_activate(ctx, token)
 
   if ctx[-1]["kind"] == "html":
@@ -98,6 +99,7 @@ def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   match = re.search(token["regex-open"], part)
   assert match is not None
 
+  ## open the context
   for flag, value in token["flags"].items():
     flags[flag] = part if value == "#VALUE" else value
 
