@@ -35,6 +35,7 @@ Over the years I’ve created so, so many Markdown files in *Assort* that it’s
 
 ## Future Features
 
+- Update parsing engine to allow tokens to specify number of flags to expect afterwards
 - Check if export filepaths have changed for a file, and if so, delete the artefact file.
 - Extract article title into a special `<header>` container.
 - Find a way to combine commits so that a single new deployment doesn’t result in potentially hundreds of programmatically generated commits? [^combine-commits]
