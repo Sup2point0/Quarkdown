@@ -27,5 +27,6 @@ with Github(auth = Auth.Token(key)) as git:
   log_home, log_repo = qk.export_and_deploy(home, repo, files, commit = "auto-assort")
 
   qk.update_logs(home, "assort", log_repo)
-  log_home["time-taken"] = time.time() - start
+  
+  qk.finish(start, log_home)
   qk.update_logs(home, "quarkup", log_home)

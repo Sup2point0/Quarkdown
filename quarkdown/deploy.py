@@ -29,6 +29,14 @@ def prepare_deploy(git: Github, repo_name: str) -> tuple[Repository, Repository]
   )
 
 
+def finish(start: int, log: dict):
+  '''Log time performance metrics.'''
+
+  latest = log[0]
+  latest["duration"] = time.time() - start
+  latest["average"] = latest["changes"] / latest["duration"]
+
+
 def extract_repo_files(repo: Repository, path = "") -> list[ContentFile]:
   '''Extract all .md files from the `path` directory of a repository.'''
 
@@ -76,6 +84,8 @@ def export_and_deploy(
     "epox": round(time.time() - EPOCH_OFFSET),
     "date": datetime.now().strftime("%Y-%m-%d"),
     "changes": 0,
+    "duration": None,
+    "average": None,
     "data": [],
   })
 
