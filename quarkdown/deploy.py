@@ -5,6 +5,7 @@ Deploys .md files in a GitHub repository to GitHub Pages.
 import base64
 import json
 import time
+from datetime import datetime
 
 from github import Github
 from github.Repository import Repository
@@ -73,6 +74,7 @@ def export_and_deploy(
   log_home.insert(0, {
     "run": len(log_repo), 
     "epox": round(time.time() - EPOCH_OFFSET),
+    "date": datetime.now().strftime("%Y-%m-%d"),
     "changes": 0,
     "data": [],
   })
@@ -84,7 +86,7 @@ def export_and_deploy(
     text = base64.b64decode(file.content).decode()
 
     try:
-      export = quarkify.export(text)
+      export = quarkify.export(file)
       path = export["path"]
     except quarkify.Quarkless:
       continue
@@ -101,7 +103,7 @@ def export_and_deploy(
     log_home[0]["changes"] += 1
     log_home[0]["data"].append({"path": file.path, **export})
 
-    log_repo[file.path.lower()] = {
+    log_repo[file.path] = {
       "version": __version__,
       "export-path": path,
       "last-export": round(time.time() - EPOCH_OFFSET),
@@ -132,7 +134,7 @@ def update_logs(
 def has_changed(file: ContentFile, log: dict) -> bool:
   '''Check if a file has been updated since the last export and deployment.'''
 
-  existing = log.get(file.path.lower(), False)
+  existing = log.get(file.path, False)
   if not existing:
     return True
   

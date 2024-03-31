@@ -2,9 +2,12 @@
 Implements the Quarkdown parsing engine.
 '''
 
+import base64
 import json
-import re
 import os
+import re
+
+from github.ContentFile import ContentFile
 
 from . import textualise
 from .__version__ import __version__
@@ -22,30 +25,32 @@ class ContextOpened(Exception):
   pass
 
 
-def export(text: str) -> dict:
+def export(file: ContentFile) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
+  text = base64.b64decode(file.content).decode()
+  
   load = extract_quarks(text)
-  print(f"load = {load}")
-
   content = load["content"]
   content = textualise.render_html(content)
   content = textualise.clear_comments(content)
 
   root = os.path.split(os.path.abspath(__file__))[0]
   path = os.path.join(root, "resources/core.html")
+
   with open(path) as file:
     content = file.read().format(
       style = load.get("style", "default"),
-      darkness = load.get("polarity", "#LIGHT") == "#DARK",
+      darkness = load.get("polarity", "light") == "dark",
       header = load.get("header", ""),
       content = content,
-      source = "https://github.com/Sup2point0/Assort/" + load.get("source", ""),
+      source = "https://github.com/Sup2point0/Assort/" + file.path,
       version = __version__,
     )
   
   load["content"] = content
   load["path"] = "docs/" + load["path"] + ".html"
+
   return load
 
 
@@ -53,10 +58,9 @@ def extract_quarks(text: str) -> dict:
   '''Extract #QUARK quarks from Quarkdown-Flavoured Markdown.'''
 
   # TODO this is a bit inefficient, we should find a better way to do this
-  if "#QUARK LIVE" not in text:
+  if "#QUARK live!" not in text:
     raise Quarkless("#QUARK file inactive")
 
-  # FIXME path
   root = os.path.split(os.path.abspath(__file__))[0]
   with open(os.path.join(root, "resources/tokens.json")) as file:
     tokens = json.load(file)["tokens"]
