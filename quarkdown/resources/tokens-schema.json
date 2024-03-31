@@ -115,6 +115,7 @@
               "required-ctx": null,
               "required-idx": null,
               "opens-ctx": null,
+              "ctx-persists": false,
               "ctx-clashes": true,
               "flags": {},
               "regex-open": "~",
