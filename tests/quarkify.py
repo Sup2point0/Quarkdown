@@ -5,7 +5,7 @@ sys.path[0] = "/".join(sys.path[0].split("/")[:-1])
 from quarkdown import quarkify
 
 
-def test_quarkify(self):
+def test_quarkify():
   result = quarkify.extract_quarks('''
     <!-- #QUARK live! -->
     <!-- #QUARK
