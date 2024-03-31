@@ -35,9 +35,9 @@ Over the years I’ve created so, so many Markdown files in *Assort* that it’s
 
 ## Future Features
 
-- Update parsing engine to be able to store lists of flags.
 - Check if export filepaths have changed for a file, and if so, delete the artefact file.
 - Extract article title into a special `<header>` container.
+- Inject MathJax without `{}` breaking Python string formatting.
 - Find a way to combine commits so that a single new deployment doesn’t result in potentially hundreds of programmatically generated commits? [^combine-commits]
 - Devise a way to upgrade *Assort* into a wiki-like website &ndash; i.e. with navigation. Why is this difficult? Cuz the file paths of .md files in the repo are not the same as the URLs of the .html files on the website. We’ll see.
   - Also, for a wiki you’d probably need a way to search, and... well, firstly GitHub Pages is for static sites, and secondly I have no clue how to create an efficient search engine.
