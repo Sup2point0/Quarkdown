@@ -38,8 +38,8 @@ def export(file: ContentFile) -> dict:
   root = os.path.split(os.path.abspath(__file__))[0]
   path = os.path.join(root, "resources/core.html")
 
-  with open(path) as file:
-    content = file.read().format(
+  with open(path) as source:
+    content = source.read().format(
       style = load.get("style", "default"),
       darkness = load.get("polarity", "light") == "dark",
       header = load.get("header", ""),
