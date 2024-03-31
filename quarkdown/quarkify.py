@@ -40,7 +40,7 @@ def export(file: ContentFile) -> dict:
 
   with open(path) as source:
     content = source.read().format(
-      style = load.get("style", "default"),
+      style = load.get("style", ["default"])[0],  # TODO support multiple styles
       darkness = load.get("polarity", "light") == "dark",
       header = load.get("header", ""),
       content = content,
