@@ -71,22 +71,26 @@ def extract_quarks(text: str) -> dict:
   context = [textualise.tokenise({}, defaults)]
   flags = {}
 
-  # TODO splitting is pretty slow, how do we optimise this
-  for part in text.split():
-    for token in tokens:
-      token = textualise.tokenise(token, defaults)
+  # TODO splitting twice is really, really slow, how do we optimise this
+  for line in text.split("\n"):
+    for part in line.split():
+      for token in tokens:
+        token = textualise.tokenise(token, defaults)
 
-      try:
-        check_open(context, part, token, flags)
-      except ContextOpened:
-        break
-      except AssertionError:
-        pass
+        try:
+          check_open(context, part, token, flags)
+        except ContextOpened:
+          break
+        except AssertionError:
+          pass
 
-      try:
-        check_close(context, part, token, flags)
-      except AssertionError:
-        pass
+        try:
+          check_close(context, part, token, flags)
+        except AssertionError:
+          pass
+
+    while not context[-1]["ctx-persists"]:
+      close_ctx(context)
 
   return {**flags, "content": text}
 
@@ -94,7 +98,6 @@ def extract_quarks(text: str) -> dict:
 def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   '''Check for contexts to open. Raises `AssertionError` if processing can be skipped, or `ContextOpened` if a context is successfully activated.'''
 
-  ## ensure the context can be activated
   can_activate(ctx, token)
 
   if ctx[-1]["kind"] == "html":
@@ -103,9 +106,13 @@ def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   match = re.search(token["regex-open"], part)
   assert match is not None
 
-  ## open the context
   for flag, value in token["flags"].items():
-    flags[flag] = part if value == "#VALUE" else value
+    if isinstance(value, str):
+      flags[flag] = part if value == "#VALUE" else value
+    elif isinstance(value, dict):
+      for key, val in value.items():
+        if key == "add":
+          flags[flag].append(part if val == "#VALUE" else value)
 
   if token["opens-ctx"]:
     ctx.append(token)
@@ -127,10 +134,7 @@ def check_close(ctx: list[dict], part: str, token: dict, flags: dict):
   match = re.search(pattern, part)
   assert match is not None
 
-  cx = ctx[-1]
-  ctx.pop()
-  for i in range(cx["ctx-collapses"]):
-    ctx.pop()
+  close_ctx(ctx)
 
 
 def can_activate(ctx: list[dict], token: dict):
@@ -143,3 +147,12 @@ def can_activate(ctx: list[dict], token: dict):
     assert ctx[-1]["opens-ctx"] != token["opens-ctx"]
   elif token["ctx-clashes"] or ctx[-1]["ctx-clashes"]:
     assert ctx[-1]["opens-ctx"] not in token["ctx-clashes"]
+
+
+def close_ctx(ctx):
+  '''Close the current context, collapsing contexts if applicable.'''
+
+  latest = ctx[-1]
+  ctx.pop()
+  for i in range(latest["ctx-collapses"]):
+    ctx.pop()

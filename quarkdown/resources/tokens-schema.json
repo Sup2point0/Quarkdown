@@ -40,6 +40,10 @@
             "description": "The context activated by the token.",
             "type": ["string", "null"]
           },
+          "ctx-persists": {
+            "description": "Whether this context remains active between line breaks.",
+            "type": "boolean"
+          },
           "ctx-clashes": {
             "title": "Context Clashes",
             "description": "The token will not activate if these contexts are active. If set to a boolean, this specifies whether the context clashes with itself.",
@@ -53,14 +57,13 @@
             "properties": {}
           },
           "flags": {
-            "title": "Trigger Flags",
             "description": "Flags to trigger from the token's activation.",
             "type": "object",
             "properties": {}
           },
           "regex-open": {
             "title": "RegEx Opening Pattern",
-            "description": "The regular expression that activates the token when matched.",
+            "description": "The regular expression that activates the context when matched.",
             "type": "string"
           },
           "html-open": {
@@ -110,6 +113,7 @@
               "shard": "~",
               "kind": "~",
               "required-ctx": null,
+              "required-idx": null,
               "opens-ctx": null,
               "ctx-clashes": true,
               "flags": {},
