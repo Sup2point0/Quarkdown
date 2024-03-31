@@ -85,13 +85,17 @@ def extract_quarks(text: str) -> dict:
           pass
 
         try:
-          check_close(context, part, token, flags)
+          check_close(context, part, token)
         except AssertionError:
           pass
 
-    while len(context) > 1:  # root context must always be active
-      while not context[-1]["ctx-persists"]:
-        close_ctx(context)
+    while True:
+      if context[-1]["ctx-persists"]:
+        break
+      if len(context) == 1:  # root context must always be active
+        break
+      
+      close_ctx(context)
 
   return {**flags, "content": text}
 
@@ -124,7 +128,7 @@ def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   raise ContextOpened()
 
 
-def check_close(ctx: list[dict], part: str, token: dict, flags: dict):
+def check_close(ctx: list[dict], part: str, token: dict):
   '''Check for contexts to close. Raises `AssertionError` if processing can be skipped.'''
 
   # context must be active to be deactivated
