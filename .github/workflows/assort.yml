@@ -7,7 +7,7 @@ on:
     types: [trigger-workflow]
 
 jobs:
-  Assort:
+  assort:
     runs-on: ubuntu-latest
     # defaults:
     #   run:
