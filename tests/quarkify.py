@@ -1,3 +1,7 @@
+# we really need to find a proper way to do this
+import sys
+sys.path[0] = "/".join(sys.path[0].split("/")[:-1])
+
 from quarkdown import quarkify
 
 
