@@ -18,9 +18,14 @@ def test_positive():
 
 
 def test_negative():
-  result = quarkify.extract_quarks('''
-    testing
-    <!-- #QUARK -->
-  ''')
+  skips = False
+  
+  try:
+    quarkify.extract_quarks('''
+      testing
+      <!-- #QUARK -->
+    ''')
+  except quarkify.Quarkless:
+    skips = True
 
-  assert result.get("live", False) is False
+  assert skips
