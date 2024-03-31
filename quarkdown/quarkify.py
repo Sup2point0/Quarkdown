@@ -112,12 +112,12 @@ def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
   assert match is not None
 
   for flag, value in token["flags"].items():
-    if isinstance(value, str):
-      flags[flag] = part if value == "#VALUE" else value
-    elif isinstance(value, dict):
+    if isinstance(value, dict):
       for key, val in value.items():
         if key == "add":
           flags[flag].append(part if val == "#VALUE" else value)
+    else:
+      flags[flag] = part if value == "#VALUE" else value
 
   if token["opens-ctx"]:
     ctx.append(token)
