@@ -1,5 +1,10 @@
 <h1 align="center"> <em> Quarkdown </em> </h1>
 
+<div align="center">
+<img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/tests.yml/badge.svg">
+<img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/assort.yml/badge.svg">
+</div>
+
 A personalised GitHub-Flavoured Markdown to HTML renderering engine which automatically renders files in GitHub repositories and deploys them to GitHub Pages.
 
 
