@@ -5,7 +5,7 @@ sys.path[0] = "/".join(sys.path[0].split("/")[:-1])
 from quarkdown import quarkify
 
 
-def test_quarkify():
+def test_positive():
   result = quarkify.extract_quarks('''
     <!-- #QUARK live! -->
     <!-- #QUARK
@@ -15,3 +15,12 @@ def test_quarkify():
 
   assert result["live"] is True, "live flag not triggered!"
   assert result["path"] == "testing/test", "export path incorrect!"
+
+
+def test_negative():
+  result = quarkify.extract_quarks('''
+    testing
+    <!-- #QUARK -->
+  ''')
+
+  assert result.get("live", False) is False
