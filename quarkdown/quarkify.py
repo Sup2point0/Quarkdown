@@ -68,7 +68,7 @@ def extract_quarks(text: str) -> dict:
   with open(os.path.join(root, "resources/tokens-schema.json")) as file:
     defaults = json.load(file)["properties"]["tokens"]["items"]["defaultSnippets"][0]["body"]
   
-  context = [textualise.tokenise({}, defaults)]
+  context: list[dict] = [defaults]
   flags = {}
 
   # TODO splitting twice is really, really slow, how do we optimise this
@@ -89,8 +89,9 @@ def extract_quarks(text: str) -> dict:
         except AssertionError:
           pass
 
-    while not context[-1]["ctx-persists"]:
-      close_ctx(context)
+    while len(context) > 1:  # root context must always be active
+      while not context[-1]["ctx-persists"]:
+        close_ctx(context)
 
   return {**flags, "content": text}
 
