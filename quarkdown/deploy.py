@@ -33,7 +33,7 @@ def finish(start: int, log: dict):
   '''Log time performance metrics.'''
 
   latest = log[0]
-  latest["duration"] = time.time() - start
+  latest["duration"] = round(time.time() - start)
   latest["average"] = latest["changes"] / latest["duration"]
 
 
@@ -80,9 +80,9 @@ def export_and_deploy(
   log_repo = extract_repo_json(home, f"quarkdown/logs/{repo.name.lower()}.json")
 
   log_home.insert(0, {
-    "run": len(log_repo), 
+    "run": len(log_home), 
     "epox": round(time.time() - EPOCH_OFFSET),
-    "date": datetime.now().strftime("%Y-%m-%d"),
+    "date": datetime.now().strftime("%y-%m-%d"),
     "changes": 0,
     "duration": None,
     "average": None,

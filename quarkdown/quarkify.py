@@ -29,8 +29,8 @@ def export(file: ContentFile) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
   text = base64.b64decode(file.content).decode()
-  
   load = extract_quarks(text)
+
   content = load["content"]
   content = textualise.render_html(content)
   content = textualise.clear_comments(content)
