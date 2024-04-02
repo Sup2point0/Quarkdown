@@ -31,11 +31,17 @@ def export(file: ContentFile) -> dict:
   text = base64.b64decode(file.content).decode()
   load = extract_quarks(text)
 
+  # isn't this pipeline nice...
+  # maybe there's a way to do this more succinctly?
   content = load["content"]
   content = textualise.render_html(content)
   content = textualise.clear_comments(content)
+  content = textualise.indent(content, " " * 6)
 
-  styles = "\n".join(
+  header = load.get("header", "")
+  header = textualise.indent(header, " " * 6)
+
+  styles = "  \n".join(
     f'''<link rel="stylesheet" type="text/css" href="https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/{style}.css">'''
     for style in load.get("style", ["default"])
   )
@@ -47,7 +53,7 @@ def export(file: ContentFile) -> dict:
     content = source.read().format(
       styles = styles,
       darkness = load.get("polarity", "light") == "dark",
-      header = load.get("header", ""),
+      header = header,
       content = content,
       source = "https://github.com/Sup2point0/Assort/" + file.path,
       version = __version__,

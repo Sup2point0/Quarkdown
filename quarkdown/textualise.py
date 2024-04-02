@@ -3,6 +3,7 @@ Pipeline functions for processing text.
 '''
 
 import re
+import textwrap
 
 import requests
 
@@ -34,3 +35,9 @@ def clear_comments(text: str) -> str:
   '''Remove HTML comments from given text.'''
 
   return re.sub("<!--.*-->", "", text)
+
+
+def indent(text: str, spaces: int) -> str:
+  '''Add indentation to multi-line text.'''
+
+  return textwrap.indent(text, " " * spaces)
