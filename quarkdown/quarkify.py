@@ -35,7 +35,7 @@ def export(file: ContentFile) -> dict:
   content = textualise.render_html(content)
   content = textualise.clear_comments(content)
 
-  style = "\n".join(
+  styles = "\n".join(
     f'''<link rel="stylesheet" type="text/css" href="https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/{style}.css">'''
     for style in load.get("style", ["default"])
   )
@@ -45,7 +45,7 @@ def export(file: ContentFile) -> dict:
 
   with open(path) as source:
     content = source.read().format(
-      style = style,
+      styles = styles,
       darkness = load.get("polarity", "light") == "dark",
       header = load.get("header", ""),
       content = content,
