@@ -120,7 +120,7 @@
               "shard": "~",
               "required-ctx": null,
               "required-idx": null,
-              "opens-ctx": null,
+              "opens-ctx": "~",
               "ctx-persists": false,
               "ctx-clashes": true,
               "flags": {},
