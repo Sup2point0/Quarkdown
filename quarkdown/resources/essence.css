@@ -13,6 +13,10 @@ html {
 }
 
 /* core */
+td {
+  border: 1px var(--grey-nova);
+}
+
 a {
   display: inline-block;
   position: relative;
