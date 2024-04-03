@@ -11,9 +11,9 @@ on:
 jobs:
   assort:
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: ./
+    defaults:
+      run:
+        working-directory: ./
 
     steps:
       - name: 'Git: checkout'
