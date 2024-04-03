@@ -118,8 +118,8 @@ def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
 
   can_activate(ctx, token)
 
-  if ctx[-1]["kind"] == "html":
-    assert "quark" in token["opens-ctx"]
+  if "html" in ctx[-1]["opens-ctx"]:
+    assert "quark" in token["shard"]
 
   match = re.search(token["regex-open"], part)
   assert match is not None
