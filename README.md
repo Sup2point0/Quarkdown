@@ -5,6 +5,8 @@
 <img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/assort.yml/badge.svg">
 </div>
 
+![quarkdown-title](.assets/title.png)
+
 A personalised GitHub-Flavoured Markdown to HTML renderering engine which automatically renders files in GitHub repositories and deploys them to GitHub Pages.
 
 
