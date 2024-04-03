@@ -7,10 +7,12 @@ from quarkdown import quarkify
 
 def test_live_positive():
   result = quarkify.extract_quarks('''
+    test
     <!-- #QUARK live! -->
     <!-- #QUARK
     EXPORT: testing/test
     -->
+    test
   ''')
 
   assert result["live"] is True, "live flag not triggered!"
@@ -39,8 +41,12 @@ def test_dead():
 
   try:
     quarkify.extract_quarks('''
+      test
+      test
       <!-- #QUARK dead! -->
       <!-- #QUARK live! -->
+      test
+      test
     ''')
   except quarkify.Quarkless:
     skips = True
@@ -64,5 +70,5 @@ def test_data_single():
   assert result["path"] == "testing/test"
   assert result["style"] == ["default"]
   assert result["duality"] == "light"
-  assert result["index"] == "tests"
+  assert result["index"] == ["tests"]
   assert result["date"] == 24
