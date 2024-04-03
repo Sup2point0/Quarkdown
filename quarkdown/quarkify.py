@@ -38,10 +38,10 @@ def export(file: ContentFile) -> dict:
   content = load["content"]
   content = textualise.render_html(content)
   content = textualise.clear_comments(content)
-  content = textualise.indent(content, " " * 6)
+  content = textualise.indent(content, 6)
 
   header = load.get("header", "")
-  header = textualise.indent(header, " " * 6)
+  header = textualise.indent(header, 6)
 
   styles = "  \n".join(
     f'''<link rel="stylesheet" type="text/css" href="https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/{style}.css">'''
