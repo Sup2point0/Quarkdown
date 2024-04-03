@@ -19,6 +19,16 @@
             "type": "string",
             "default": "~"
           },
+          "opens-ctx": {
+            "description": "The context activated by the token.",
+            "type": ["string", "null"],
+            "default": null
+          },
+          "regex-open": {
+            "description": "The regular expression that activates the context when matched.",
+            "type": "string",
+            "default": ".*"
+          },
           "required-ctx": {
             "description": "The context(s) that must be active.",
             "type": ["string", "null"],
@@ -27,11 +37,6 @@
           "required-idx": {
             "description": "The index of a line the token must appear at.",
             "type": ["integer", "null"],
-            "default": null
-          },
-          "opens-ctx": {
-            "description": "The context activated by the token.",
-            "type": ["string", "null"],
             "default": null
           },
           "ctx-persists": {
@@ -45,23 +50,10 @@
             "items": {"type": "string"},
             "default": true
           },
-          "variables": {
-            "title": "Variable Content",
-            "description": "Variables to extract from the token.",
-            "type": "object",
-            "properties": {},
-            "default": {}
-          },
-          "flags": {
-            "description": "Flags to trigger from the context's activation.",
-            "type": "object",
-            "properties": {},
-            "default": {}
-          },
-          "regex-open": {
-            "description": "The regular expression that activates the context when matched.",
-            "type": "string",
-            "default": ".*"
+          "inhibits-quarkdown": {
+            "description": "Whether to prevent other contexts from activating while this context is active.",
+            "type": "boolean",
+            "default": false
           },
           "html-open": {
             "description": "The HTML tag to prepend to the text.\n\nIf set to `#AUTO`, a `div` will be added with `class` set to the token's shard.",
@@ -80,6 +72,12 @@
               {"enum": ["#AUTO"]}
             ],
             "default": null
+          },
+          "flags": {
+            "description": "Flags to trigger from the context's activation.",
+            "type": "object",
+            "properties": {},
+            "default": {}
           },
           "regex-close": {
             "description": "The regular expression that deactivates the context when matched.\n\nIf set to `#AUTO`, the context will close itself upon matching the same token.",
@@ -104,11 +102,6 @@
             "type": "integer",
             "minimum": 0,
             "default": 0
-          },
-          "inhibits-quarkdown": {
-            "description": "Whether to prevent other contexts from activating while this context is active.",
-            "type": "boolean",
-            "default": false
           }
         },
         "defaultSnippets":
@@ -118,19 +111,19 @@
             "description": "All default configurations for a token.",
             "body": {
               "shard": "~",
+              "opens-ctx": "~",
+              "regex-open": " ",
               "required-ctx": null,
               "required-idx": null,
-              "opens-ctx": "~",
               "ctx-persists": false,
               "ctx-clashes": true,
-              "flags": {},
-              "regex-open": " ",
+              "inhibits-quarkdown": false,
               "html-open": "<div>",
               "html-replaces": "#AUTO",
+              "flags": {},
               "regex-close": null,
               "html-close": "#AUTO",
-              "ctx-collapses": 0,
-              "inhibits-quarkdown": false
+              "ctx-collapses": 0
             }
           },
           {
@@ -138,10 +131,10 @@
             "description": "Core configurations for a token.",
             "body": {
               "shard": "",
-              "required-ctx": "",
               "opens-ctx": "",
-              "ctx-persists": false,
               "regex-open": "",
+              "required-ctx": "",
+              "ctx-persists": false,
               "ctx-collapses": 0
             }
           },
@@ -150,14 +143,14 @@
             "description": "Extended configurations for a token",
             "body": {
               "shard": "",
-              "required-ctx": "",
               "opens-ctx": "",
+              "regex-open": "",
+              "required-ctx": "",
               "ctx-persists": false,
               "ctx-clashes": true,
-              "regex-open": "",
+              "inhibits-quarkdown": false,
               "regex-close": "#AUTO",
-              "ctx-collapses": 0,
-              "inhibits-quarkdown": false
+              "ctx-collapses": 0
             }
           }
         ]
