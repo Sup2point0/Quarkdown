@@ -53,6 +53,7 @@ def export(file: ContentFile) -> dict:
 
   with open(path) as source:
     content = source.read().format(
+      title = load.get("title", "Assort"),
       styles = styles,
       darkness = load.get("duality", "light") == "dark",
       header = header,
