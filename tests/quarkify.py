@@ -5,7 +5,7 @@ sys.path[0] = "/".join(sys.path[0].split("/")[:-1])
 from quarkdown import quarkify
 
 
-def test_positive():
+def test_live_positive():
   result = quarkify.extract_quarks('''
     <!-- #QUARK live! -->
     <!-- #QUARK
@@ -17,15 +17,48 @@ def test_positive():
   assert result["path"] == "testing/test", "export path incorrect!"
 
 
-def test_negative():
+def test_live_negative():
   skips = False
   
   try:
     quarkify.extract_quarks('''
-      testing
       <!-- #QUARK -->
     ''')
   except quarkify.Quarkless:
     skips = True
 
   assert skips
+
+
+def test_dead():
+  skips = False
+
+  try:
+    quarkify.extract_quarks('''
+      <!-- #QUARK dead! -->
+      <!-- #QUARK live! -->
+    ''')
+  except quarkify.Quarkless:
+    skips = True
+
+  assert skips
+
+
+def test_data_single():
+  result = quarkify.extract_quarks('''
+    <!-- #QUARK live! -->
+    <!-- #QUARK
+    EXPORT: testing/test
+    STYLE: default
+    DUALITY: light
+    INDEX: tests
+    DATE: 24
+    -->
+  ''')
+
+  assert result["live"] is True
+  assert result["path"] == "testing/test"
+  assert result["style"] == "default"
+  assert result["duality"] == "light"
+  assert result["index"] == "tests"
+  assert result["date"] = 24
