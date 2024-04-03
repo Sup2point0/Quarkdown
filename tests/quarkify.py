@@ -22,7 +22,11 @@ def test_live_negative():
   
   try:
     quarkify.extract_quarks('''
+      test
+      test
       <!-- #QUARK -->
+      test
+      test
     ''')
   except quarkify.Quarkless:
     skips = True
@@ -58,7 +62,7 @@ def test_data_single():
 
   assert result["live"] is True
   assert result["path"] == "testing/test"
-  assert result["style"] == "default"
+  assert result["style"] == ["default"]
   assert result["duality"] == "light"
   assert result["index"] == "tests"
   assert result["date"] == 24
