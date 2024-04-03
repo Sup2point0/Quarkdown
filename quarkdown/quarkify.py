@@ -54,7 +54,7 @@ def export(file: ContentFile) -> dict:
   with open(path) as source:
     content = source.read().format(
       styles = styles,
-      darkness = load.get("polarity", "light") == "dark",
+      darkness = load.get("duality", "light") == "dark",
       header = header,
       content = content,
       source = "https://github.com/Sup2point0/Assort/" + file.path,
