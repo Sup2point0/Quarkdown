@@ -15,6 +15,8 @@ from .__version__ import __version__
 
 __all__ = ["export"]
 
+LIVE_LINES = 3
+
 
 class Quarkless(Exception):
   '''Exception raised when a file has no `#QUARK LIVE` flag.'''
@@ -68,10 +70,6 @@ def export(file: ContentFile) -> dict:
 def extract_quarks(text: str) -> dict:
   '''Extract #QUARK quarks from Quarkdown-Flavoured Markdown.'''
 
-  # TODO this is a bit inefficient, we should find a better way to do this
-  if "#QUARK live!" not in text:
-    raise Quarkless("#QUARK file inactive")
-
   root = os.path.split(os.path.abspath(__file__))[0]
   with open(os.path.join(root, "resources/tokens.json")) as file:
     tokens = json.load(file)["tokens"]
@@ -83,7 +81,11 @@ def extract_quarks(text: str) -> dict:
   flags = {}
 
   # TODO splitting twice is really, really slow, how do we optimise this
-  for line in text.split("\n"):
+  for idx, line in enumerate(text.split("\n")):
+    if idx == LIVE_LINES:
+      if not flags.get("live", False):
+        raise Quarkless("#QUARK file inactive")
+        
     for part in line.split():
       for token in tokens:
         token = textualise.tokenise(token, defaults)
