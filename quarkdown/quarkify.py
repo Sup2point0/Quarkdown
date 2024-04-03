@@ -118,9 +118,6 @@ def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
 
   can_activate(ctx, token)
 
-  if "html" in ctx[-1]["opens-ctx"]:
-    assert "quark" in token["shard"]
-
   match = re.search(token["regex-open"], part)
   assert match is not None
 
@@ -157,6 +154,12 @@ def check_close(ctx: list[dict], part: str, token: dict):
 
 def can_activate(ctx: list[dict], token: dict):
   '''Check if a context meets its activation requirements. Raises `AssertionError` if not.'''
+
+  if ctx[-1]["inhibits-quarkdown"]:
+    raise AssertionError()
+
+  if "html" in ctx[-1]["opens-ctx"]:
+    assert "quark" in token["shard"]
 
   if token["required-ctx"]:
     assert ctx[-1]["opens-ctx"] == token["required-ctx"]
