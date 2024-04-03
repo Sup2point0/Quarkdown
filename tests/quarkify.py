@@ -61,4 +61,4 @@ def test_data_single():
   assert result["style"] == "default"
   assert result["duality"] == "light"
   assert result["index"] == "tests"
-  assert result["date"] = 24
+  assert result["date"] == 24
