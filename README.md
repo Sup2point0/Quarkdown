@@ -7,7 +7,7 @@
 
 ![quarkdown-title](.assets/title.png)
 
-A personalised GitHub-Flavoured Markdown to HTML renderering engine which automatically renders files in GitHub repositories and deploys them to GitHub Pages.
+A personalised GitHub-Flavoured Markdown to HTML renderering engine, which automatically exports files in GitHub repositories and deploys them to GitHub Pages.
 
 
 <br>
@@ -28,6 +28,8 @@ A brief general overview of how *Quarkdown* works.
 - The rendered `.html` files are added to the `docs/` folder in *Assort*.
 - GitHub Pages will then automatically deploy those to [sup2point0.github.io/Assort](https://sup2point0.github.io/Assort)!
 
+I like to give my projects their own little bit of jargon for character, so if you’d like to understand the terms used, refer to the [glossary](docs/glossary.md).
+
 
 <br>
 
@@ -42,6 +44,7 @@ Over the years I’ve created so, so many Markdown files in *Assort* that it’s
 
 ## Future Features
 
+- Add special index pages.
 - Check if export filepaths have changed for a file, and if so, delete the artefact file.
 - Extract article title into a special `<header>` container.
 - Inject MathJax without `{}` breaking Python string formatting.
