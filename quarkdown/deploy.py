@@ -34,7 +34,7 @@ def finish(start: int, log: dict):
 
   latest = log[0]
   latest["duration"] = round(time.time() - start)
-  latest["average"] = latest["changes"] / latest["duration"]
+  latest["average"] = round(latest["duration"] / latest["changes"], 1)
 
 
 def extract_repo_files(repo: Repository, path = "") -> list[ContentFile]:
