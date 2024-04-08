@@ -7,16 +7,11 @@ from quarkdown import quarkify
 
 def test_live_positive():
   result = quarkify.extract_quarks('''
-    test
     <!-- #QUARK live! -->
-    <!-- #QUARK
-    EXPORT: testing/test
-    -->
-    test
   ''')
 
-  assert result["live"] is True, "live flag not triggered!"
-  assert result["path"] == "testing/test", "export path incorrect!"
+  assert "live" in result, "flag [live] doesn’t exist!"
+  assert result["live"] is True, "flag [live] not triggered!"
 
 
 def test_live_negative():
@@ -24,40 +19,32 @@ def test_live_negative():
   
   try:
     quarkify.extract_quarks('''
-      test
-      test
       <!-- #QUARK -->
-      test
-      test
     ''')
   except quarkify.Quarkless:
     skips = True
 
-  assert skips
+  assert skips, "exception [Quarkless] not raised!"
 
 
-def test_dead():
+def test_dead_positive():
   skips = False
 
   try:
-    quarkify.extract_quarks('''
-      test
-      test
+    result = quarkify.extract_quarks('''
       <!-- #QUARK dead! -->
       <!-- #QUARK live! -->
-      test
-      test
     ''')
   except quarkify.Quarkless:
     skips = True
 
-  assert skips
+  assert skips, "exception [Quarkless] not raised!"
+  assert result.get("live", False) is not True, "flag [live] set to True instead of False!"
 
 
 def test_data_single():
   result = quarkify.extract_quarks('''
-    <!-- #QUARK live! -->
-    <!-- #QUARK
+    <!-- #QUARK live!
     EXPORT: testing/test
     STYLE: default
     DUALITY: light
@@ -72,3 +59,22 @@ def test_data_single():
   assert result["duality"] == "light"
   assert result["index"] == ["tests"]
   assert result["date"] == ["24"]
+
+
+def test_data_multi():
+  result = quarkify.extract_quarks('''
+    <!-- #QUARK live!
+    EXPORT: testing/tester/test scarlet/herring
+    STYLE: default special testing
+    DUALITY: light ignore
+    INDEX: tests testing
+    DATE: 24 04 02
+    -->
+  ''')
+
+  assert result["live"] is True
+  assert result["path"] == "testing/tester/test"
+  assert result["style"] == ["default", "special", "testing"]
+  assert result["duality"] == "light"
+  assert result["index"] == ["tests", "testing"]
+  assert result["date"] == ["24", "04", "02"]
