@@ -1,0 +1,17 @@
+[project]
+name = "Quarkdown"
+dynamic = ["version"]
+description = "A Markdown to HTML renderer for exporting and deploying repositories to GitHub Pages"
+readme = "README.md"
+authors = [{name = "Sup#2.0"}]
+license = {file = "LICENSE"}
+requires-python = ">= 3.10"
+dependencies = [
+  "PyGithub",
+]
+keywords = []
+
+[project.urls]
+Homepage = "https://github.com/Sup2point0/Quarkdown"
+Documentation = "https://github.com/Sup2point0/Quarkdown/docs"
+Repository = "https://github.com/Sup2point0/Quarkdown"
