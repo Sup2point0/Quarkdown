@@ -160,8 +160,7 @@ def check_close(ctx: list[dict], part: str, token: dict):
 def can_activate(ctx: list[dict], token: dict):
   '''Check if a context meets its activation requirements. Raises `AssertionError` if not.'''
 
-  if ctx[-1]["inhibits-quarkdown"]:
-    raise AssertionError()
+  assert not ctx[-1]["inhibits-quarkdown"]
 
   if "html" in ctx[-1]["opens-ctx"]:
     assert "quark" in token["shard"]
