@@ -111,7 +111,7 @@
             "description": "All default configurations for a token.",
             "body": {
               "shard": "~",
-              "opens-ctx": "~",
+              "opens-ctx": null,
               "regex-open": " ",
               "required-ctx": null,
               "required-idx": null,

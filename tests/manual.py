@@ -1,7 +1,7 @@
 import sys
 sys.path[0] = "/".join(sys.path[0].split("/")[:-1])
 
-from . import quarkify
+import quarkify
 
 
 quarkify.test_data_single()

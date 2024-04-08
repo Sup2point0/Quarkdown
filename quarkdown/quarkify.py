@@ -78,7 +78,9 @@ def extract_quarks(text: str) -> dict:
   with open(os.path.join(root, "resources/tokens-schema.json")) as file:
     defaults = json.load(file)["properties"]["tokens"]["items"]["defaultSnippets"][0]["body"]
   
-  context: list[dict] = [defaults]
+  context: list[dict] = [
+    textualise.tokenise({"opens-ctx": "~"}, defaults)
+  ]
   flags = {}
 
   # TODO splitting twice is really, really slow, how do we optimise this
