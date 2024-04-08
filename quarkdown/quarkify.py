@@ -84,7 +84,8 @@ def extract_quarks(text: str) -> dict:
   # TODO splitting twice is really, really slow, how do we optimise this
   for idx, line in enumerate(text.split("\n")):
     if idx < LIVE_LINES:
-      if flags.get("live", False) is False:
+      # once we reach LIVE_LINES, we force quit if we haven’t seen `#QUARK live!`
+      if flags.get("live", idx != LIVE_LINES) is False:
         raise Quarkless("#QUARK file inactive")
         
     for part in line.split():
