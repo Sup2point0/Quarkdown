@@ -15,7 +15,7 @@ from .__version__ import __version__
 
 __all__ = ["export"]
 
-LIVE_LINES = 3
+LIVE_LINES = 4
 
 
 class Quarkless(Exception):
@@ -83,8 +83,8 @@ def extract_quarks(text: str) -> dict:
 
   # TODO splitting twice is really, really slow, how do we optimise this
   for idx, line in enumerate(text.split("\n")):
-    if idx == LIVE_LINES:
-      if not flags.get("live", False):
+    if idx < LIVE_LINES:
+      if flags.get("live", False) is False:
         raise Quarkless("#QUARK file inactive")
         
     for part in line.split():
