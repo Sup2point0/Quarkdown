@@ -111,7 +111,10 @@ def extract_quarks(text: str) -> dict:
       
       close_ctx(context)
 
-  return {**flags, "content": text}
+  if not flags.get("live", False):
+    raise Quarkless("#QUARK file inactive")
+  else:
+    return {**flags, "content": text}
 
 
 def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
