@@ -37,6 +37,7 @@ def test_dead_positive():
     ''')
   except quarkify.Quarkless:
     skips = True
+    result = None
 
   if result:
     assert result.get("live", False) is not True, "flag [live] set to True instead of False!"
