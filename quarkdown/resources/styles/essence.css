@@ -61,8 +61,8 @@ a:visited:hover {
 
 #footer {
   width: 100%;
-  margin-top: 1em;
-  padding: 2em 0em;
+  margin-top: 1rem;
+  padding: 2rem 0rem;
   background-color: #00060e;
   text-align: center;
   color: var(--grey-nova);
