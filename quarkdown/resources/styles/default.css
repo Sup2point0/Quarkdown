@@ -19,7 +19,7 @@ h1 {
   font-weight: 500;
 }
 h2 {
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-bottom: 0rem;
   padding-bottom: 0.2rem;
   font-size: 2rem;
@@ -28,7 +28,7 @@ h2 {
   border-bottom: 3.5px solid var(--teal-elec)
 }
 h3 {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   margin-bottom: 0rem;
   font-size: 1.69rem;
   font-family: var(--font-head);
