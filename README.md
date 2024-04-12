@@ -15,20 +15,22 @@ A personalised GitHub-Flavoured Markdown to HTML renderering engine, which autom
 
 ## Overview
 
-A brief general overview of how *Quarkdown* works.
-
-- My super repo [*Assort*](https://github.com/Sup2point0/Assort) has a GitHub Action configured to trigger whenever a commit is pushed to it.
-- This action runs a GitHub Action in this repo ([`assort.yml`](.github/workflows/assort.yml)).
-- That action then runs a Python script ([`assort.py`](scripts/assort.py)).
-- This script accesses *Assort* through the GitHub API and scans for (updated) Markdown (`.md`) files.
-  - For each file, it parses it for `#QUARK` flags (affectionately known as *quarks*) to extract meta data about how Quarkdown should process it.
-  - It then exports the Markdown content to HTML using the GitHub-Flavoured Markdown API.
-  - The final `.html` file is generated using the [`core.html`](quarkdown/resources/core.html) base.
-  - Updates are logged with JSON to track which files have already been rendered, so as to avoid needlessly re-rendering files that haven’t updated.
-- The rendered `.html` files are added to the `docs/` folder in *Assort*.
-- GitHub Pages will then automatically deploy those to [sup2point0.github.io/Assort](https://sup2point0.github.io/Assort)!
+[Quarkdown](docs/glossary.md) is an engine for extracting Markdown files from a GitHub repo, exporting them to HTML, and adding those files to the repo to be deployed by GitHub Pages.
 
 I like to give my projects their own little bit of jargon for character, so if you’d like to understand the terms used, refer to the [glossary](docs/glossary.md).
+
+> [!TIP]
+> For more, see the [docs](docs/).
+
+
+<br>
+
+
+## Features
+
+- A customised Markdown parser which handles Quarkdown-Flavoured Markdown
+- An engine for extracting and uploading files through the GitHub API
+- Automation through GitHub Actions for automatically exporting and deploying GitHub repositories
 
 
 <br>
