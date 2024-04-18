@@ -3,7 +3,7 @@
 > [!NOTE]
 > This page is currently under construction. Apologies for incomplete or inaccurate content.
 
-Quarkdown extracts metadata and processing directives through *quarks*. These are added to Markdown documents via HTML comments (which aren’t rendered) containing a `#QUARK` flag.
+Quarkdown extracts metadata and processing directives from through *quarks*. These are added to Markdown documents via HTML comments (which aren’t rendered in previews) containing a `#QUARK` flag. Text containing quarks is referred to as *Quarkdown-Flavoured Markdown*.
 
 
 <br>
@@ -16,7 +16,7 @@ The behaviour of a quark is influenced by its *flavour*, indicated via a particu
 | Flavour | Mark | Instance | Description |
 | :------ | :--- | :------- | :---------- |
 | Boolean Flag | `!` | `#QUARK live!` | Set a flag to a hardcoded value determined by the parser. |
-| Variable Flag | `:` | `#QUARK EXPORT:` | Set a variable to a given value. |
+| Variable Flag | `:` | `#QUARK EXPORT: <path>` | Set a variable to a given value. |
 | Section Open | `?` | `#QUARK only?` | Open a particular section for special processing – similar to `<div class="...">`. |
 | Section Close | `.` | `#QUARK only.` | Close a section, equivalent of `</div>`. |
 
@@ -30,7 +30,7 @@ Documents to be exported by Quarkdown must be marked as *active* with `#QUARK li
 
 Processing is skipped for inactive files. Whichever quark is used, it should be placed as close to the top as possible (below the page title by convention) to confirm its activity as early as possible.
 
-### Instance
+### Instances
 
 ```md
 # Lorem Ipsum
@@ -52,17 +52,17 @@ The quick brown fox jumps over the lazy dog.
 
 ## Core
 
-Alongside the `live` indicator is a series of metadata flags which direct Quarkdown in how to export the document.
+Alongside the activity indicator is a series of metadata flags which instruct Quarkdown in how it should go about exporting the document.
 
 ### Flags
 
-| Flag | Parameters | Values | Required | Description | Notes |
-| :--- | :--------- | :----- | :------- | :---------- | :---- |
-| `EXPORT` | `<path>` | | yes | The file path to export to in the `docs/` folder of the relevant repository. | `docs/` is not needed at the start, since this is automagically prepended. No file extension is needed either, since all files will be exported to `.html`. |
-| `STYLE` | `<style(s)>` | `default` `creative` | no, defaults to `auto` | The style(s) to use. | |
-| `DUALITY` | `<theme>` | `light` `dark` | no, defaults to `auto` | The colour scheme to use. | |
-| `INDEX` | `<category(s)>` | any, `auto` | no | Index pages to add this page to. | If set to `auto` the page will be added to the index page of its parent directory. For instance, if `EXPORT` is `dir/folder/file`, this page will be indexed in `folder/index.html`. |
-| `DATE` | `<year> <month/season?> <day?>` | | no | The date the page was created. | Used for sorting contents in index pages. |
+| Flag | Parameters | Values | Required | Default | Description | Notes |
+| :--- | :--------- | :----- | :------- | :------ | :---------- | :---- |
+| `EXPORT` | `<path>` | any | yes | – | The file path to export to in the `docs/` folder of the relevant repository. | `docs/` is not needed at the start, since this is automagically prepended. No file extension is needed either, since all files will be exported to `.html`. |
+| `STYLE` | `<style(s)>` | `default` `creative` | no | `auto` | The style(s) to use. | |
+| `DUALITY` | `<theme>` | `light` `dark` | no | `auto` | The colour scheme to use. | |
+| `INDEX` | `<category(s)>` | any, `auto` | no | – | Index pages to add this page to. | If set to `auto` the page will be added to the index page of its parent directory. For instance, if `EXPORT` is `dir/folder/file`, this page will be indexed in `folder/index.html`. |
+| `DATE` | `<year> <month/season?> <day?>` | 1/2-digit numbers, `FALL` `WINTER` `SPRING` `SUMMER` | no | – | The date the page was created. | Used for sorting contents in index pages. |
 
 ### Layout
 
@@ -72,7 +72,19 @@ Alongside the `live` indicator is a series of metadata flags which direct Quarkd
   STYLE: <style(s)>
   POLARITY: <light/dark>
   INDEX: <category(s)>
-  DATE: <yy> <mm?> <dd?>
+  DATE: <yy> <mm/s?> <dd?>
+-->
+```
+
+### Instance
+
+```md
+<!-- #QUARK live!
+  EXPORT: testing/example
+  STYLE: default easter
+  POLARITY: light
+  INDEX: tests special
+  DATE: 24 SUMMER
 -->
 ```
 
@@ -98,7 +110,18 @@ The quick brown fox jumps over the lazy dog.
 ```
 
 ### `only`
-Encloses a section that is rendered by Quarkdown but isn’t displayed otherwise.
+Encloses a section that is rendered by Quarkdown but isn’t displayed in Markdown.
+
+```md
+The quick brown fox jumps over the lazy dog.
+
+<!-- #QUARK only?
+This text won’t show up on Github,
+but will appear in the rendered HTML.
+#QUARK only. -->
+
+The quick brown fox jumps over the lazy dog.
+```
 
 
 <br>
