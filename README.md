@@ -2,12 +2,14 @@
 
 <div align="center">
 <img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/tests.yml/badge.svg">
+<img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/quarkdown.yml/badge.svg">
 <img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/assort.yml/badge.svg">
+<img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/antarctica.yml/badge.svg">
 </div>
 
 ![quarkdown-title](.assets/title.png)
 
-A personalised GitHub-Flavoured Markdown to HTML renderering engine, which automatically exports files in GitHub repositories and deploys them to GitHub Pages.
+A personalised GitHub-Flavoured Markdown to HTML rendering engine, which automatically exports files in GitHub repositories and deploys them to GitHub Pages.
 
 
 <br>
@@ -38,7 +40,7 @@ I like to give my projects their own little bit of jargon for character, so if y
 
 ## Rationale
 
-Over the years I’ve created so, so many Markdown files in *Assort* that it’s gotten ridiculous – it’s basically my own personal wiki at this point. So, I thought why not give people the option to browse it through a website? Don’t get me wrong, GitHub is already fantastic at displaying Markdown files, but with an actual webpage we can make it *so* much more personalised.
+Over the years I’ve created so, so many Markdown files in *Assort* that it’s basically my own personal wiki at this point. So, I thought why not give people the option to browse it through a website? Don’t get me wrong, GitHub is already fantastic at displaying Markdown files, but with an actual webpage we can make it *so* much more personalised.
 
 
 <br>
