@@ -1,41 +1,64 @@
 <!DOCTYPE html>
 
-<!-- Quarkdown Core v1.5.2 -->
+<!-- Quarkdown Core v1.6.2 -->
 <html>
 
 <head>
-  <title> Testing | Tests | Quarkdown </title>
+  <title> {title} </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="https://github.com/Sup2point0/Assort/blob/origin/.assets/profiles/Purple Portal.png">
   <link rel="stylesheet" type="text/css" href="https://raw.githack.com/Sup2point0/supcode/sup/resources/Nova/Nova.css">
   <link rel="stylesheet" type="text/css" href="https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/styles/essence.css">
-  <link rel="stylesheet" type="text/css" href="https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/styles/default.css">
-  <link rel="icon" type="image/x-icon" href="https://github.com/Sup2point0/Assort/blob/origin/.assets/profiles/Purple Portal.png">
+  {styles}
+
+  <!-- we use this endpoint for security -->
+  <script type="text/javascript" src="https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+  <!-- <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script> -->
 </head>
 
 <body style="--darkness: {darkness}">
+
+  <nav">
+    <ul>
+      <div class="left">
+        <li id="github-icon">
+          <img height="4em" src="https://github.com/Sup2point0/sup2point0.github.io/blob/sup/assets/github-icon.svg">
+        </li>
+        <li id="assort">
+          <a href="https://sup2point0.github.io/assort"> <div class="nav-cell"> Assort </div> </a>
+        </li>
+      </div>
+  
+      <div class="right">
+        <li>
+          <a href="https://sup2point0.github.io/assort/writing"> <div class="nav-cell"> writing </div> </a>
+        </li>
+        <li>
+          <a href="https://sup2point0.github.io/assort/poetry"> <div class="nav-cell"> poetry </div> </a>
+        </li>
+      </div>
+    </ul>
+  </nav>
+  
   <article>
   
     <div id="header">
-      <h1>Testing the Tests</h1>
+{header}
     </div>
 
     <div id="content">
-      <h2>What is a test?</h2>
-      <p>The quick brown fox jumps over the lazy dog.</p>
-      <h2>But really, what is a test?</h2>
-      <p>The quick brown fox jumps over the lazy dog!</p>
-      <h3>Lorem Ipsum Ipsum Lorem</h3>
-      <p>TESTING TESTING TESTING</p>
+{content}
     </div>
 
     <div id="footer">
       <p> by <a href="https://github.com/Sup2point0">Sup#2.0</a> </p>
-      <p> Auto-rendered by <a href="https://github.com/Sup2point0/Quarkdown">Quarkdown</a> (testing) </p>
+      <p> Auto-rendered by <a href="https://github.com/Sup2point0/Quarkdown">Quarkdown</a> v{version} </p>
       <p> <a href="{source}">View on GitHub</a> </p>
     </div>
-  
+
   </article>
+
 </body>
 
 </html>
