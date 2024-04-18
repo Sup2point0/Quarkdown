@@ -1,9 +1,9 @@
 # Quarks
 
-> [!NOTE]
-> This page is currently under construction. Apologies for incomplete or inaccurate content.
-
 Quarkdown extracts metadata and processing directives from through *quarks*. These are added to Markdown documents via HTML comments (which aren’t rendered in previews) containing a `#QUARK` flag. Text containing quarks is referred to as *Quarkdown-Flavoured Markdown*.
+
+> [!TIP]
+> For quick reference, see [§ Cheat Sheet](#cheat-sheet).
 
 
 <br>
@@ -116,9 +116,9 @@ Encloses a section that is rendered by Quarkdown but isn’t displayed in Markdo
 The quick brown fox jumps over the lazy dog.
 
 <!-- #QUARK only?
-This text won’t show up on Github,
+This text won’t show up in Markdown,
 but will appear in the rendered HTML.
-#QUARK only. -->
+     #QUARK only. -->
 
 The quick brown fox jumps over the lazy dog.
 ```
@@ -139,12 +139,16 @@ The quick brown fox jumps over the lazy dog.
 -->
 
 <!-- #QUARK ignore? -->
-This text isn’t rendered to HTML.
+This text isn’t rendered or processed.
 <!-- #QUARK ignore. -->
 
 <!-- #QUARK only?
-This text won’t show up in Markdown, but is rendered to HTML.
-#QUARK only. -->
+This text won’t show up in Markdown, but will appear in the rendered HTML.
+     #QUARK only. -->
+
+<!-- #QUARK synopsis? -->
+This text will be incorporated into the header section.
+<!-- #QUARK synopsis. -->
 
 <!-- #QUARK contents? -->
 A hardcoded table of contents will be rendered specially by Quarkdown.
