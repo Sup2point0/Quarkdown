@@ -53,6 +53,38 @@ a:visited:hover {
   color: var(--lilac-nova);
 }
 
+nav {
+  --col-nav: rgba(0, 0, 0 / 20%);
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--col-nav);
+  list-style-type: none;
+}
+nav ul li {
+  display: inline;
+}
+
+nav ul li .left {
+  float: left;
+}
+nav ul li .right {
+  float: right;
+}
+
+.nav-cell {
+  display: block;
+  padding: 1em;
+  color: #fff;
+  transition: 0.2s ease-in-out;
+}
+.nav-cell:hover {
+  background-color: #666;
+}
+
 /* specific */
 #content {
   margin: 0 min(169px, 20vw);
