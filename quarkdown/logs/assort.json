@@ -2,87 +2,87 @@
   "slinqui.md": {
     "version": "1.3.1",
     "export-path": "docs/slinqui.html",
-    "last-export": 3436524
+    "last-export": 4416013
   },
   "Yu-Gi-Oh!/readme.md": {
     "version": "1.3.1",
     "export-path": "docs/yu-gi-oh/index.html",
-    "last-export": 3436534
+    "last-export": 4416023
   },
   "xeriqui/readme.md": {
     "version": "1.3.1",
     "export-path": "docs/xeriqui/index.html",
-    "last-export": 3436541
+    "last-export": 4416029
   },
   "~poetry/Fortisan.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/fortisan.html",
-    "last-export": 3436552
+    "last-export": 4416042
   },
   "~poetry/Heartburn.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/heartburn.html",
-    "last-export": 3436554
+    "last-export": 4416043
   },
   "~poetry/Heavy Crown.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/heavy-crown.html",
-    "last-export": 3436556
+    "last-export": 4416045
   },
   "~poetry/Lifeless.md": {
     "version": "1.3.1",
     "export-path": "docs/lifeless.html",
-    "last-export": 3436558
+    "last-export": 4416046
   },
   "~poetry/Nameless.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/nameless.html",
-    "last-export": 3436559
+    "last-export": 4416047
   },
   "~poetry/Quantitative Quantitivity.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/quantitative-quantitivity.html",
-    "last-export": 3436561
+    "last-export": 4416049
   },
   "~poetry/Reverie.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/reverie.html",
-    "last-export": 3436562
+    "last-export": 4416050
   },
   "~poetry/Strive.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/strive.html",
-    "last-export": 3436563
+    "last-export": 4416052
   },
   "~poetry/Teardrop.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/teardrop.html",
-    "last-export": 3436565
+    "last-export": 4416053
   },
   "~poetry/This.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/this.html",
-    "last-export": 3436566
+    "last-export": 4416054
   },
   "~poetry/Time of the Times.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/time-of-the-times.html",
-    "last-export": 3436567
+    "last-export": 4416056
   },
   "~poetry/What Was This Called Again.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/what-was-this-called-again.html",
-    "last-export": 3436569
+    "last-export": 4416058
   },
   "~poetry/Wordless.md": {
     "version": "1.3.1",
     "export-path": "docs/poetry/wordless.html",
-    "last-export": 3436570
+    "last-export": 4416060
   },
   "~writing/Broken World.md": {
     "version": "1.3.1",
     "export-path": "docs/broken-world.html",
-    "last-export": 3436571
+    "last-export": 4416061
   },
   "~writing/Python Syntax.md": {
     "version": "1.2.0",
@@ -92,56 +92,66 @@
   "~writing/Wormhole of Wikipedia.md": {
     "version": "1.3.1",
     "export-path": "docs/wormhole-of-wikipedia.html",
-    "last-export": 3436573
+    "last-export": 4416063
   },
   "~writing/origins.md": {
     "version": "1.3.1",
     "export-path": "docs/origins.html",
-    "last-export": 3436575
+    "last-export": 4416065
   },
   "~writing/writing.md": {
     "version": "1.3.1",
     "export-path": "docs/writing.html",
-    "last-export": 3436576
+    "last-export": 4416067
   },
   "~writing/creative/Eclipse.md": {
     "version": "1.3.1",
     "export-path": "docs/eclipse.html",
-    "last-export": 3436612
+    "last-export": 4416104
   },
   "~writing/creative/Expanse.md": {
     "version": "1.3.1",
     "export-path": "docs/expanse.html",
-    "last-export": 3436614
+    "last-export": 4416106
   },
   "~writing/creative/Precipice.md": {
     "version": "1.3.1",
     "export-path": "docs/precipice.html",
-    "last-export": 3436615
+    "last-export": 4416107
   },
   "~writing/creative/Seclusion.md": {
     "version": "1.3.1",
     "export-path": "docs/seclusion.html",
-    "last-export": 3436617
+    "last-export": 4416109
   },
   "~writing/creative/The Last Cavern.md": {
     "version": "1.3.1",
     "export-path": "docs/the-last-cavern.html",
-    "last-export": 3436618
+    "last-export": 4416110
   },
   "~lists/quotes/Software Development.md": {
     "version": "1.3.1",
     "export-path": "docs/lists/software-dev-quotes.html",
-    "last-export": 3436609
+    "last-export": 4416101
   },
   "~writing/dev/Python Syntax.md": {
     "version": "1.3.1",
     "export-path": "docs/python-syntax.html",
-    "last-export": 3436620
+    "last-export": 4416111
   },
   "~writing/dev/decoded.md": {
     "version": "1.3.1",
     "export-path": "docs/dev/decoded.html",
-    "last-export": 3436621
+    "last-export": 4416113
+  },
+  "~dev/Slithering Hump-Back Kebabs.md": {
+    "version": "1.3.1",
+    "export-path": "docs/dev/kebabs.html",
+    "last-export": 4416031
+  },
+  "~poetry/Titles.md": {
+    "version": "1.3.1",
+    "export-path": "docs/poetry/titles.html",
+    "last-export": 4416057
   }
 }
