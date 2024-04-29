@@ -44,7 +44,9 @@ def export(file: ContentFile) -> dict:
   header = textualise.indent(header, 6)
 
   styles = "  \n".join(
-    f'''<link rel="stylesheet" type="text/css" href="https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/styles/{style}.css">'''
+    f'''<link rel="stylesheet" type="text/css" '''
+    f'''href="https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/styles/{
+      "default" if style == "auto" else style.lower()}.css">'''
     for style in load.get("style", ["default"])
   )
 
