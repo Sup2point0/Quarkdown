@@ -2,6 +2,8 @@
 Test `live!` and `dead!` quarks.
 '''
 
+import pytest
+
 # we really need to find a proper way to do this
 import sys
 sys.path[0] = "/".join(sys.path[0].split("/")[:-1])
@@ -20,15 +22,11 @@ def test_live_positive():
 
 def test_live_negative():
   skips = False
-  
-  try:
+
+  with pytest.raises(quarkify.Quarkless):
     quarkify.extract_quarks('''
       <!-- #QUARK -->
     ''')
-  except quarkify.Quarkless:
-    skips = True
-
-  assert skips, "exception [Quarkless] not raised!"
 
 
 def test_dead_positive():
