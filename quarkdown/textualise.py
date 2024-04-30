@@ -14,6 +14,12 @@ def tokenise(token: dict, defaults: dict) -> dict:
   return {key: token.get(key, val) for key, val in defaults.items()}
 
 
+def sanitise_filename(name: str) -> str:
+  '''Format a file name to simple lowercase `kebab-case`.'''
+
+  return name.lower().replace(" ", "-")
+
+
 def render_html(text: str) -> str:
   '''Render Github-Flavoured Markdown to HTML through the GitHub API.'''
 

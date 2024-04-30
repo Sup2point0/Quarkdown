@@ -89,11 +89,11 @@ def export_and_deploy(
     "data": [],
   })
 
+  index_pages = []
+
   for file in files:
     if not has_changed(file, log_repo):
       continue
-    
-    text = base64.b64decode(file.content).decode()
 
     try:
       export = quarkify.render(file)
@@ -110,6 +110,10 @@ def export_and_deploy(
 
     # we won’t track exported content (too much text)
     export.pop("content")
+
+    for each in export.get("index", []):
+      index_pages[each.lower()].append(export)
+
     log_home[0]["changes"] += 1
     log_home[0]["data"].append({"path": file.path, **export})
 

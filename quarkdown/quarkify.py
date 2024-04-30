@@ -13,7 +13,7 @@ from . import textualise
 from .__version__ import __version__
 
 
-__all__ = ["export"]
+__all__ = ["render", "Quarkless"]
 
 LIVE_LINES = 4
 
@@ -33,8 +33,7 @@ def render(file: ContentFile) -> dict:
   text = base64.b64decode(file.content).decode()
   load = extract_quarks(text)
 
-  # isn't this pipeline nice...
-  # maybe there's a way to do this more succinctly?
+  # isn't this pipeline nice... maybe there's a way to do this more succinctly?
   content = load["content"]
   content = textualise.render_html(content)
   content = textualise.clear_comments(content)
@@ -85,10 +84,9 @@ def extract_quarks(text: str) -> dict:
   ]
   flags = {}
 
-  # TODO splitting twice is really, really slow, how do we optimise this
   for idx, line in enumerate(text.split("\n")):
     if idx < LIVE_LINES:
-      # once we reach LIVE_LINES, we force quit if we haven’t seen `#QUARK live!`
+      # once we reach LIVE_LINES, force quit if we haven’t seen `#QUARK live!`
       if flags.get("live", idx != LIVE_LINES) is False:
         raise Quarkless("#QUARK file inactive")
         
@@ -118,8 +116,10 @@ def extract_quarks(text: str) -> dict:
 
   if not flags.get("live", False):
     raise Quarkless("#QUARK file inactive")
-  else:
-    return {**flags, "content": text}
+  
+  flags["path"] = textualise.sanitise_filename(flags.get("path", file.name))
+  
+  return {**flags, "content": text}
 
 
 def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
