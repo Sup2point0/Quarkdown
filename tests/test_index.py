@@ -14,4 +14,4 @@ def test_positive():
     <!-- #QUARK live! index! -->
   ''')
 
-  assert result["index"] is True, "index page not detected!"
+  assert result["is-index"] is True, "index page not detected!"
