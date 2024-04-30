@@ -96,7 +96,7 @@ def export_and_deploy(
     text = base64.b64decode(file.content).decode()
 
     try:
-      export = quarkify.export(file)
+      export = quarkify.render(file)
       path = export["path"]
     except quarkify.Quarkless:
       continue

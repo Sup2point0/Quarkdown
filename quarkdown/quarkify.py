@@ -27,7 +27,7 @@ class ContextOpened(Exception):
   pass
 
 
-def export(file: ContentFile) -> dict:
+def render(file: ContentFile) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
   text = base64.b64decode(file.content).decode()
