@@ -19,13 +19,13 @@ This is what a Quark flag looks like!
 
 The behaviour of a quark is influenced by its *flavour*, indicated via a particular punctuation mark.
 
-| Flavour | Mark | Instance | Description |
-| :------ | :--- | :------- | :---------- |
-| Boolean Flag | `!` | `#QUARK live!` | Set a flag to a hardcoded value determined by the parser. |
-| Variable Flag | `:` | `#QUARK EXPORT: <path>` | Set a variable to a given value. |
-| Section Open | `?` | `#QUARK only?` | Open a particular section for special processing – similar to `<div class="...">`. |
-| Section Close | `.` | `#QUARK only.` | Close a section, equivalent of `</div>`. |
-| Placeholder | `~` | `#QUARK index~` | Mark a point in the text which will be auto-filled with dynamically generated content. |
+| Flavour | Mark | Instance | Description | Notes |
+| :------ | :--- | :------- | :---------- | :---- |
+| Boolean Flag | `!` | `#QUARK live!` | Set a flag to a hardcoded value determined by the parser. | |
+| Variable Flag | `:` | `#QUARK EXPORT: <path>` | Set a variable to a given value. | If multiple values are accepted, they should be separated by spaces. |
+| Section Open | `?` | `#QUARK only?` | Open a particular section for special processing – similar to `<div class="...">`. | |
+| Section Close | `.` | `#QUARK only.` | Close a section, equivalent of `</div>`. | |
+| Placeholder | `~` | `#QUARK index~` | Mark a point in the text which will be auto-filled with dynamically generated content. | |
 
 
 <br>
