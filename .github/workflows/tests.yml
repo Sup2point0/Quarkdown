@@ -34,5 +34,4 @@ jobs:
           pip install -r requirements.txt
           
       - name: 'Pytest: quarkify'
-        run: |
-          pytest tests/quarkify.py
+        run: pytest
