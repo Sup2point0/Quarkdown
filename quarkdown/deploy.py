@@ -89,7 +89,7 @@ def export_and_deploy(
     "data": [],
   })
 
-  index_pages = []
+  index_pages = {}
 
   for file in files:
     if not has_changed(file, log_repo):
