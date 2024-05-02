@@ -112,7 +112,10 @@ def export_and_deploy(
     export.pop("content")
 
     for each in export.get("index", []):
-      index_pages[each.lower()].append(export)
+      try:
+        index_pages[each.lower()].append(export)
+      except KeyError:
+        index_pages[each.lower()] = [export]
 
     log_home[0]["changes"] += 1
     log_home[0]["data"].append({"path": file.path, **export})
