@@ -1,10 +1,14 @@
 /* core */
 body {
   margin: 0px;
-  background-color: var(--blue-night);
-  color: #fff;
+  background-color: var(--grey-swallow);
+  color: var(--blue-night);
   font-size: 1.44rem;
   font-family: var(--font-body);
+}
+body[class="dark"] {
+  background-color: var(--blue-night);
+  color: #fff;
 }
 
 p {

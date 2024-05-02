@@ -56,7 +56,7 @@ def render(file: ContentFile) -> dict:
     content = source.read().format(
       title = load.get("title", "Assort"),
       styles = styles,
-      darkness = load.get("duality", "light") == "dark",
+      dark = load.get("duality", "light").lower(),
       header = header,
       content = content,
       source = "https://github.com/Sup2point0/Assort/" + file.path,
