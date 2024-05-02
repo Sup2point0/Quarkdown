@@ -54,12 +54,18 @@ a:visited:hover {
 }
 
 nav {
-  --col-nav: rgba(0, 0, 0 / 20%);
+  --col-nav: rgb(0 0 0 / 69%);
+  /* width: 100%; */
 }
 
 nav ul {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  width: 96vw;
+  max-width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0.42rem 8rem 0.42rem 1rem;
   overflow: hidden;
   background-color: var(--col-nav);
   list-style-type: none;
@@ -68,16 +74,16 @@ nav ul li {
   display: inline;
 }
 
-nav ul li .left {
+nav ul .left li {
   float: left;
 }
-nav ul li .right {
+nav ul .right li {
   float: right;
 }
 
 .nav-cell {
   display: block;
-  padding: 1em;
+  padding: 0.69rem 1rem;
   color: #fff;
   transition: 0.2s ease-in-out;
 }
