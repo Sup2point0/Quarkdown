@@ -1,0 +1,53 @@
+nav {
+  /* use as backup in case gradients break */
+  --col-nav: var(--blue-nova);
+  --col-nav-upper: color-mix(in srgb, var(--blue-nova) 100%, transparent);
+  --col-nav-lower: color-mix(in srgb, var(--blue-nova) 96%, transparent);
+}
+.dark nav {
+  --col-nav: #000;
+  --col-nav-upper: rgb(0 0 0 / 69%);
+  --col-nav-lower: rgb(0 0 0 / 69%);
+}
+
+nav ul {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  width: 93vw;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.69rem 4rem 0.2rem;
+  /* overflow: hidden; */
+  background-color: var(--col-nav);
+  background: linear-gradient(to bottom, var(--col-nav-upper), var(--col-nav-lower));
+  list-style-type: none;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul .left li {
+  float: left;
+}
+nav ul .right li {
+  float: right;
+}
+
+.nav-cell {
+  display: block;
+  margin: 0 0.42rem;
+  padding: 0.42rem 1rem;
+  color: #fff;
+  border-radius: 0.69rem;
+  transition: 0.16s;
+}
+
+.nav-cell:hover {
+  background-color: var(--blue-ocean);
+  background-color: color-mix(in srgb, var(--blue-ocean) 42%, transparent);
+}
+.dark .nav-cell:hover {
+  background-color: var(--pink-elec);
+}
