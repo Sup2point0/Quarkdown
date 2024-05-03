@@ -31,7 +31,7 @@ h2 {
   font-weight: 600;
   border-bottom: 3.5px solid var(--pink-elec);
 }
-h2[class="dark"] {
+.dark h2 {
   border-bottom: 3.5px solid var(--teal-elec);
 }
 h3 {
@@ -61,10 +61,24 @@ th {
 em {
   font-variation-settings: "slnt" -2;
 }
-h1 rem, h2 rem, h3 rem {
+h1, h2, h3 {
   font-variation-settings: "slnt" -4;
 }
 
 strong {
   font-weight: bolder;
+}
+
+/* specific */
+#footer {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 2rem 0rem;
+  background-color: var(--grey-spirit);
+  text-align: center;
+  color: var(--grey-storm);
+  font-family: var(--font-flavour);
+}
+.dark #footer {
+  background-color: #00060e;
 }
