@@ -1,5 +1,316 @@
 [
   {
+    "run": 4,
+    "epox": 4764095,
+    "date": "24-05-03",
+    "changes": 31,
+    "duration": 178,
+    "average": 5.7,
+    "data": [
+      {
+        "path": "docs/slinqui.html",
+        "live": true,
+        "style": [
+          "personal"
+        ]
+      },
+      {
+        "path": "docs/yu-gi-oh/index.html",
+        "live": true,
+        "style": [
+          "auto"
+        ]
+      },
+      {
+        "path": "docs/xeriqui/index.html",
+        "live": true,
+        "style": [
+          "auto"
+        ]
+      },
+      {
+        "path": "docs/dev/kebabs.html",
+        "live": true,
+        "style": [
+          "dev"
+        ],
+        "duality": "dark",
+        "index": [
+          "dev",
+          "writing"
+        ],
+        "date": [
+          "24",
+          "SPRING"
+        ]
+      },
+      {
+        "path": "docs/dev/decoded.html",
+        "live": true,
+        "style": [
+          "dev"
+        ],
+        "duality": "dark",
+        "index": [
+          "dev",
+          "notes"
+        ],
+        "date": [
+          "24",
+          "4"
+        ]
+      },
+      {
+        "path": "docs/poetry/fortisan.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry/heartburn.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry/heavy-crown.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/lifeless.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry/nameless.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry/quantitative-quantitivity.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry/reverie.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry/strive.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry/teardrop.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry/this.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry/time-of-the-times.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry/titles.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "duality": "light",
+        "index": [
+          "poetry"
+        ],
+        "date": [
+          "23",
+          "04"
+        ]
+      },
+      {
+        "path": "docs/poetry/what-was-this-called-again.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry/wordless.html",
+        "live": true,
+        "style": [
+          "poetry"
+        ],
+        "index": [
+          "poetry"
+        ]
+      },
+      {
+        "path": "docs/poetry.html",
+        "live": true,
+        "is-index": true,
+        "style": [
+          "poetry"
+        ],
+        "duality": "light"
+      },
+      {
+        "path": "docs/broken-world.html",
+        "live": true,
+        "style": [
+          "creative"
+        ]
+      },
+      {
+        "path": "docs/wormhole-of-wikipedia.html",
+        "live": true
+      },
+      {
+        "path": "docs/origins.html",
+        "live": true,
+        "style": [
+          "auto"
+        ],
+        "duality": "light",
+        "index": [
+          "writing"
+        ]
+      },
+      {
+        "path": "docs/writing.html",
+        "live": true,
+        "style": [
+          "creative"
+        ]
+      },
+      {
+        "path": "docs/lists/software-dev-quotes.html",
+        "live": true,
+        "style": [
+          "quotes",
+          "tech"
+        ],
+        "duality": "dark",
+        "index": [
+          "lists",
+          "quotes",
+          "dev"
+        ]
+      },
+      {
+        "path": "docs/eclipse.html",
+        "live": true,
+        "style": [
+          "creative"
+        ]
+      },
+      {
+        "path": "docs/expanse.html",
+        "live": true,
+        "style": [
+          "cretive"
+        ]
+      },
+      {
+        "path": "docs/precipice.html",
+        "live": true,
+        "style": [
+          "creative"
+        ]
+      },
+      {
+        "path": "docs/seclusion.html",
+        "live": true,
+        "style": [
+          "creative"
+        ]
+      },
+      {
+        "path": "docs/the-last-cavern.html",
+        "live": true,
+        "style": [
+          "creative"
+        ]
+      },
+      {
+        "path": "docs/dev/python-syntax.html",
+        "live": true,
+        "style": [
+          "dev"
+        ],
+        "duality": "dark",
+        "index": [
+          "writing",
+          "dev"
+        ],
+        "date": [
+          "24",
+          "spring"
+        ]
+      }
+    ]
+  },
+  {
     "run": 3,
     "epox": 4681997,
     "date": "24-05-02",
