@@ -8,7 +8,6 @@ a {
   color: var(--blue-nova);
   transition: .2s;
 }
-
 .dark :is(p,h1,h2,h3,h4) a {
   color: var(--blue-cresc)
 }
@@ -26,43 +25,17 @@ a {
   transition: transform .2s ease-out;
 }
 
-.dark :is(p,h1,h2,h3,h4) a:after {
-  background-color: var(--blue-nova)
-}
-
 :is(p,h1,h2,h3,h4) a:hover {
   color: var(--pink-elec);
 }
-
-.dark :is(p,h1,h2,h3,h4) a:hover {
-  color: var(--blue-nova)
-}
-
 :is(p,h1,h2,h3,h4) a:hover:after {
   transform: scaleX(1);
   transform-origin: left;
 }
 
 :is(p,h1,h2,h3,h4) a:visited {
-  color: var(--lilac-nova);
+  color: var(--blue-ocean);
 }
-
-.dark :is(p,h1,h2,h3,h4) a:visited {
-  color: var(--lilac-cresc);
-}
-
-:is(p,h1,h2,h3,h4) a:visited:after {
-  background-color: var(--pink-elec);
-}
-
-.dark :is(p,h1,h2,h3,h4) a:visited:after {
-  background-color: var(--lilac-nova);
-}
-
 :is(p,h1,h2,h3,h4) a:visited:hover {
   color: var(--pink-elec);
-}
-
-.dark :is(p,h1,h2,h3,h4) a:visited:hover {
-  color: var(--lilac-nova);
 }

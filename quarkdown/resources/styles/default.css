@@ -12,7 +12,7 @@ body[class="dark"] {
 }
 
 p {
-  font-weight: 200;
+  font-weight: 100;
 }
 
 h1 {
@@ -43,26 +43,35 @@ h3 {
 }
 
 code {
-  color: var(--mellow-cresc);
+  color: var(--lilac-nova);
   font-size: 84%;
   font-family: var(--font-code);
   font-weight: 400;
 }
+.dark code {
+  color: var(--mellow-cresc)
+}
 
-td {
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+td, th {
+  margin: 0px;
+  padding: 0.42rem 1rem;
   font-size: 80%;
+  border: 2px solid var(--grey-spirit);
+}
+td {
+  font-weight: 200;
 }
 th {
-  font-size: 80%;
   font-family: var(--font-head);
   font-weight: 500;
 }
 
 em {
   font-variation-settings: "slnt" -2;
-}
-h1, h2, h3 {
-  font-variation-settings: "slnt" -4;
 }
 
 strong {
@@ -72,7 +81,7 @@ strong {
 /* specific */
 #footer {
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 4.2rem;
   padding: 2rem 0rem;
   background-color: var(--grey-spirit);
   text-align: center;

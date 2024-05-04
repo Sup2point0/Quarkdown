@@ -40,6 +40,7 @@ nav ul .right li {
   margin: 0 0.42rem;
   padding: 0.42rem 1rem;
   color: #fff;
+  font-weight: 300;
   border-radius: 0.69rem;
   transition: 0.16s;
 }
