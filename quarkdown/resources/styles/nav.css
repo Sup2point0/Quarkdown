@@ -10,7 +10,7 @@ nav {
   --col-nav-lower: rgb(0 0 0 / 69%);
 }
 
-nav ul {
+nav > ul {
   position: fixed;
   z-index: 2;
   top: 0;
@@ -35,6 +35,28 @@ nav ul .right li {
   float: right;
 }
 
+nav ul li ul {
+  visibility: hidden;
+  opacity: 0;
+  display: none;
+  position: absolute;
+  width: auto;
+  left: inherit;
+  margin-top: 0;
+  padding: 1rem 0.69rem 1.2rem;
+  transition: all 0.42s ease;
+  /* background-color: var(--grey-nova); */
+}
+.nav-dropdown {
+  position: relative;
+  height: 100px;
+  margin-top: 0.42rem;
+  padding: 1rem 0;
+  background-color: var(--col-nav-lower);
+  opacity: 1;
+  border-radius: 1rem;
+}
+
 .nav-cell {
   display: block;
   margin: 0 0.42rem;
@@ -51,4 +73,15 @@ nav ul .right li {
 }
 .dark .nav-cell:hover {
   background-color: var(--pink-elec);
+}
+
+nav ul li:hover > ul, nav ul li ul:hover {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+
+nav ul li ul li {
+  width: 100%;
+  clear: both;
 }
