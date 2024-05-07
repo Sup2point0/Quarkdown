@@ -10,21 +10,13 @@ import re
 from github.ContentFile import ContentFile
 
 from . import textualise
+from .classes import Quarkless, ContextOpened, ExportFile
 from .__version__ import __version__
 
 
-__all__ = ["render", "Quarkless"]
+__all__ = ["render"]
 
 LIVE_LINES = 4
-
-
-class Quarkless(Exception):
-  '''Exception raised when a file has no `#QUARK LIVE` flag.'''
-  pass
-
-class ContextOpened(Exception):
-  '''Exception raised when a context has been successfully activated.'''
-  pass
 
 
 def render(file: ContentFile) -> dict:
