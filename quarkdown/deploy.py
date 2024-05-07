@@ -13,6 +13,7 @@ from github.ContentFile import ContentFile
 from github.GithubException import UnknownObjectException
 
 from . import quarkify
+from .classes import ExportFile
 from .__version__ import __version__
 
 
@@ -21,7 +22,7 @@ EPOCH_OFFSET = 1710000000
 
 
 def prepare_deploy(git: Github, repo_name: str) -> tuple[Repository, Repository]:
-  '''Prepares the deployment process by accessing the home and target repositories.'''
+  '''Prepar the quarkup process by accessing the home and target repositories.'''
 
   return (
     git.get_repo("Sup2point0/Quarkdown"),
@@ -30,7 +31,7 @@ def prepare_deploy(git: Github, repo_name: str) -> tuple[Repository, Repository]
 
 
 def finish(start: int, log: dict):
-  '''Log time performance metrics.'''
+  '''Track how long the quarkup process took.'''
 
   latest = log[0]
   latest["duration"] = round(time.time() - start)
@@ -38,7 +39,7 @@ def finish(start: int, log: dict):
 
 
 def extract_repo_files(repo: Repository, path = "") -> list[ContentFile]:
-  '''Extract all .md files from the `path` directory of a repository.'''
+  '''Extract all .md files from directory `path` of a repository.'''
 
   out = []
   content = repo.get_contents(path)
@@ -53,6 +54,7 @@ def extract_repo_files(repo: Repository, path = "") -> list[ContentFile]:
   
     elif file.path.endswith(".md"):
       out.append(file)
+      # out.append(ExportFile(file = file))
 
   return out
 

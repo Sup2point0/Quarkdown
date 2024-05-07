@@ -29,9 +29,11 @@ class ExportFile:
   '''A container for all the export info of a file.'''
 
   file: ContentFile
+  '''The original `github.ContentFile` fetched through the GitHub API. Only this parameter needs to be supplied when instantiating an `ExportFile`.'''
 
-  orig_path: str = None
+  source_path: str = None
   export_path: str = None
+  export_path_frags: list[str] = None
   source_url: str = None
 
   title: str = None
@@ -48,6 +50,10 @@ class ExportFile:
   dec: int = None
   day: int = None
   date: datetime.date = None
+
+  def __post_init__(self):
+    self.source_path = self.file.path
+    self.source_url = self.file.html_url
 
   def set_flags(self, data: dict):
     '''Set file info from a given `dict`.
