@@ -186,6 +186,7 @@ Index will go here:
   STYLE: default creative personal
   DUALITY: light
   INDEX: category category
+  SHARD: tag tag
   DATE: 24 04 02
 -->
 
@@ -204,6 +205,11 @@ This text will be incorporated into the header section.
 <!-- #QUARK contents? -->
 A hardcoded table of contents will be rendered specially by Quarkdown.
 <!-- #QUARK contents. -->
+
+### Heading
+<!-- #QUARK caption? -->
+This will be attached below the heading as a subheading.
+<!-- #QUARK caption. -->
 ```
 
 ### Index
