@@ -12,6 +12,7 @@ from github.ContentFile import ContentFile
 
 import suptools as sup
 from . import presets
+from . import textualise
 
 
 class Quarkless(Exception):
@@ -101,7 +102,7 @@ class ExportFile:
     )))
 
     if flags.get("year", None) is not None:
-      self.date = date(
+      self.date = datetime.date(
         year = int(flags["year"]),
         month = presets.dec_index.get(flags.get("dec", 0), 0),
         day = flags.get("day", 1),
