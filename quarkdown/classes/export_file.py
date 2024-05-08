@@ -1,5 +1,5 @@
 '''
-Utility classes.
+Implements the `ExportFile` class for representing files during quarkup.
 '''
 
 import datetime
@@ -11,20 +11,11 @@ from dataclasses import dataclass
 from github.ContentFile import ContentFile
 
 import suptools as sup
-from . import presets
-from . import textualise
+from .. import presets
+from .. import textualise
 
 
-class Quarkless(Exception):
-  '''Exception raised when a file has no `#QUARK LIVE` flag.'''
-  pass
-
-class ContextOpened(Exception):
-  '''Exception raised when a context has been successfully activated.'''
-  pass
-
-
-@ dataclass(kw_only = True, slots = True)
+@ dataclass(kw_only = True)
 class ExportFile:
   '''A container for all the export info of a file.'''
 
@@ -43,13 +34,15 @@ class ExportFile:
   styles: list[str] = None
   duality: str = "light"
   indexes: list[str] = None
-  shard: list[str] = None
+  shards: list[str] = None
 
   year: int = None
   season: str = None
   dec: int = None
   day: int = None
   date: datetime.date = None
+
+  EXPORT_DATA = ["source_path", "export_path", "styles", "duality", "indexes", "shards"]
 
   def __post_init__(self):
     self.source_path = self.file.path
@@ -113,3 +106,9 @@ class ExportFile:
         month = presets.dec_index.get(flags.get("dec", 0), 0),
         day = flags.get("day", 1),
       )
+
+  def export_dict(self) -> dict:
+    '''Extract a concise `dict` representation of the exported file.'''
+
+    attrs = vars(self)
+    return {each: attrs[each] for each in attrs if each in self.EXPORT_DATA}
