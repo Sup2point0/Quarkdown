@@ -98,7 +98,7 @@ def export_and_deploy(
       continue
 
     try:
-      export = quarkify.render(file)
+      export = quarkify.render(file, {})  ### TODO track repo data
       path = export["path"]
     except quarkify.Quarkless:
       continue

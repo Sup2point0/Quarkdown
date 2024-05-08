@@ -9,6 +9,7 @@ import re
 
 from github.ContentFile import ContentFile
 
+from . import presets
 from . import textualise
 from .classes import Quarkless, ContextOpened, ExportFile
 from .__version__ import __version__
@@ -19,7 +20,7 @@ __all__ = ["render"]
 LIVE_LINES = 4
 
 
-def render(file: ContentFile) -> dict:
+def render(file: ContentFile, repodata: dict) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
   text = base64.b64decode(file.content).decode()
@@ -34,12 +35,8 @@ def render(file: ContentFile) -> dict:
   header = load.get("header", "")
   header = textualise.indent(header, 6)
 
-  styles = "  \n".join(
-    f'''<link rel="stylesheet" type="text/css" '''
-    f'''href="https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/styles/{
-      "default" if style == "auto" else style.lower()}.css">'''
-    for style in load.get("style", ["default"])
-  )
+  fonts = "  \n".join(presets.css.fonts(repodata.get("fonts", presets.defaults.fonts)))
+  styles = "  \n".join(presets.css.style(style) for style in load.get("style", ["default"]))
 
   root = os.path.split(os.path.abspath(__file__))[0]
   path = os.path.join(root, "resources/core.html")
@@ -47,6 +44,7 @@ def render(file: ContentFile) -> dict:
   with open(path) as source:
     content = source.read().format(
       title = load.get("title", "Assort"),
+      fonts = presets.css.fonts(["abel", "geologica", "montserrat", "nanum"]),
       styles = styles,
       dark = load.get("duality", "light").lower(),
       header = header,

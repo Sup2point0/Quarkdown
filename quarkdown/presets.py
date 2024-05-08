@@ -2,20 +2,45 @@
 Static resources.
 '''
 
+
+class defaults:
+  fonts = ["abel", "montserrat"]
+
+
 class url:
   google_fonts = "https://fonts.googleapis.com/css2?"
   styles = "https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/styles"
 
+  fonts = {
+    "abel": "family=Abel",
+    "geologica": "Geologica:slnt,wght@-12..0,100..900",
+    "montserrat": "family=Montserrat:ital,wght@0,100..900;1,100..900",
+    "nanum": "family=Nanum+Pen+Script",
+    "outfit": "family=Outfit:wght@100..900",
+    "sen": "family=Sen:wght@400..800",
+    "shadows into light two": "family=Shadows+Into+Light+Two",
+  }
+  '''Google Fonts URLs.'''
+
+
 class css:
-  def font(fonts: list[str]) -> str:
+  def fonts(fonts: list[str]) -> str:
     '''Format the HTML `<link>` tag for loading fonts from Google Fonts.'''
 
-    return f'''<link rel="stylesheet" type="text/css" href="{url.google_fonts}{"&".join(font for font in fonts)}&display=swap">'''
+    return (
+      f'''<link rel="stylesheet" type="text/css" href="'''
+      f'''{url.google_fonts}{"&".join(url.fonts[font.lower] for font in fonts)}&display=swap">'''
+    )
     
   def style(style: str) -> str:
     '''Format the HTML `<link>` tag for a given stylesheet.'''
 
-    return f'''<link rel="stylesheet" type="text/css" href="{url.styles}/{style.lower()}">'''
+    style = style.lower()
+    if style == "auto":
+      style = "default"
+
+    return f'''<link rel="stylesheet" type="text/css" href="{url.styles}/{style}">'''
+
 
 dec_index = {
   "spring": 0.5,
