@@ -13,7 +13,7 @@ from github.ContentFile import ContentFile
 from github.GithubException import UnknownObjectException
 
 from . import quarkify
-from .classes import ExportFile
+from .classes import ExportFile, Quarkless, IsIndex
 from .__version__ import __version__
 
 
@@ -53,8 +53,7 @@ def extract_repo_files(repo: Repository, path = "") -> list[ContentFile]:
         content.extend(folder)
   
     elif file.path.endswith(".md"):
-      out.append(file)
-      # out.append(ExportFile(file = file))
+      out.append(ExportFile(file = file))
 
   return out
 
@@ -75,6 +74,7 @@ def export_and_deploy(
   files: list[ContentFile],
   *,
   commit: str,
+  repo_config: dict = {},
 ) -> dict:
   '''Export .md files to HTML and commit them to the `docs/` folder of a given GitHub repository. Returns a `dict` log of changed files.'''
 
@@ -91,40 +91,40 @@ def export_and_deploy(
     "data": [],
   })
 
-  index_pages = {}
+  index_pages = []
+  indexed_pages = {}
 
   for file in files:
     if not has_changed(file, log_repo):
       continue
 
     try:
-      export = quarkify.render(file, {})  ### TODO track repo data
-      path = export["path"]
-    except quarkify.Quarkless:
+      export = quarkify.render(file, repo_config)  ### TODO track repo data
+    except Quarkless:
+      continue
+    except IsIndex:
+      index_pages.append(file)
       continue
 
     try:
-      existing = repo.get_contents(path)
+      existing = repo.get_contents(export.path)
     except UnknownObjectException:
-      repo.create_file(path, commit, export["content"])
+      repo.create_file(export.path, commit, export.content)
     else:
-      repo.update_file(path, commit, export["content"], existing.sha)
+      repo.update_file(export.path, commit, export.content, existing.sha)
 
-    # we won’t track exported content (too much text)
-    export.pop("content")
-
-    for each in export.get("index", []):
+    for each in export.indexes or []:
       try:
-        index_pages[each.lower()].append(export)
+        indexed_pages[each.casefold()].append(export)
       except KeyError:
-        index_pages[each.lower()] = [export]
+        indexed_pages[each.casefold()] = [export]
 
     log_home[0]["changes"] += 1
-    log_home[0]["data"].append({"path": file.path, **export})
+    log_home[0]["data"].append(export.export_dict())
 
     log_repo[file.path] = {
       "version": __version__,
-      "export-path": path,
+      "export-path": export.path,
       "last-export": round(time.time() - EPOCH_OFFSET),
     }
 

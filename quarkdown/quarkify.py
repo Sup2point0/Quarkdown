@@ -11,7 +11,7 @@ from github.ContentFile import ContentFile
 
 from . import presets
 from . import textualise
-from .classes import Quarkless, ContextOpened, ExportFile
+from .classes import ExportFile, RepoConfig, Quarkless, ContextOpened
 from .__version__ import __version__
 
 
@@ -20,14 +20,14 @@ __all__ = ["render"]
 LIVE_LINES = 4
 
 
-def render(file: ContentFile, repodata: dict) -> dict:
+def render(file: ExportFile, repo_config: RepoConfig) -> dict:
   '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
 
   text = base64.b64decode(file.content).decode()
   load = extract_quarks(text)
 
   # isn't this pipeline nice... maybe there's a way to do this more succinctly?
-  content = load["content"]
+  content = load.content
   content = textualise.render_html(content)
   content = textualise.clear_comments(content)
   content = textualise.indent(content, 6)
@@ -35,7 +35,7 @@ def render(file: ContentFile, repodata: dict) -> dict:
   header = load.get("header", "")
   header = textualise.indent(header, 6)
 
-  fonts = "  \n".join(presets.css.fonts(repodata.get("fonts", presets.defaults.fonts)))
+  fonts = "  \n".join(presets.css.fonts(repo_config.get("fonts", presets.defaults.fonts)))
   styles = "  \n".join(presets.css.style(style) for style in load.get("style", ["default"]))
 
   root = os.path.split(os.path.abspath(__file__))[0]
@@ -59,22 +59,22 @@ def render(file: ContentFile, repodata: dict) -> dict:
   return load
 
 
-def extract_quarks(text: str) -> dict:
-  '''Extract #QUARK quarks from Quarkdown-Flavoured Markdown.'''
+def extract_quarks(file: ExportFile) -> dict:
+  '''Extract `#QUARK` quarks from Quarkdown-Flavoured Markdown.'''
 
   root = os.path.split(os.path.abspath(__file__))[0]
-  with open(os.path.join(root, "resources/tokens.json")) as file:
-    tokens = json.load(file)["tokens"]
+  with open(os.path.join(root, "resources/tokens.json")) as source:
+    tokens = json.load(source)["tokens"]
 
-  with open(os.path.join(root, "resources/tokens-schema.json")) as file:
-    defaults = json.load(file)["properties"]["tokens"]["items"]["defaultSnippets"][0]["body"]
+  with open(os.path.join(root, "resources/tokens-schema.json")) as source:
+    defaults = json.load(source)["properties"]["tokens"]["items"]["defaultSnippets"][0]["body"]
   
   context: list[dict] = [
     textualise.tokenise({"opens-ctx": "~"}, defaults)
   ]
   flags = {}
 
-  for idx, line in enumerate(text.split("\n")):
+  for idx, line in enumerate(file.content.split("\n")):
     if idx < LIVE_LINES:
       # once we reach LIVE_LINES, force quit if we haven’t seen `#QUARK live!`
       if flags.get("live", idx != LIVE_LINES) is False:
@@ -107,9 +107,7 @@ def extract_quarks(text: str) -> dict:
   if not flags.get("live", False):
     raise Quarkless("#QUARK file inactive")
   
-  flags["path"] = textualise.sanitise_filename(flags.get("path", file.name))
-  
-  return {**flags, "content": text}
+  return file.set_flags(flags)
 
 
 def check_open(ctx: list[dict], part: str, token: dict, flags: dict):
