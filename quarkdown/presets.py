@@ -12,13 +12,14 @@ class url:
   styles = "https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/styles"
 
   fonts = {
-    "abel": "family=Abel",
+    "abel": "Abel",
     "geologica": "Geologica:slnt,wght@-12..0,100..900",
-    "montserrat": "family=Montserrat:ital,wght@0,100..900;1,100..900",
-    "nanum": "family=Nanum+Pen+Script",
-    "outfit": "family=Outfit:wght@100..900",
-    "sen": "family=Sen:wght@400..800",
-    "shadows into light two": "family=Shadows+Into+Light+Two",
+    "montserrat": "Montserrat:ital,wght@0,100..900;1,100..900",
+    "nanum": "Nanum+Pen+Script",
+    "outfit": "Outfit:wght@100..900",
+    "readex": "Readex+Pro:wght@160..700",
+    "sen": "Sen:wght@400..800",
+    "shadows into light two": "Shadows+Into+Light+Two",
   }
   '''Google Fonts URLs.'''
 
@@ -29,7 +30,7 @@ class css:
 
     return (
       f'''<link rel="stylesheet" type="text/css" href="'''
-      f'''{url.google_fonts}{"&".join(url.fonts[font.lower] for font in fonts)}&display=swap">'''
+      f'''{url.google_fonts}{"&".join("family=" + url.fonts[font.lower] for font in fonts)}&display=swap">'''
     )
     
   def style(style: str) -> str:
