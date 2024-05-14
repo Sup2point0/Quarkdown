@@ -19,6 +19,12 @@
       "title": "Export Directory",
       "description": "The root directory where files are exported relative to.",
       "type": "string"
+    },
+    "slow-updates" {
+      "title": "Slowly Updating Directories",
+      "description": "A list of RegEx patterns matching files or directories which are only exported when a major update has occurred (2.0 » 2.1).",
+      "type": "array",
+      "items": {"type": "string"}
     }
   }
 }
