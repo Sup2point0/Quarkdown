@@ -46,6 +46,14 @@ Over the years I’ve created so, so many Markdown files in *Assort* that it’s
 <br>
 
 
+## Notes
+
+- If the tests are failing, that (probably) means I’m working on some new feature.
+
+
+<br>
+
+
 ## Future Features
 
 - Add special index pages.
