@@ -21,6 +21,6 @@ minversion = "6.0"
 testpaths = [
   "tests"
 ]
-# python_files = [
-#   "pytest-*.py",
-# ]
+python_files = [
+  "test-*.py",
+]
