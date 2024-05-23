@@ -29,7 +29,7 @@ def construct(file: ExportFile, repo_config: RepoConfig) -> ExportFile:
       fonts = presets.css.fonts(repo_config.get("fonts", presets.defaults.fonts)),
       styles = "  \n".join(presets.css.style(style) for style in file.styles),
       dark = file.duality,
-      header = render_header(export),
+      header = render_header(file),
       content = content,
       source = file.source_url,
       version = config.__version__,

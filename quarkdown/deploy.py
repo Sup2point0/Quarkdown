@@ -100,8 +100,8 @@ def quarkup(
       continue
 
     try:
-      export = quarkify.extract(file, repo_config)
-      export = render.construct(export)
+      extract = quarkify.extract(file, repo_config)
+      export = render.construct(extract)
     except Quarkless:
       continue
     except IsIndex:
