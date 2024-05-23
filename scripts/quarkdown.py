@@ -24,7 +24,7 @@ with Github(auth = Auth.Token(key)) as git:
   home, repo = qk.prepare_deploy(git, "Sup2point0/Quarkdown")
 
   files = qk.extract_repo_files(repo, "tests/")
-  log_home, log_repo = qk.export_and_deploy(home, repo, files, commit = "#QUARK export file")
+  log_home, log_repo = qk.quarkup(home, repo, files, commit = "#QUARK export file")
 
   qk.update_logs(home, "assort", log_repo)
   

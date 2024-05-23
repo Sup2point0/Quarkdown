@@ -14,6 +14,7 @@ from github.GithubException import UnknownObjectException
 
 import config
 from . import quarkify
+from . import render
 from .classes import ExportFile, Quarkless, IsIndex
 
 
@@ -68,7 +69,7 @@ def extract_repo_json(repo: Repository, path = "") -> dict | list:
   return data
 
 
-def export_and_deploy(
+def quarkup(
   home: Repository,
   repo: Repository,
   files: list[ContentFile],
@@ -99,7 +100,8 @@ def export_and_deploy(
       continue
 
     try:
-      export = quarkify.render(file, repo_config)  ### TODO track repo data
+      export = quarkify.extract(file, repo_config)
+      export = render.construct(export)
     except Quarkless:
       continue
     except IsIndex:

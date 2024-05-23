@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from github.ContentFile import ContentFile
 
 import suptools as sup
+import config
 from .. import presets
 from .. import textualise
 
@@ -27,7 +28,7 @@ class ExportFile:
   export_path_frags: list[str] = None
   source_url: str = None
 
-  title: str = None
+  title: str = "Assort"
   header: str = None
   content: str = None
 
@@ -51,20 +52,18 @@ class ExportFile:
   def set_flags(self, data: dict):
     '''Set file info from a given `dict`.
 
-    All values are fully sanitised here.
+    All values are fully sanitised here. Should always be called before rendering the file.
     '''
 
-    path = pathlib.Path(__file__).absolute.parent
-    path = path.join("resources", "quarks.json")
+    with open(config.ROOT / "quarkdown/resources/quarks.json") as source:
+      flags = json.load(source)
 
-    with open(path) as file:
-      flags = json.load(file)
-
-    path = data.get("path", self.file.name)
+    path = data.get("path", self.file.name) + ".html"
     self.export_path = textualise.sanitise_filename(path)
-    self.export_path_frags = self.export_path.split("\n")
+    self.export_path_frags = self.export_path.split("/")
 
     self.header = data.get("header", None)
+    self.title = data.get("title", self.header or "Assort")
 
     styles = data.get("styles", ["auto"])
     self.styles = [
@@ -80,7 +79,7 @@ class ExportFile:
     self.duality = data.get("duality", next(
       (each for each in duality if each),
       flags["styles"]["default"]["duality"]
-    ))
+    )).lower()
 
     # indexes listed by relevance so order retained
     indexes = data.get("indexes", [])

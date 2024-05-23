@@ -8,6 +8,7 @@ import re
 
 from github.ContentFile import ContentFile
 
+import suptools as sup
 import config
 from . import presets
 from . import textualise
@@ -31,7 +32,7 @@ def extract(file: ExportFile) -> ExportFile:
   ]
   flags = {}
 
-  for idx, line in enumerate(file.content.split("\n")):
+  for idx, line in enumerate(sup.io.decode_base64_lines(file.content)):
     if idx < config.LIVE_LINES:
       # once we reach config.LIVE_LINES, force quit if we haven’t seen `#QUARK live!`
       if flags.get("live", idx != config.LIVE_LINES) is False:
