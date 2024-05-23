@@ -4,6 +4,7 @@
 <img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/tests.yml/badge.svg">
 <img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/quarkdown.yml/badge.svg">
 <img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/assort.yml/badge.svg">
+<img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/pycobytes.yml/badge.svg">
 <img src="https://github.com/Sup2point0/Quarkdown/actions/workflows/antarctica.yml/badge.svg">
 </div>
 
@@ -54,17 +55,15 @@ Over the years I’ve created so, so many Markdown files in *Assort* that it’s
 <br>
 
 
-## Future Features
+## Features
 
+### Under Development
 - Add special index pages.
-- Check if export filepaths have changed for a file, and if so, delete the artefact file.
 - Extract article title into a special `<header>` container.
-- Inject MathJax without `{}` breaking Python string formatting.
-- Find a way to combine commits so that a single new deployment doesn’t result in potentially hundreds of programmatically generated commits? [^combine-commits]
-- Devise a way to upgrade *Assort* into a wiki-like website &ndash; i.e. with navigation. Why is this difficult? Cuz the file paths of .md files in the repo are not the same as the URLs of the .html files on the website. We’ll see.
-  - Also, for a wiki you’d probably need a way to search, and... well, firstly GitHub Pages is for static sites, and secondly I have no clue how to create an efficient search engine.
 
-[^combine-commits]: This is actually a non-trivial challenge. It involves blobs.
+### Future
+- Find a way to combine commits so that a single new deployment doesn’t result in potentially hundreds of programmatically generated commits?
+- Check if export filepaths have changed for a file, and if so, delete the artefact file.
 
 
 <br>
