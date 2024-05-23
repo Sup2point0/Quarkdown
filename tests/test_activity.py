@@ -12,7 +12,7 @@ from quarkdown import quarkify
 
 
 def test_live_positive():
-  result = quarkify.extract_quarks('''
+  result = quarkify.extract('''
     <!-- #QUARK live! -->
   ''')
 
@@ -24,7 +24,7 @@ def test_live_negative():
   skips = False
 
   with pytest.raises(quarkify.Quarkless):
-    quarkify.extract_quarks('''
+    quarkify.extract('''
       <!-- #QUARK -->
     ''')
 
@@ -33,7 +33,7 @@ def test_dead_positive():
   skips = False
 
   try:
-    result = quarkify.extract_quarks('''
+    result = quarkify.extract('''
       <!-- #QUARK dead! -->
       <!-- #QUARK live! -->
     ''')
