@@ -9,10 +9,10 @@ import re
 
 from github.ContentFile import ContentFile
 
+import config
 from . import presets
 from . import textualise
 from .classes import ExportFile, RepoConfig, Quarkless, ContextOpened
-from .__version__ import __version__
 
 
 __all__ = ["render"]
@@ -50,7 +50,7 @@ def render(file: ExportFile, repo_config: RepoConfig) -> dict:
       header = header,
       content = content,
       source = "https://github.com/Sup2point0/Assort/" + file.path,
-      version = __version__,
+      version = config.__version__,
     )
   
   load["content"] = content

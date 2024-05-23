@@ -12,9 +12,9 @@ from github.Repository import Repository
 from github.ContentFile import ContentFile
 from github.GithubException import UnknownObjectException
 
+import config
 from . import quarkify
 from .classes import ExportFile, Quarkless, IsIndex
-from .__version__ import __version__
 
 
 EPOCH_OFFSET = 1710000000
@@ -123,7 +123,7 @@ def export_and_deploy(
     log_home[0]["data"].append(export.export_dict())
 
     log_repo[file.path] = {
-      "version": __version__,
+      "version": config.__version__,
       "export-path": export.path,
       "last-export": round(time.time() - EPOCH_OFFSET),
     }
@@ -157,7 +157,7 @@ def has_changed(file: ContentFile, log: dict) -> bool:
   if not existing:
     return True
   
-  if existing["version"] != __version__:
+  if existing["version"] != config.__version__:
     return True
   
   deployed = existing["last-export"]
