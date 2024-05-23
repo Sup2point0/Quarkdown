@@ -4,7 +4,6 @@ Implements the Quarkdown parsing engine.
 
 import base64
 import json
-import os
 import re
 
 from github.ContentFile import ContentFile
@@ -15,58 +14,16 @@ from . import textualise
 from .classes import ExportFile, RepoConfig, Quarkless, ContextOpened
 
 
-__all__ = ["render"]
-
-LIVE_LINES = 4
+__all__ = ["extract"]
 
 
-def render(file: ExportFile, repo_config: RepoConfig) -> dict:
-  '''Render Quarkdown-Flavoured Markdown to HTML, extracting content and metadata.'''
-
-  text = base64.b64decode(file.content).decode()
-  load = extract_quarks(text)
-
-  # isn't this pipeline nice... maybe there's a way to do this more succinctly?
-  content = load.content
-  content = textualise.render_html(content)
-  content = textualise.clear_comments(content)
-  content = textualise.indent(content, 6)
-
-  header = load.get("header", "")
-  header = textualise.indent(header, 6)
-
-  fonts = "  \n".join(presets.css.fonts(repo_config.get("fonts", presets.defaults.fonts)))
-  styles = "  \n".join(presets.css.style(style) for style in load.get("style", ["default"]))
-
-  root = os.path.split(os.path.abspath(__file__))[0]
-  path = os.path.join(root, "resources/core.html")
-
-  with open(path) as source:
-    content = source.read().format(
-      title = load.get("title", "Assort"),
-      fonts = presets.css.fonts(["abel", "geologica", "montserrat", "nanum"]),
-      styles = styles,
-      dark = load.get("duality", "light").lower(),
-      header = header,
-      content = content,
-      source = "https://github.com/Sup2point0/Assort/" + file.path,
-      version = config.__version__,
-    )
-  
-  load["content"] = content
-  load["path"] = "docs/" + load["path"] + ".html"
-
-  return load
-
-
-def extract_quarks(file: ExportFile) -> dict:
+def extract(file: ExportFile) -> ExportFile:
   '''Extract `#QUARK` quarks from Quarkdown-Flavoured Markdown.'''
 
-  root = os.path.split(os.path.abspath(__file__))[0]
-  with open(os.path.join(root, "resources/tokens.json")) as source:
+  with open(config.ROOT / "quarkdown/resources/tokens.json") as source:
     tokens = json.load(source)["tokens"]
 
-  with open(os.path.join(root, "resources/tokens-schema.json")) as source:
+  with open(config.ROOT / "quarkdown/resources/tokens-schema.json") as source:
     defaults = json.load(source)["properties"]["tokens"]["items"]["defaultSnippets"][0]["body"]
   
   context: list[dict] = [
@@ -75,9 +32,9 @@ def extract_quarks(file: ExportFile) -> dict:
   flags = {}
 
   for idx, line in enumerate(file.content.split("\n")):
-    if idx < LIVE_LINES:
-      # once we reach LIVE_LINES, force quit if we haven’t seen `#QUARK live!`
-      if flags.get("live", idx != LIVE_LINES) is False:
+    if idx < config.LIVE_LINES:
+      # once we reach config.LIVE_LINES, force quit if we haven’t seen `#QUARK live!`
+      if flags.get("live", idx != config.LIVE_LINES) is False:
         raise Quarkless("#QUARK file inactive")
         
     for part in line.split():
