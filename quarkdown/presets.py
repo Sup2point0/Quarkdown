@@ -12,7 +12,7 @@ class defaults:
 class url:
   styles = "https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/styles"
   GoogleFonts = "https://fonts.googleapis.com/css2?"
-  MathJax = "<script type="text/javascript" src="https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>"
+  MathJax = '''<script type="text/javascript" src="https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>'''
 
   fonts = {
     "abel": "Abel",
