@@ -19,19 +19,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Git: checkout'
+      - name: 'Git – checkout'
         uses: actions/checkout@v4
       
-      - name: 'Python: setup'
+      - name: 'Python – setup'
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           
-      - name: 'Python: installs'
+      - name: 'Python – install'
         run: |
           python -m pip install --upgrade pip
           # pip install flake8 pytest
           pip install -r requirements.txt
           
-      - name: 'Pytest: execute'
-        run: pytest
+      - name: 'Pytest – execute'
+        run: pytest -vv
