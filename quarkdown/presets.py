@@ -2,14 +2,17 @@
 Static resources.
 '''
 
+from typing import Iterable
+
 
 class defaults:
-  fonts = ["abel", "montserrat"]
+  fonts = ("abel", "montserrat")
 
 
 class url:
-  google_fonts = "https://fonts.googleapis.com/css2?"
   styles = "https://raw.githack.com/Sup2point0/Quarkdown/main/quarkdown/resources/styles"
+  GoogleFonts = "https://fonts.googleapis.com/css2?"
+  MathJax = "<script type="text/javascript" src="https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>"
 
   fonts = {
     "abel": "Abel",
@@ -25,12 +28,12 @@ class url:
 
 
 class css:
-  def fonts(fonts: list[str]) -> str:
+  def fonts(fonts: Iterable[str]) -> str:
     '''Format the HTML `<link>` tag for loading fonts from Google Fonts.'''
 
     return (
       f'''<link rel="stylesheet" type="text/css" href="'''
-      f'''{url.google_fonts}{"&".join("family=" + url.fonts[font.lower] for font in fonts)}&display=swap">'''
+      f'''{url.GoogleFonts}{"&".join("family=" + url.fonts[font.lower] for font in fonts)}&display=swap">'''
     )
     
   def style(style: str) -> str:

@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Quarkup Config Schema",
+  "description": "Quarkup configurations for a repository.",
+  "properties":
+  {
+    "source-repo": {
+      "title": "Source Repository",
+      "description": "The repository containing the files to be exported.",
+      "type": "string",
+      "pattern": "[a-zA-Z\-_.]*"
+    },
+    "export-repo": {
+      "title": "Destination Repository",
+      "description": "The repository where the files will be exported to.",
+      "type": "string"
+    },
+    "export-path": {
+      "title": "Export Directory",
+      "description": "The root directory where files are exported relative to.",
+      "type": "string"
+    },
+    "slow-updates" {
+      "title": "Slowly Updating Directories",
+      "description": "A list of RegEx patterns matching files or directories which are only exported when a major update has occurred (2.0 » 2.1).",
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}

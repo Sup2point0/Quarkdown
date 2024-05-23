@@ -10,7 +10,8 @@ Documentation of Quarkdown for anyone wishing to use or understand it ...includi
 
 | Page | Notes |
 | :--- | :---- |
-| [walkthrough](walkthrough.md) | A guided walkthrough on how to use Quarkdown-Flavoured Markdown. |
-| [glossary](glossary.md) | Terminology used throughout Quarkdown. |
-| [quarks](quarks.md) | Reference for Quarkdown syntax. |
-| [quarkup](quarkup.md) | Deep dive into the Quarkup export process. |
+| [Walkthrough](walkthrough.md) | A guided walkthrough on how to use Quarkdown and Quarkdown-Flavoured Markdown. |
+| [Glossary](glossary.md) | Terminology used throughout Quarkdown. |
+| [Quarks](quarks.md) | Reference for Quarkdown-Flavoured Markdown syntax. |
+| [Configuring Quarkup for a Repository](config.md) | Reference for using `.quarkdown/` config files. |
+| [Quarkup](quarkup.md) | Deep dive into the Quarkup export process. |
