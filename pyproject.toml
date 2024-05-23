@@ -15,3 +15,12 @@ keywords = []
 Homepage = "https://github.com/Sup2point0/Quarkdown"
 Documentation = "https://github.com/Sup2point0/Quarkdown/docs"
 Repository = "https://github.com/Sup2point0/Quarkdown"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = [
+  "tests"
+]
+# python_files = [
+#   "pytest-*.py",
+# ]
