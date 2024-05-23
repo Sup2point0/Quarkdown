@@ -10,7 +10,7 @@ from quarkdown import quarkify
 
 
 def test_single():
-  result = quarkify.extract_quarks('''
+  result = quarkify.extract('''
     <!-- #QUARK live!
       EXPORT: testing/test
       STYLE: default
@@ -29,7 +29,7 @@ def test_single():
 
 
 def test_multi():
-  result = quarkify.extract_quarks('''
+  result = quarkify.extract('''
     <!-- #QUARK live!
       EXPORT: testing/tester/test scarlet/herring
       STYLE: default special testing
