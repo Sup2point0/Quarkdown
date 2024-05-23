@@ -36,7 +36,7 @@ nav ul .right li {
 }
 
 nav ul li ul {
-  visibility: hidden;
+  /* visibility: hidden; */
   opacity: 0;
   display: none;
   position: absolute;
@@ -44,8 +44,7 @@ nav ul li ul {
   left: inherit;
   margin-top: 0;
   padding: 1rem 0.69rem 1.2rem;
-  transition: all 0.42s ease;
-  /* background-color: var(--grey-nova); */
+  transition: opacity 0.42s;
 }
 .nav-dropdown {
   position: relative;
@@ -53,8 +52,8 @@ nav ul li ul {
   margin-top: 0.42rem;
   padding: 1rem 0;
   background-color: var(--col-nav-lower);
-  opacity: 1;
   border-radius: 1rem;
+  transition: opacity 0.42s;
 }
 
 .nav-cell {
@@ -76,7 +75,7 @@ nav ul li ul {
 }
 
 nav ul li:hover > ul, nav ul li ul:hover {
-  visibility: visible;
+  /* visibility: visible; */
   opacity: 1;
   display: block;
 }
