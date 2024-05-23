@@ -10,7 +10,7 @@ from quarkdown import quarkify
 
 
 def test_positive():
-  result = quarkify.extract_quarks('''
+  result = quarkify.extract('''
     <!-- #QUARK live! index! -->
   ''')
 
