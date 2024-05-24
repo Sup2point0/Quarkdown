@@ -6,7 +6,7 @@ Repositories can influence how their files are exported by providing files withi
 <br>
 
 
-## `config.json`
+## `quarkup.json`
 
 Supplies the repository-level configurations.
 
