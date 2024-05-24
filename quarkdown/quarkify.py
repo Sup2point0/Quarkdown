@@ -6,13 +6,11 @@ import base64
 import json
 import re
 
-from github.ContentFile import ContentFile
-
 import suptools as sup
 import config
 from . import presets
 from . import textualise
-from .classes import ExportFile, RepoConfig, Quarkless, ContextOpened
+from .classes import ExportFile, Quarkless, ContextOpened
 
 
 __all__ = ["extract"]

@@ -32,6 +32,7 @@ class ExportFile:
   header: str = None
   content: str = None
 
+  live: bool = None
   styles: list[str] = None
   duality: str = "light"
   indexes: list[str] = None
@@ -48,6 +49,9 @@ class ExportFile:
   def __post_init__(self):
     self.source_path = self.file.path
     self.source_url = self.file.html_url
+
+  def __getitem__(self, key: str):
+    return getattr(self, key)
 
   def set_flags(self, data: dict):
     '''Set file info from a given `dict`.
