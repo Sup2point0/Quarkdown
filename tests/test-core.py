@@ -6,11 +6,16 @@ Test export metadata handling.
 import sys
 sys.path[0] = "/".join(sys.path[0].split("/")[:-1])
 
-from quarkdown import quarkify
+import quarkdown as qk
+
+
+def test_export():
+  result = qk.extract()
+  assert isinstance(result, qk.ExportFile)
 
 
 def test_single():
-  result = quarkify.extract('''
+  result = qk.extract('''
     <!-- #QUARK live!
       EXPORT: testing/test
       STYLE: default
@@ -29,7 +34,7 @@ def test_single():
 
 
 def test_multi():
-  result = quarkify.extract('''
+  result = qk.extract('''
     <!-- #QUARK live!
       EXPORT: testing/tester/test scarlet/herring
       STYLE: default special testing
