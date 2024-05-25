@@ -28,11 +28,12 @@ class ExportFile:
   export_path_frags: list[str] = None
   source_url: str = None
 
+  live: bool = None
+  
   title: str = "Assort"
   header: str = None
   content: str = None
 
-  live: bool = None
   styles: list[str] = None
   duality: str = "light"
   indexes: list[str] = None
@@ -58,6 +59,11 @@ class ExportFile:
 
     All values are fully sanitised here. Should always be called before rendering the file.
     '''
+
+    if not data.get("live", False):
+      return self
+    else:
+      self.live = True
 
     with open(config.ROOT / "quarkdown/resources/quarks.json") as source:
       flags = json.load(source)
@@ -109,6 +115,8 @@ class ExportFile:
         month = presets.dec_index.get(flags.get("dec", 0), 0),
         day = flags.get("day", 1),
       )
+
+    return self
 
   def export_dict(self) -> dict:
     '''Extract a concise `dict` representation of the exported file.'''

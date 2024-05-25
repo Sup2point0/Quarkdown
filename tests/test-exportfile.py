@@ -2,7 +2,9 @@
 Test `ExportFile` operations.
 '''
 
-from github.ContentFile import ContentFile
+import quarkdown as qk
 
-import suptools as sup
-from quarkdown.classes import ExportFile
+
+def test_export(file):
+  result = qk.extract(file)
+  assert isinstance(result, qk.ExportFile)

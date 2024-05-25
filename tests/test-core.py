@@ -9,13 +9,8 @@ sys.path[0] = "/".join(sys.path[0].split("/")[:-1])
 import quarkdown as qk
 
 
-def test_export():
-  result = qk.extract()
-  assert isinstance(result, qk.ExportFile)
-
-
-def test_single():
-  result = qk.extract('''
+def test_single(file):
+  file.content = '''
     <!-- #QUARK live!
       EXPORT: testing/test
       STYLE: default
@@ -23,30 +18,34 @@ def test_single():
       INDEX: tests
       DATE: 24
     -->
-  ''')
+  '''
 
-  assert result["live"] is True
-  assert result["path"] == "testing/test"
-  assert result["style"] == ["default"]
-  assert result["duality"] == "light"
-  assert result["index"] == ["tests"]
-  assert result["date"] == ["24"]
+  result = qk.extract(file)
+
+  assert result.live is True
+  assert result.path == "testing/test"
+  assert result.style == ["default"]
+  assert result.duality == "light"
+  assert result.index == ["tests"]
+  assert result.date == ["24"]
 
 
 def test_multi():
-  result = qk.extract('''
-    <!-- #QUARK live!
-      EXPORT: testing/tester/test scarlet/herring
-      STYLE: default special testing
-      DUALITY: light ignore
-      INDEX: tests testing
-      DATE: 24 04 02
-    -->
-  ''')
+  file = '''
+  <!-- #QUARK live!
+    EXPORT: testing/tester/test scarlet/herring
+    STYLE: default special testing
+    DUALITY: light ignore
+    INDEX: tests testing
+    DATE: 24 04 02
+  -->
+'''
 
-  assert result["live"] is True
-  assert result["path"] == "testing/tester/test"
-  assert result["style"] == ["default", "special", "testing"]
-  assert result["duality"] == "light"
-  assert result["index"] == ["tests", "testing"]
-  assert result["date"] == ["24", "04", "02"]
+  result = qk.extract(file)
+
+  assert result.live is True
+  assert result.path == "testing/tester/test"
+  assert result.style == ["default", "special", "testing"]
+  assert result.duality == "light"
+  assert result.index == ["tests", "testing"]
+  assert result.date == ["24", "04", "02"]
