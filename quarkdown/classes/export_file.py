@@ -16,7 +16,7 @@ from .. import presets
 from .. import textualise
 
 
-@ dataclass(kw_only = True)
+@ dataclass(kw_only = True, slots = True)
 class ExportFile:
   '''A container for all the export info of a file.'''
 
@@ -29,6 +29,7 @@ class ExportFile:
   source_url: str = None
 
   live: bool = None
+  is_index: bool = False
   
   title: str = "Assort"
   header: str = None
@@ -81,19 +82,22 @@ class ExportFile:
       for style in sup.it.unique(styles)
     ]
 
-    # if no duality set, find default by cascading backwards
-    duality = (
-      flags["styles"][style].get("duality", None)
-      for style in reversed(self.styles)
-    )
-    self.duality = data.get("duality", next(
-      (each for each in duality if each),
-      flags["styles"]["default"]["duality"]
-    )).lower()
+    try:
+      self.duality = data["duality"]
+    except KeyError:
+      # cascade backwards over style defaults
+      defaults = (
+        flags["styles"].get(style, {}).get("duality", None)
+        for style in reversed(self.styles)
+      )
+      self.duality = next(
+        (each for each in defaults if each),
+        flags["styles"]["default"]["duality"]
+      ).lower()
 
     # indexes listed by relevance so order retained
     indexes = data.get("indexes", [])
-    self.indices = list(sup.it.unique(
+    self.indexes = list(sup.it.unique(
       itertools.chain.from_iterable(
         self.export_path_frags if index.lower() == "auto" else index.lower()
         for index in indexes
@@ -121,5 +125,4 @@ class ExportFile:
   def export_dict(self) -> dict:
     '''Extract a concise `dict` representation of the exported file.'''
 
-    attrs = vars(self)
-    return {each: attrs[each] for each in attrs if each in self.EXPORT_DATA}
+    return {each: getattr(self, each) for each in self.EXPORT_DATA}

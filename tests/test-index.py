@@ -2,16 +2,15 @@
 Test index page exporting.
 '''
 
-# we really need to find a proper way to do this
-import sys
-sys.path[0] = "/".join(sys.path[0].split("/")[:-1])
-
-from quarkdown import quarkify
+import quarkdown as qk
 
 
-def test_positive():
-  result = quarkify.extract('''
+def test_positive(source, encode):
+  file = qk.ExportFile(file = source)
+  file.content = encode('''
     <!-- #QUARK live! index! -->
   ''')
 
-  assert result["is-index"] is True, "index page not detected!"
+  result = qk.extract(file)
+
+  assert result.is_index is True, "index page not detected!"

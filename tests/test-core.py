@@ -2,15 +2,14 @@
 Test export metadata handling.
 '''
 
-# we really need to find a proper way to do this
-import sys
-sys.path[0] = "/".join(sys.path[0].split("/")[:-1])
+import datetime
 
 import quarkdown as qk
 
 
-def test_single(file):
-  file.content = '''
+def test_single(source, encode):
+  file = qk.ExportFile(file = source)
+  file.content = encode('''
     <!-- #QUARK live!
       EXPORT: testing/test
       STYLE: default
@@ -18,20 +17,21 @@ def test_single(file):
       INDEX: tests
       DATE: 24
     -->
-  '''
+  ''')
 
   result = qk.extract(file)
 
   assert result.live is True
-  assert result.path == "testing/test"
-  assert result.style == ["default"]
+  assert result.export_path == "testing/test.html"
+  assert result.styles == ["default"]
   assert result.duality == "light"
-  assert result.index == ["tests"]
-  assert result.date == ["24"]
+  assert result.indexes == ["tests"]
+  assert result.date == datetime.date(24, 0, 1)
 
 
-def test_multi():
-  file = '''
+def test_multi(source, encode):
+  file = qk.ExportFile(file = source)
+  file.content = encode('''
   <!-- #QUARK live!
     EXPORT: testing/tester/test scarlet/herring
     STYLE: default special testing
@@ -39,13 +39,13 @@ def test_multi():
     INDEX: tests testing
     DATE: 24 04 02
   -->
-'''
+  ''')
 
   result = qk.extract(file)
 
   assert result.live is True
-  assert result.path == "testing/tester/test"
-  assert result.style == ["default", "special", "testing"]
+  assert result.export_path == "testing/tester/test.html"
+  assert result.styles == ["default", "special", "testing"]
   assert result.duality == "light"
-  assert result.index == ["tests", "testing"]
-  assert result.date == ["24", "04", "02"]
+  assert result.indexes == ["tests", "testing"]
+  assert result.date == datetime.date("24", "04", "02")
